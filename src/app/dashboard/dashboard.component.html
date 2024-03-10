@@ -1,0 +1,44 @@
+<mat-toolbar>
+    <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+      <mat-icon *ngIf="!sidenav.opened">
+        menu
+      </mat-icon>
+      <mat-icon *ngIf="sidenav.opened">
+        close
+      </mat-icon>
+    </button>
+    <span>AgroPro</span>
+</mat-toolbar>
+  
+<mat-sidenav-container class="example-container">
+    <mat-sidenav class="mat-elevation-z8" #sidenav="matSidenav" mode="side" opened>
+      <img class="avatar mat-elevation-z8"src="https://startupeable.com/directorio/wp-content/uploads/listing-uploads/logo/2021/10/AgroPro-logo.png" alt="">
+      <h4 class="name">Cristian Sanchez</h4>
+      <p class="designation">Administrador</p>
+      <mat-divider></mat-divider>
+      <button mat-button class="menu-button">
+        <mat-icon>person</mat-icon>
+        <span>Crear</span>
+      </button>
+      <button mat-button class="menu-button">
+        <mat-icon>person</mat-icon>
+        <span>Person</span>
+      </button>
+      <button mat-button class="menu-button">
+        <mat-icon>person</mat-icon>
+        <span>Interés</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-button class="menu-button">
+        <mat-icon>logout</mat-icon>
+        <span>Salir</span>
+      </button>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <div class="content mat-elevation-z8">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  
+</mat-sidenav-container>
