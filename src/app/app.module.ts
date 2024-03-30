@@ -13,9 +13,10 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthComponent } from './auth/auth.component';
-import { ActionsComponent } from './actions/actions.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserCreateComponent } from './user-create/user-create.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { FincaCreateComponent } from './finca-create/finca-create.component';
 
 
 @NgModule({
@@ -23,9 +24,9 @@ import { UserCreateComponent } from './user-create/user-create.component';
     AppComponent,
     DashboardComponent,
     AuthComponent,
-    ActionsComponent,
     ProfileComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    FincaCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +38,7 @@ import { UserCreateComponent } from './user-create/user-create.component';
     MatSidenavModule,
     MatDividerModule,
     MatButtonModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

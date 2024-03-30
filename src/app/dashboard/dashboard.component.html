@@ -17,16 +17,33 @@
       <p class="designation">Administrador</p>
       <mat-divider></mat-divider>
       <button mat-button class="menu-button">
-        <mat-icon>person</mat-icon>
-        <span>Crear</span>
+        <mat-icon>home</mat-icon>
+        <span>Inicio</span>
+      </button>     
+      <button mat-button class="menu-button" [matMenuTriggerFor]="actions">
+        <mat-icon>reorder</mat-icon>
+        <span>Acciones</span>
       </button>
+      <mat-menu #actions="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="user">Usuario</button>
+        <button mat-menu-item [matMenuTriggerFor]="finca">Finca</button>
+        <button mat-menu-item>Cuentas</button>
+        <button mat-menu-item>Liquidaciones</button>
+      </mat-menu>
+      <mat-menu #user="matMenu">
+        <button mat-menu-item routerLink="/dashboard/user-create">Crear usuario</button>
+        <button mat-menu-item>Listar usuarios</button>
+        <button mat-menu-item>Añadir representante</button>
+      </mat-menu>
+      <mat-menu #finca="matMenu">
+        <button mat-menu-item routerLink="/dashboard/finca-create">Crear Finca</button>
+        <button mat-menu-item>Añadir parcela</button>
+        <button mat-menu-item>Listar parcelas</button>
+        <button mat-menu-item>Listar propietarios</button>
+      </mat-menu>
       <button mat-button class="menu-button">
         <mat-icon>person</mat-icon>
-        <span>Person</span>
-      </button>
-      <button mat-button class="menu-button">
-        <mat-icon>person</mat-icon>
-        <span>Interés</span>
+        <span>Ver perfil</span>
       </button>
       <mat-divider></mat-divider>
       <button mat-button class="menu-button">
