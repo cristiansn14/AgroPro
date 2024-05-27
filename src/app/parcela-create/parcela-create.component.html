@@ -1,0 +1,161 @@
+<h2>Crear Parcela</h2>
+<form action="#" method="post" class="user-form">
+    <div style="display: block; width: 100%;">
+        <div style="display: flex; width: fit-content; height: fit-content; margin-bottom: 20px;">
+            <label style="font-size: 0.9rem; font-weight: bold; margin-top: -4px; margin-left: 15px;" for="tipoParcela">Introduzca el número de propietarios:</label>
+            <input style="margin-left: 15px; margin-right: 15px; width: 45%;" name="input-propietarios" min="0" type="number" id="numPropietarios" [(ngModel)]="numeroPropietarios" (change)="generarFormularioPropietarios()" required>
+        </div>
+        <form [formGroup]="propietariosForm">
+            <div formArrayName="propietarios">
+                <div *ngFor="let row of propietarioRows; let rowIndex = index" class="propietarios" style="display: flex; width: 100%;">
+                    <div *ngFor="let propietario of row; let i = index" [formGroupName]="rowIndex * 3 + i" class="propietario" style="padding: 10px;">
+                        <div class="form-header">
+                            <h1>Usuario {{ rowIndex * 3 + i + 1 }}</h1>
+                            <div class="form-group">
+                                <label for="usuario{{ rowIndex * 3 + i }}">Usuario:</label>
+                                <select id="usuario{{ rowIndex * 3 + i }}" formControlName="usuario" name="usuario{{ rowIndex * 3 + i }}"></select>
+                
+                                <label for="participacion{{ rowIndex * 3 + i }}">Participación (%):</label>
+                                <input type="number" id="participacion{{ rowIndex * 3 + i }}" formControlName="participacion" name="participacion{{ rowIndex * 3 + i }}" min="0" max="100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>            
+        <div style="display: flex; width: fit-content; height: fit-content; margin-bottom: 20px; margin-top: 10px;">
+            <label style="font-size: 0.9rem; font-weight: bold; margin-top: -4px; margin-left: 15px;" for="tipoParcela">Introduzca el tipo de parcela:</label>
+            <select name="tipoParcela" id="tipoParcela" [(ngModel)]="tipoParcela" style="margin-left: 15px; margin-right: 15px; width: 45%;" (change)="generarFormularioParcela()">
+                <option value="parcela">Parcela</option>
+                <option value="construccion">Construcción</option>        
+            </select>
+        </div>
+        <div class="flex" *ngIf="tipoParcela === 'construccion'">
+            <div class="form-header">
+                <h1>Datos</h1>
+                <div class="form-group">           
+                    <label for="referencia">Referencia catastral:</label>
+                    <input type="text" id="referencia" name="referencia" required><br>
+
+                    <label for="uso-principal">Uso principal:</label>
+                    <select id="uso-principal" name="uso-principal"></select> 
+
+                    <label for="escalera">Escalera:</label>
+                    <input type="number" id="escalera" name="escalera">
+
+                    <label for="planta">Planta:</label>
+                    <input type="number" id="planta" name="planta">
+
+                    <label for="puerta">Puerta:</label>
+                    <select id="puerta" name="puerta"></select>
+                </div>
+            </div>
+            <div class="form-header">
+                <h1>Características</h1>                               
+                <div class="form-group">
+                    <label for="tipo-reforma">Tipo reforma:</label>
+                    <select id="tipo-reforma" name="tipo-reforma"></select> 
+
+                    <label for="fecha-reforma">Fecha reforma:</label>
+                    <select id="fecha-reforma" name="fecha-reforma"></select>
+
+                    <label for="superficie">Superficie:</label>
+                    <select id="superficie" name="superficie"></select> 
+                </div>      
+            </div>
+        </div> 
+        <div class="flex" *ngIf="tipoParcela === 'parcela'">
+            <div class="form-header">
+                <h1>Datos</h1>
+                <div class="form-group">           
+                    <label for="referencia">Referencia catastral:</label>
+                    <input type="text" id="referencia" name="referencia" required><br>
+
+                    <label for="poligono">Polígono:</label>
+                    <select id="poligono" name="poligono" required></select> 
+
+                    <label for="parcela">Parcela:</label>
+                    <select id="parcela" name="parcela" required></select>
+
+                    <label for="paraje">Paraje:</label>
+                    <select id="paraje" name="paraje" required></select> 
+
+                    <label for="clase">Clase:</label>
+                    <select id="clase" name="clase"></select>
+                </div>
+            </div>
+            <div class="form-header">
+                <h1>Características</h1>                               
+                <div class="form-group">
+                    <label for="valor-suelo">Valor del suelo:</label>
+                    <input type="number" id="valor-suelo" name="valor-suelo"><br> 
+
+                    <label for="valor-construccion">Valor construcción:</label>
+                    <input type="number" id="valor-construccion" name="valor-construccion"><br> 
+
+                    <label for="ano">Año valor:</label>
+                    <select id="ano" name="ano"></select> 
+                </div>      
+            </div>
+        </div>  
+        <div style="display: flex; width: 100%; height: fit-content; margin: 15px;" *ngIf="tipoParcela === 'parcela'">
+            <label style="font-size: 0.9rem; margin-top: 8px; font-weight: bold;" for="numSubparcelas">Introduzca el número de subparcelas:</label>
+            <input style="width: 100px;" min="0" name="input-subparcela" type="number" id="numSubparcelas" [(ngModel)]="numeroSubparcelas" (change)="generarFormularioSubparcela()" required>
+        </div>
+        <div *ngIf="tipoParcela === 'parcela'">
+            <form [formGroup]="subparcelasForm">
+                <div formArrayName="subparcelas">
+                    <div *ngFor="let row of subparcelaRows; let rowIndex = index" class="form-row">
+                        <div *ngFor="let subparcela of row; let i = index" [formGroupName]="rowIndex * 3 + i" class="form-column">
+                            <div class="form-header" style="margin-bottom: 30px; width: 100%;">
+                                <h1>Subparcela {{ rowIndex * 3 + i + 1 }}</h1>
+                                <div class="subparcela">
+                                    <h3>Catastro</h3>
+                                    <div class="form-sub">
+                                        <label for="cultivoCatastro{{ rowIndex * 3 + i }}">Cultivo:</label>
+                                        <select class="select-sub" name="cultivoCatastro{{ rowIndex * 3 + i }}" id="cultivoCatastro{{ rowIndex * 3 + i }}" formControlName="cultivoCatastro">
+                                            <option value="intensidad0">00</option>
+                                        </select>
+        
+                                        <label for="intensidadCatastro{{ rowIndex * 3 + i }}" style="margin-right: 15px; margin-top: -3px;">Intensidad productiva:</label>
+                                        <select class="select-sub" name="intensidadCatastro{{ rowIndex * 3 + i }}" id="intensidadCatastro{{ rowIndex * 3 + i }}" formControlName="intensidadCatastro">
+                                            <option value="00">00</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+        
+                                        <label for="superficieCatastro{{ rowIndex * 3 + i }}" style="margin-right: 10px; margin-top: -3px;">Supercifie (m2): </label>
+                                        <input class="input-sub" type="number" id="superficieCatastro{{ rowIndex * 3 + i }}" name="superficieCatastro{{ rowIndex * 3 + i }}" formControlName="superficieCatastro">
+                                    </div>
+                                </div>
+                                <div class="subparcela" style="margin-top: 30px;">
+                                    <h3>SIGPAC</h3>
+                                    <div class="form-sub">
+                                        <label for="cultivoSigpac{{ rowIndex * 3 + i }}" style="margin-right: 10px;">Cultivo:</label>
+                                        <select class="select-sub" name="cultivoSigpac{{ rowIndex * 3 + i }}" id="cultivoSigpac{{ rowIndex * 3 + i }}" formControlName="cultivoSigpac"></select>
+        
+                                        <label for="intensidadSigpac{{ rowIndex * 3 + i }}" style="margin-right: 10px; margin-top: -3px;">Intensidad productiva:</label>
+                                        <select class="select-sub" name="intensidadSigpac{{ rowIndex * 3 + i }}" id="intensidadSigpac{{ rowIndex * 3 + i }}" formControlName="intensidadSigpac">
+                                            <option value="00">00</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                        </select>
+        
+                                        <label for="superficieSigpac{{ rowIndex * 3 + i }}" style="margin-right: 10px; margin-top: -3px;">Supercifie (m2): </label>
+                                        <input type="number" id="superficieSigpac{{ rowIndex * 3 + i }}" name="superficieSigpac{{ rowIndex * 3 + i }}" formControlName="superficieSigpac">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>                                
+    </div>     
+    <div class="div-buttons">
+        <button mat-raised-button class="create-button" (click)="guardar()">Crear</button>
+        <button mat-raised-button class="cancel-button" routerLink="/dashboard">Cancelar</button>
+    </div>
+</form>

@@ -4,26 +4,20 @@
         <div class="form-header">
             <h1>Datos personales</h1>
             <div class="form-group">
-                <div>
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" required><br> 
-                </div>
-                <div>
-                    <label for="apellido1">Primer Apellido:</label>
-                    <input type="text" id="apellido1" name="apellido1" required><br> 
-                </div>
-                <div>
-                    <label for="apellido2">Segundo Apellido:</label>
-                    <input type="text" id="apellido2" name="apellido2" required><br> 
-                </div>
-                <div>
-                    <label for="dni">DNI:</label>
-                    <input type="text" id="dni" name="dni" required><br> 
-                </div>
-                <div>
-                    <label for="cuenta">Número de Cuenta:</label>
-                    <input type="text" id="cuenta" name="cuenta" required><br> 
-                </div>      
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required><br> 
+
+                <label for="apellido1">Primer Apellido:</label>
+                <input type="text" id="apellido1" name="apellido1" required><br> 
+
+                <label for="apellido2">Segundo Apellido:</label>
+                <input type="text" id="apellido2" name="apellido2" required><br> 
+
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" name="dni" required><br> 
+
+                <label for="cuenta">Número de Cuenta:</label>
+                <input type="text" id="cuenta" name="cuenta" required><br> 
             </div>                              
         </div>
         <div class="form-header">
@@ -65,11 +59,12 @@
                 </div>      
             </div>
         </div>
+        <div class="div-buttons">
+            <button mat-raised-button class="create-button">Guardar</button>
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard">Cancelar</button>
+        </div>
     </div>
-    <div class="div-buttons">
-        <button mat-raised-button class="create-button">Crear</button>
-        <button mat-raised-button class="cancel-button" routerLink="/dashboard">Cancelar</button>
-    </div>
+    
     
 
 </form>

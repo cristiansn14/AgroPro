@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { FincaCreateComponent } from './finca-create/finca-create.component';
+import { ParcelaCreateComponent } from './parcela-create/parcela-create.component';
 
 const routes: Routes = [
   { path:'', redirectTo:'/login', pathMatch:'full'},
@@ -19,6 +20,9 @@ const routes: Routes = [
       },
       {
         path: 'finca-create', component: FincaCreateComponent
+      },
+      {
+        path: 'parcela-create', component: ParcelaCreateComponent
       }
     ]
   }
