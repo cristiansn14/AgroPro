@@ -1,0 +1,67 @@
+<h2>Editar Usuario</h2>
+<form action="#" method="post" class="user-form">   
+    <div class="flex">
+        <div class="form-header">
+            <h1>Datos personales</h1>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required><br> 
+
+                <label for="apellido1">Primer Apellido:</label>
+                <input type="text" id="apellido1" name="apellido1" required><br> 
+
+                <label for="apellido2">Segundo Apellido:</label>
+                <input type="text" id="apellido2" name="apellido2" required><br> 
+
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" name="dni" required><br> 
+
+                <label for="cuenta">Número de Cuenta:</label>
+                <input type="text" id="cuenta" name="cuenta" required><br> 
+            </div>                              
+        </div>
+        <div class="form-header">
+            <h1>Dirección</h1>
+            <div class="form-group">                   
+                <div>
+                    <label for="localidad">Localidad:</label>
+                    <select id="localidad" name="localidad" required></select>               
+        
+                    <label for="provincia">Provincia:</label>
+                    <select id="provincia" name="provincia" required></select>
+        
+                    <label for="comunidad">Comunidad:</label>
+                    <select id="comunidad" name="comunidad" required></select>
+                   
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" iD="direccion" name="direccion" required><br>
+        
+                    <label for="codigo_postal">Código postal:</label>
+                    <input type="text" id="codigo_postal" name="codigo_postal" required><br>
+                </div>       
+            </div>
+        </div>   
+        <div class="form-header">
+            <h1>Usuario</h1> 
+            <div class="form-group">                  
+                <div>
+                    <label for="correo-electronico">Correo electrónico:</label>
+                    <input type="text" id="correo-electronico" name="correo-electronico" required><br>
+                    
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" required><br>
+
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" required><br>
+        
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" required><br>
+                </div>      
+            </div>
+        </div>
+        <div class="div-buttons">
+            <button mat-raised-button class="create-button">Guardar</button>
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard">Cancelar</button>
+        </div>
+    </div>
+</form>

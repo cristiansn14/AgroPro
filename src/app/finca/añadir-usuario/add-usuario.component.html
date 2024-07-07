@@ -1,0 +1,40 @@
+<h2>Añadir usuario a finca</h2>
+<form action="#" method="post" class="user-form">
+    <div style="display: block; width: 100%;">
+        <div style="display: flex; width: fit-content; height: fit-content; margin-bottom: 20px; margin-top: 30px;">
+            <label style="font-size: 0.9rem; font-weight: bold; margin-top: -4px; margin-left: 15px;" for="tipoParcela">Introduzca el número de propietarios:</label>
+            <input style="margin-left: 15px; margin-right: 15px; width: 45%;" name="input-propietarios" min="0" type="number" id="numPropietarios" [(ngModel)]="numeroPropietarios" (change)="generarFormularioPropietarios()" required>
+        </div>
+        <form [formGroup]="propietariosForm">
+            <div formArrayName="propietarios">
+                <div *ngFor="let row of propietarioRows; trackBy: trackByFn; let rowIndex = index" class="propietarios" style="display: flex; width: 100%;">
+                    <div *ngFor="let propietario of row; let i = index" [formGroupName]="rowIndex * 3 + i" class="propietario" style="padding: 10px;">
+                        <div class="form-header">
+                            <h1>Usuario {{ rowIndex * 3 + i + 1 }}</h1>
+                            <div class="form-group">
+                                <label for="usuario{{ rowIndex * 3 + i }}">Usuario:</label>
+                                <select id="usuario{{ rowIndex * 3 + i }}" formControlName="usuario" name="usuario{{ rowIndex * 3 + i }}">
+                                    <option value="" disabled selected>Seleccione un usuario</option>
+                                    <option *ngFor="let usuario of usuariosDisponibles" [value]="usuario.id">{{ usuario.nombre }} {{usuario.apellido1}} {{usuario.apellido2}}</option>
+                                </select>
+                
+                                <label for="onzas{{ rowIndex * 3 + i }}">Onzas:</label>
+                                <span style="color: rgb(255, 94, 0); font-size: 0.8rem;">(Disponibles: {{ onzasDisponibles }})</span>
+                                <input type="number" id="onzas{{ rowIndex * 3 + i }}" formControlName="onzas" name="onzas{{ rowIndex * 3 + i }}">
+                
+                                <section class="rol">
+                                    <mat-checkbox formControlName="administrador" class="check" id="administrador{{ rowIndex * 3 + i }}">Administrador</mat-checkbox>
+                                    <mat-checkbox formControlName="propietario" class="check" id="propietario{{ rowIndex * 3 + i }}">Propietario</mat-checkbox>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="div-buttons">
+        <button mat-raised-button class="create-button" (click)="add()">Añadir</button>
+        <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Cancelar</button>
+    </div>       
+</form>

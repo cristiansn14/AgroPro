@@ -5,6 +5,7 @@
 mat-toolbar{
   background: #2bea04;
   color: black;
+  align-items: center;
 }
 
 mat-sidenav{
@@ -70,4 +71,34 @@ mat-divider{
 
 mat-sidenav-content{
   height: calc(100vh - 65px);
+}
+
+mat-toolbar mat-form-field {
+  background: #2bea04; /* Asegúrate de que esto coincida con el fondo de la barra de herramientas */
+  border: none; /* Elimina bordes que podrían aparecer */
+  color: black;
+  width: auto; /* O un tamaño fijo, dependiendo de tu diseño */
+  outline: none; /* Elimina el contorno que podría aparecer al hacer clic */
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 25px;
+}
+
+mat-select {
+  background: #2bea04;
+  color: black;
+}
+
+mat-option {
+  color: black;
+}
+
+:host ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #2bea04 !important;
+}
+
+::ng-deep .mat-select-panel .mat-option {
+  justify-content: center; /* Centrar contenido horizontalmente */
+  display: flex;
 }

@@ -8,15 +8,21 @@
       </mat-icon>
     </button>
     <span>AgroPro</span>
+    <span style="flex: 1 1 auto;"></span>
+    <mat-form-field appearance="fill">
+      <mat-select [(ngModel)]="selectedFinca" (selectionChange)="onFincaChange($event)">
+        <mat-option *ngFor="let finca of fincas" [value]="finca.id">{{ finca.nombre }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 </mat-toolbar>
   
 <mat-sidenav-container class="example-container">
     <mat-sidenav class="mat-elevation-z8" #sidenav="matSidenav" mode="side" opened>
       <img class="avatar mat-elevation-z8"src="https://startupeable.com/directorio/wp-content/uploads/listing-uploads/logo/2021/10/AgroPro-logo.png" alt="">
-      <h4 class="name">Cristian Sanchez</h4>
-      <p class="designation">Administrador</p>
+      <h4 class="name">{{ username }}</h4>
+      <p class="designation">{{ rol }}</p>
       <mat-divider></mat-divider>
-      <button mat-button class="menu-button">
+      <button mat-button class="menu-button" routerLink="/dashboard/home">
         <mat-icon>home</mat-icon>
         <span>Inicio</span>
       </button>     
@@ -31,13 +37,14 @@
         <button mat-menu-item>Liquidaciones</button>
       </mat-menu>
       <mat-menu #user="matMenu">
-        <button mat-menu-item routerLink="/dashboard/user-create">Crear usuario</button>
+        <button mat-menu-item routerLink="/dashboard/registrar-usuario">Registrar usuario</button>
         <button mat-menu-item>Listar usuarios</button>
         <button mat-menu-item>Añadir representante</button>
       </mat-menu>
       <mat-menu #finca="matMenu">
-        <button mat-menu-item routerLink="/dashboard/finca-create">Crear Finca</button>
+        <button mat-menu-item routerLink="/dashboard/crear-finca">Crear Finca</button>
         <button mat-menu-item routerLink="/dashboard/parcela-create">Añadir parcela</button>
+        <button mat-menu-item routerLink="/dashboard/añadir-usuario">Añadir usuario a finca</button>
         <button mat-menu-item>Listar parcelas</button>
         <button mat-menu-item>Listar propietarios</button>
       </mat-menu>
@@ -46,7 +53,7 @@
         <span>Ver perfil</span>
       </button>
       <mat-divider></mat-divider>
-      <button mat-button class="menu-button">
+      <button mat-button class="menu-button" (click)="logout()">
         <mat-icon>logout</mat-icon>
         <span>Salir</span>
       </button>

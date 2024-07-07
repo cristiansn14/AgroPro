@@ -2,30 +2,44 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProfileComponent } from './profile/profile.component';
-import { UserCreateComponent } from './user-create/user-create.component';
-import { FincaCreateComponent } from './finca-create/finca-create.component';
-import { ParcelaCreateComponent } from './parcela-create/parcela-create.component';
+import { CrearUsuarioComponent } from './usuario/crear-usuario/crear-usuario.component';
+import { EditarUsuarioComponent } from './usuario/editar-usuario/editar-usuario.component';
+import { DetallesUsuarioComponent } from './usuario/detalles-usuario/detalles-usuario.component';
+import { CrearParcelaComponent } from './parcela/crear-parcela/crear-parcela.component';
+import { HomeComponent } from './home/home.component';
+import { authGuard } from './auth/auth.guard';
+import { CrearFincaComponent } from './finca/crear-finca/crear-finca.component';
+import { AddUsuarioComponent } from './finca/añadir-usuario/add-usuario.component';
 
 const routes: Routes = [
   { path:'', redirectTo:'/login', pathMatch:'full'},
-  { path:'login', component: AuthComponent },
-  { path:'dashboard', component: DashboardComponent,
+  { path:'login', component: AuthComponent }, 
+  { path:'dashboard', component: DashboardComponent, canActivate: [authGuard],
     children: [
       {
-        path: 'profile', component: ProfileComponent
+        path: 'home', component: HomeComponent
       },
       {
-        path: 'user-create', component: UserCreateComponent
+        path: 'registrar-usuario', component: CrearUsuarioComponent
       },
       {
-        path: 'finca-create', component: FincaCreateComponent
+        path: 'editar-perfil', component: EditarUsuarioComponent
       },
       {
-        path: 'parcela-create', component: ParcelaCreateComponent
+        path: 'ver-perfil', component: DetallesUsuarioComponent
+      },
+      {
+        path: 'crear-finca', component: CrearFincaComponent
+      },
+      {
+        path: 'añadir-usuario', component: AddUsuarioComponent
+      },
+      {
+        path: 'crear-parcela', component: CrearParcelaComponent
       }
     ]
-  }
+  },
+  { path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({

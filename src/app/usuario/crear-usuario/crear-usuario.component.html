@@ -1,0 +1,51 @@
+<h2>Registrar usuario</h2>
+<form action="#" method="post" class="user-form">
+    <div style="display: block; width: 100%;">
+        <div style="display: flex; width: fit-content; height: fit-content; margin-bottom: 20px; margin-top: 30px;">
+            <label style="font-size: 0.9rem; font-weight: bold; margin-top: -4px; margin-left: 15px;" for="tipoParcela">Introduzca el número de usuarios que quieres registrar:</label>
+            <input style="margin-left: 15px; margin-right: 15px; width: 45%;" name="input-propietarios" min="0" type="number" id="numUsuarios" [(ngModel)]="numeroUsuarios" (change)="generarFormularioUsuarios()" required>
+        </div>
+        <form [formGroup]="usuariosForm">
+            <div formArrayName="usuarios">
+                <div *ngFor="let row of usuarioRows; trackBy: trackByFn; let rowIndex = index" class="usuarios" style="display: flex; width: 100%;">
+                    <div *ngFor="let usuario of row; let i = index" [formGroupName]="rowIndex * 3 + i" class="usuario" style="padding: 10px;">
+                        <div class="form-header">
+                            <h1>Usuario {{ rowIndex * 3 + i + 1 }}</h1>
+                            <div class="form-group">
+                                <label for="nombre{{ rowIndex * 3 + i }}">Nombre:</label>
+                                <input type="text" id="nombre{{ rowIndex * 3 + i }}" formControlName="nombre" name="nombre{{ rowIndex * 3 + i }}">
+                
+                                <label for="apellido1{{ rowIndex * 3 + i }}">Apellido 1:</label>
+                                <input type="text" id="apellido1{{ rowIndex * 3 + i }}" formControlName="apellido1" name="apellido1{{ rowIndex * 3 + i }}">
+
+                                <label for="apellido2{{ rowIndex * 3 + i }}">Apellido 2:</label>
+                                <input type="text" id="apellido2{{ rowIndex * 3 + i }}" formControlName="apellido2" name="apellido2{{ rowIndex * 3 + i }}">
+
+                                <label for="email{{ rowIndex * 3 + i }}">Email:</label>
+                                <input type="email" id="email{{ rowIndex * 3 + i }}" formControlName="email" name="email{{ rowIndex * 3 + i }}">
+
+                                <label for="username{{ rowIndex * 3 + i }}">Nombre de usuario:</label>
+                                <input type="text" id="username{{ rowIndex * 3 + i }}" formControlName="username" name="username{{ rowIndex * 3 + i }}">
+
+                                <label for="password{{ rowIndex * 3 + i }}">Contraseña:</label>
+                                <input type="password" id="password{{ rowIndex * 3 + i }}" formControlName="password" name="password{{ rowIndex * 3 + i }}">
+
+                                <label for="password2{{ rowIndex * 3 + i }}">Repita la contraseña:</label>
+                                <input type="password" id="password2{{ rowIndex * 3 + i }}" formControlName="password2" name="password2{{ rowIndex * 3 + i }}">
+                
+                                <section class="rol" *ngIf="rol === 'SUPERUSUARIO'">
+                                    <mat-checkbox formControlName="superusuario" class="check" id="superusuario{{ rowIndex * 3 + i }}">Superusuario</mat-checkbox>
+                                    <mat-checkbox formControlName="usuariorol" class="check" id="usuariorol{{ rowIndex * 3 + i }}">Usuario</mat-checkbox>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="div-buttons">
+        <button mat-raised-button class="create-button" (click)="add()">Añadir</button>
+        <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Cancelar</button>
+    </div>       
+</form>

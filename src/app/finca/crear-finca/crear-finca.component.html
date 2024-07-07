@@ -1,0 +1,43 @@
+<h2>Crear Finca</h2>
+<form action="#" method="post" class="user-form">
+    <div style="display: block; width: 100%;">
+        <div class="flex">
+            <div class="form-header">
+                <h1>Datos</h1>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+    
+                    <label for="onzas">Onzas:</label>
+                    <input type="number" id="onzas" name="onzas" required>  
+                </div>        
+            </div>
+            <div class="form-header">
+                <h1>Ubicación</h1>
+                <div class="form-group">
+                    <label for="comunidad">Comunidad:</label>
+                    <select id="comunidad" name="comunidad" [(ngModel)]="selectedComunidad" (change)="onComunidadChange()" required>
+                        <option value="" disabled selected>Seleccione una comunidad</option>
+                        <option *ngFor="let comunidad of comunidades" [value]="comunidad.id">{{ comunidad.nombre }}</option>
+                    </select>
+
+                    <label for="provincia">Provincia:</label>
+                    <select id="provincia" name="provincia" [(ngModel)]="selectedProvincia" (change)="onProvinciaChange()" required>
+                        <option value="" disabled selected>Seleccione una provincia</option>
+                        <option *ngFor="let provincia of provincias" [value]="provincia.id">{{ provincia.nombre }}</option>
+                    </select>
+
+                    <label for="Municipio">Municipio:</label>
+                    <select id="municipio" name="municipio" [(ngModel)]="selectedMunicipio" required>
+                        <option value="" disabled selected>Seleccione un municipio</option>
+                        <option *ngFor="let municipio of municipios" [value]="municipio.id">{{ municipio.nombre }}</option>
+                    </select>                                  
+                </div>
+            </div>
+        </div>                       
+    </div>
+    <div class="div-buttons">
+        <button mat-raised-button class="create-button" (click)="crear()">Crear</button>
+        <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Cancelar</button>
+    </div>
+</form>
