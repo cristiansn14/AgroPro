@@ -43,12 +43,12 @@
       </mat-menu>
       <mat-menu #finca="matMenu">
         <button mat-menu-item routerLink="/dashboard/crear-finca">Crear Finca</button>
-        <button mat-menu-item routerLink="/dashboard/parcela-create">Añadir parcela</button>
+        <button mat-menu-item routerLink="/dashboard/crear-parcela">Añadir parcela</button>
         <button mat-menu-item routerLink="/dashboard/añadir-usuario">Añadir usuario a finca</button>
         <button mat-menu-item>Listar parcelas</button>
         <button mat-menu-item>Listar propietarios</button>
       </mat-menu>
-      <button mat-button class="menu-button">
+      <button mat-button class="menu-button" routerLink="/dashboard/ver-perfil/{{idUsuario}}">
         <mat-icon>person</mat-icon>
         <span>Ver perfil</span>
       </button>

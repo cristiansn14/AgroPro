@@ -110,6 +110,13 @@ export class CrearUsuarioComponent implements OnInit{
   }
 
   add() {
+    if (this.numeroUsuarios === 0) {
+      this.toastr.error('Debe haber al menos un usuario.', 'Error', {
+        timeOut: 3000,
+        positionClass: 'toast-top-center'
+      });
+      return;
+    }
     if (this.usuariosForm.invalid) {
       let foundMismatch = false;
       // Buscar en cada grupo de controles de usuario si hay un error de desajuste de contraseñas

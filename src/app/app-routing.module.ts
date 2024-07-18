@@ -23,10 +23,10 @@ const routes: Routes = [
         path: 'registrar-usuario', component: CrearUsuarioComponent
       },
       {
-        path: 'editar-perfil', component: EditarUsuarioComponent
+        path: 'editar-perfil/:id', component: EditarUsuarioComponent
       },
       {
-        path: 'ver-perfil', component: DetallesUsuarioComponent
+        path: 'ver-perfil/:id', component: DetallesUsuarioComponent
       },
       {
         path: 'crear-finca', component: CrearFincaComponent

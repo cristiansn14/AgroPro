@@ -1,1 +1,40 @@
-<p>detalles-usuario works!</p>
+<h2>Perfil</h2>
+<form action="#" method="post" class="user-form">   
+    <div class="flex">
+        <div class="form-header">
+            <h1>Datos personales</h1>
+            <div class="form-group">
+                <div><span class="label" style="font-weight: bold;">Nombre:</span> <span class="label">{{ usuario?.nombre }}</span></div>
+                <div><span class="label" style="font-weight: bold;">Primer Apellido:</span> <span class="label">{{ usuario?.apellido1 }}</span></div> 
+                <div><span class="label" style="font-weight: bold;">Segundo Apellido:</span> <span class="label">{{ usuario?.apellido2 }}</span></div>
+                <div><span class="label" style="font-weight: bold;">DNI:</span> <span class="label">{{ usuario?.dni }}</span></div>
+                <div><span class="label" style="font-weight: bold;">Número de cuenta:</span> <span class="label">{{ usuario?.cuenta }}</span></div> 
+            </div>                              
+        </div>
+        <div class="form-header">
+            <h1>Dirección</h1>
+            <div class="form-group">                   
+                <div><span class="label" style="font-weight: bold;">Comunidad:</span> <span class="label">{{ usuario?.comunidad }}</span></div>
+                <div><span class="label" style="font-weight: bold;">Provincia:</span> <span class="label">{{ usuario?.provincia }}</span></div>
+                <div><span class="label" style="font-weight: bold;">Municipio:</span> <span class="label">{{ usuario?.municipio }}</span></div>
+                <div><span class="label" style="font-weight: bold;">Dirección:</span> <span class="label">{{ usuario?.direccion }}</span></div>
+                <div><span class="label" style="font-weight: bold;">Código postal:</span> <span class="label">{{ usuario?.codigoPostal }}</span></div>                   
+            </div>
+        </div>   
+        <div class="form-header">
+            <h1>Usuario</h1> 
+            <div class="form-group">                 
+                <div><span class="label" style="font-weight: bold;">Email:</span> <span class="label">{{ usuario?.email }}</span></div>
+                <div><span class="label" style="font-weight: bold;">Teléfono:</span> <span class="label">{{ usuario?.telefono }}</span></div>
+                <div><span class="label" style="font-weight: bold;">Usuario:</span> <span class="label">{{ usuario?.username }}</span></div>
+                <div><span class="label" style="font-weight: bold;">Fecha de alta:</span> <span class="label">{{ usuario?.fechaAlta }}</span></div>
+                <div><button mat-raised-button class="password-button" routerLink="/dashboard/editar-usuario/{{idUsuario}}">Cambiar contraseña</button></div>              
+            </div>
+        </div>
+        <div class="div-buttons">
+            <button mat-raised-button class="edit-button" routerLink="/dashboard/editar-perfil/{{idUsuario}}">Editar</button>
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Volver</button>
+        </div>
+    </div>
+</form>
+

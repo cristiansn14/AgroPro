@@ -1,43 +1,52 @@
 <h2>Editar Usuario</h2>
-<form action="#" method="post" class="user-form">   
+<form (ngSubmit)="editar()" method="post" class="user-form">   
     <div class="flex">
         <div class="form-header">
             <h1>Datos personales</h1>
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required><br> 
+                <input type="text" id="nombre" name="nombre" required [ngModel]="usuario?.nombre" (ngModelChange)="usuario && (usuario.nombre = $event)"><br> 
 
                 <label for="apellido1">Primer Apellido:</label>
-                <input type="text" id="apellido1" name="apellido1" required><br> 
+                <input type="text" id="apellido1" name="apellido1" required [ngModel]="usuario?.apellido1" (ngModelChange)="usuario && (usuario.apellido1 = $event)"><br> 
 
                 <label for="apellido2">Segundo Apellido:</label>
-                <input type="text" id="apellido2" name="apellido2" required><br> 
+                <input type="text" id="apellido2" name="apellido2" required [ngModel]="usuario?.apellido2" (ngModelChange)="usuario && (usuario.apellido2 = $event)"><br> 
 
                 <label for="dni">DNI:</label>
-                <input type="text" id="dni" name="dni" required><br> 
+                <input type="text" id="dni" name="dni" required [ngModel]="usuario?.dni" (ngModelChange)="usuario && (usuario.dni = $event)"><br> 
 
                 <label for="cuenta">Número de Cuenta:</label>
-                <input type="text" id="cuenta" name="cuenta" required><br> 
+                <input type="text" id="cuenta" name="cuenta" required [ngModel]="usuario?.cuenta" (ngModelChange)="usuario && (usuario.cuenta = $event)"><br> 
             </div>                              
         </div>
         <div class="form-header">
             <h1>Dirección</h1>
             <div class="form-group">                   
                 <div>
-                    <label for="localidad">Localidad:</label>
-                    <select id="localidad" name="localidad" required></select>               
-        
-                    <label for="provincia">Provincia:</label>
-                    <select id="provincia" name="provincia" required></select>
-        
                     <label for="comunidad">Comunidad:</label>
-                    <select id="comunidad" name="comunidad" required></select>
-                   
+                    <select id="comunidad" name="comunidad" [(ngModel)]="selectedComunidad" (change)="onComunidadChange()" required>
+                        <option value="" disabled selected>Seleccione una comunidad</option>
+                        <option *ngFor="let comunidad of comunidades" [value]="comunidad.id">{{ comunidad.nombre }}</option>
+                    </select>
+
+                    <label for="provincia">Provincia:</label>
+                    <select id="provincia" name="provincia" [(ngModel)]="selectedProvincia" (change)="onProvinciaChange()" required>
+                        <option value="" disabled selected>Seleccione una provincia</option>
+                        <option *ngFor="let provincia of provincias" [value]="provincia.id">{{ provincia.nombre }}</option>
+                    </select>
+
+                    <label for="municipio">Municipio:</label>
+                    <select id="municipio" name="municipio" [(ngModel)]="selectedMunicipio" required>
+                        <option value="" disabled selected>Seleccione un municipio</option>
+                        <option *ngFor="let municipio of municipios" [value]="municipio.id">{{ municipio.nombre }}</option>
+                    </select>               
+                  
                     <label for="direccion">Dirección:</label>
-                    <input type="text" iD="direccion" name="direccion" required><br>
+                    <input type="text" iD="direccion" name="direccion" required [ngModel]="usuario?.direccion" (ngModelChange)="usuario && (usuario.direccion = $event)"><br>
         
                     <label for="codigo_postal">Código postal:</label>
-                    <input type="text" id="codigo_postal" name="codigo_postal" required><br>
+                    <input type="text" id="codigo_postal" name="codigo_postal" required [ngModel]="usuario?.codigoPostal" (ngModelChange)="usuario && (usuario.codigoPostal = $event)"><br>
                 </div>       
             </div>
         </div>   
@@ -45,23 +54,20 @@
             <h1>Usuario</h1> 
             <div class="form-group">                  
                 <div>
-                    <label for="correo-electronico">Correo electrónico:</label>
-                    <input type="text" id="correo-electronico" name="correo-electronico" required><br>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required [ngModel]="usuario?.email" (ngModelChange)="usuario && (usuario.email = $event)"><br>
                     
                     <label for="telefono">Teléfono:</label>
-                    <input type="text" id="telefono" name="telefono" required><br>
+                    <input type="text" id="telefono" name="telefono" required [ngModel]="usuario?.telefono" (ngModelChange)="usuario && (usuario.telefono = $event)"><br>
 
                     <label for="usuario">Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" required><br>
-        
-                    <label for="contrasena">Contraseña:</label>
-                    <input type="password" id="contrasena" name="contrasena" required><br>
+                    <input type="text" id="usuario" name="usuario" required [ngModel]="usuario?.username" (ngModelChange)="usuario && (usuario.username = $event)"><br>
                 </div>      
             </div>
         </div>
         <div class="div-buttons">
-            <button mat-raised-button class="create-button">Guardar</button>
-            <button mat-raised-button class="cancel-button" routerLink="/dashboard">Cancelar</button>
+            <button mat-raised-button class="create-button" click="editar()">Guardar</button>
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard/ver-perfil/{{idUsuario}}">Cancelar</button>
         </div>
     </div>
 </form>

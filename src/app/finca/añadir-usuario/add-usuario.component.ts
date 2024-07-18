@@ -189,6 +189,14 @@ export class AddUsuarioComponent implements OnInit, OnDestroy {
   }
 
   add() {
+    if (this.propietariosForm.get('propietarios')?.value.length === 0) {
+      this.toastr.error('Debe haber al menos un usuario.', 'Error', {
+        timeOut: 3000,
+        positionClass: 'toast-top-center'
+      });
+      return;
+    }
+
     if (this.propietariosForm.get('propietarios')?.hasError('onzasExceeded')) {
       this.toastr.error('La suma de las onzas excede el total disponible.', 'Error', {
         timeOut: 3000,

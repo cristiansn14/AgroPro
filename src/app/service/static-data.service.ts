@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { Municipio } from '../model/municipio';
 import { Provincia } from '../model/provincia';
 import { Comunidad } from '../model/comunidad';
+import { PoligonoParcela } from '../model/poligonoParcela';
+import { Paraje } from '../model/paraje';
+import { Cultivo } from '../model/cultivo';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +31,21 @@ export class StaticDataService {
 
   getMunicipiosByProvincia(idProvincia: number): Observable<Municipio[]> {
     return this.http.get<Municipio[]>(`${this.staticDataUrl}/findAllMunicipiosByIdProvincia/${idProvincia}`);
+  }
+
+  getMunicipioByNombreAndProvincia(municipio: string, provincia: string): Observable<Municipio> {
+    return this.http.get<Municipio>(`${this.staticDataUrl}/findMunicipioByNombreAndProvincia/${municipio}/${provincia}`);
+  }
+
+  getPoligonoParcelaByFinca(idFinca: string): Observable<PoligonoParcela[]> {
+    return this.http.get<PoligonoParcela[]>(`${this.staticDataUrl}/findPoligonoParcelaByFinca/${idFinca}`);
+  }
+
+  getParajesByFinca(idFinca: string): Observable<Paraje[]> {
+    return this.http.get<Paraje[]>(`${this.staticDataUrl}/findParajeByFinca/${idFinca}`);
+  }
+
+  getCultivos(): Observable<Cultivo[]> {
+    return this.http.get<Cultivo[]>(`${this.staticDataUrl}/findCultivos`);
   }
 }

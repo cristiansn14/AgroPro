@@ -132,7 +132,7 @@ export class CrearFincaComponent implements OnInit {
 
     this.fincaService.guardarFinca(this.fincaDto).subscribe({
       next: (data) => {        
-        this.toastr.success('Finca ' + this.fincaDto?.nombre + 'creada correctamente', 'OK', {
+        this.toastr.success('Finca ' + this.fincaDto?.nombre + ' creada correctamente', 'OK', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.router.navigate(['/dashboard/home']);

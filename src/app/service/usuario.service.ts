@@ -16,7 +16,17 @@ export class UsuarioService {
     return this.http.get<Usuario[]>(`${this.usuarioUrl}/findUsuariosNotInFinca/${idFinca}`);
   }
 
-  findUsuarioById (idUsuario: string): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${this.usuarioUrl}/findUsuarioById/${idUsuario}`);
+  findUsuariosInFinca(idFinca: string): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.usuarioUrl}/findUsuariosInFinca/${idFinca}`);
   }
+
+  findById (idUsuario: string): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.usuarioUrl}/findById/${idUsuario}`);
+  }
+
+  editarUsuario (usuario: Usuario): Observable<any> {
+    return this.http.post<any>(this.usuarioUrl + '/editarUsuario', usuario);
+  }
+
+
 }

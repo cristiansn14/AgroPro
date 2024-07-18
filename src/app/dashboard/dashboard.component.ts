@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit{
   username: string | null = null;
   roles: string[] = [];
   rol: string | null = null;
+  idUsuario: string | null = null;
 
   constructor(
     private observer: BreakpointObserver, 
@@ -37,7 +38,8 @@ export class DashboardComponent implements OnInit{
 
   ngOnInit(): void {
       this.getFincasInit();
-      this.username = this.tokenService.getUserName();    
+      this.username = this.tokenService.getUserName();
+      this.idUsuario = this.tokenService.getUserId();
   }
 
   ngAfterViewInit(){
@@ -119,7 +121,8 @@ export class DashboardComponent implements OnInit{
   onFincaChange(event: MatSelectChange) {
     this.selectedFinca = event.value;
     if (this.selectedFinca != null) {
-      this.fincaService.setSelectedFinca(this.selectedFinca);  
+      this.fincaService.setSelectedFinca(this.selectedFinca);
+      this.getUsuarioFinca();
     } 
   }
 }

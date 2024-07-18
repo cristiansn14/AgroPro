@@ -48,6 +48,7 @@
   
   .user-form label {
     flex-basis: 100%;
+    font-weight: bold;
     font-size: 0.8rem;
     color: hsl(0, 0%, 20%);
     width: fit-content;
@@ -57,7 +58,7 @@
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    font-size: 0.8rem;
+    font-size: 1rem;
     margin-bottom: 10px;
     width: 100%; 
     justify-self: end;
@@ -82,7 +83,7 @@
   
   .create-button{
     width: 100px;
-    background-color: #0770fa;
+    background-color: #2bea04;
     color: white;
     margin-top: 15px;
     margin-right: 10px;
@@ -133,7 +134,7 @@
     }
   
     .create-button{
-      background-color: #0770fa;
+      background-color: #2bea04;
       color: white;
     }
     

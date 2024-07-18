@@ -27,7 +27,7 @@
                         <option *ngFor="let provincia of provincias" [value]="provincia.id">{{ provincia.nombre }}</option>
                     </select>
 
-                    <label for="Municipio">Municipio:</label>
+                    <label for="municipio">Municipio:</label>
                     <select id="municipio" name="municipio" [(ngModel)]="selectedMunicipio" required>
                         <option value="" disabled selected>Seleccione un municipio</option>
                         <option *ngFor="let municipio of municipios" [value]="municipio.id">{{ municipio.nombre }}</option>

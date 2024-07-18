@@ -7,21 +7,16 @@
     display: flex;
 }
 
-.propietario-row{
-    display: flex;
-    width: fit-content;
-    margin-bottom: 20px;
+.propietarios{
+  display: flex;
+  width: fit-content;
+  margin-bottom: 20px;
 }
 
 .propietario {
-    margin: 0 10px;
-    width: fit-content;
-    box-sizing: border-box;
-}
-
-.propietario:last-child {
-    width: fit-content;
-    margin-right: 0;
+  margin: 0 10px;
+  width: fit-content;
+  box-sizing: border-box;
 }
 
 h2 {
@@ -112,27 +107,6 @@ h1 {
     margin-right: 10px;
 }
 
-.subparcela{
-    padding: 15px;
-    margin-top: 10px;
-    border: 1px solid #00060c;
-    border-radius: 10px;
-    width: 100%;
-    height: fit-content;
-    margin-bottom: 15px;
-    margin-top: 30px;
-}
-
-h3{
-    font-size: 10;
-    color: black;
-    margin: unset;
-    margin-top: -30px;
-    background-color: rgb(238, 238, 237);
-    width: fit-content;
-    margin-bottom: 10px;
-}
-
 .form-sub{
     display: flex;
 }
@@ -153,24 +127,14 @@ h3{
       align-items: left;
     }
 
-    .propietarios-container {
-        flex-direction: column;
-        align-items: left;
-        width: 100%;
-    }
-    
-    .propietario-row{
-        flex-direction: column;
-        align-items: left;
-        width: 100%;
+    .propietarios{
+      flex-direction: column;
+      align-items: left;
+      width: 100%;
     }
     
     .propietario {
-        width: 100%;
-    }
-    
-    .propietario:last-child {
-         width: 100%;
+      width: 100%;
     }
   
     .flex{
@@ -189,17 +153,6 @@ h3{
       margin-left: 0;
       width: 100%;
       margin: inherit;
-    }
-
-    .subparcela{
-        width: 100%;
-    }
-
-    .form-sub{
-      flex-direction: column;
-      margin-right: 0;
-      margin-left: 0;
-      width: 100%;
     }
   
     .user-form input {
@@ -220,26 +173,6 @@ h3{
       width: 100%;
     }
 
-    .input-sub{
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 0.8rem;
-      margin-bottom: 10px;
-      width: 100%;
-      margin: inherit;
-    }
-
-    .select-sub{
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 0.8rem;
-      margin-bottom: 10px;
-      width: 100%;
-      margin: inherit;
-    }
-  
     .div-buttons{
       width: fit-content;
       height: fit-content;
