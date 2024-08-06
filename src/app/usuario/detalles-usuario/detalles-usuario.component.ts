@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Usuario } from 'src/app/model/usuario';
-import { TokenService } from 'src/app/service/token.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({

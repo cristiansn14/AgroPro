@@ -18,6 +18,12 @@
 
                 <label for="cuenta">Número de Cuenta:</label>
                 <input type="text" id="cuenta" name="cuenta" required [ngModel]="usuario?.cuenta" (ngModelChange)="usuario && (usuario.cuenta = $event)"><br> 
+
+                <div class="file-upload">
+                    <label for="fotoPerfil" class="file-upload-label">Subir Foto de Perfil</label>
+                    <input type="file" id="fotoPerfil" name="fotoPerfil" class="file-upload-input" (change)="onFileSelected($event)">
+                    <span id="file-name" class="file-name">No se ha seleccionado ningún archivo</span>
+                </div>
             </div>                              
         </div>
         <div class="form-header">
@@ -66,7 +72,7 @@
             </div>
         </div>
         <div class="div-buttons">
-            <button mat-raised-button class="create-button" click="editar()">Guardar</button>
+            <button mat-raised-button class="save-button" click="editar()">Guardar</button>
             <button mat-raised-button class="cancel-button" routerLink="/dashboard/ver-perfil/{{idUsuario}}">Cancelar</button>
         </div>
     </div>

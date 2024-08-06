@@ -10,6 +10,9 @@ import { HomeComponent } from './home/home.component';
 import { authGuard } from './auth/auth.guard';
 import { CrearFincaComponent } from './finca/crear-finca/crear-finca.component';
 import { AddUsuarioComponent } from './finca/añadir-usuario/add-usuario.component';
+import { DetallesParcelaComponent } from './parcela/detalles-parcela/detalles-parcela.component';
+import { CrearMovimientoComponent } from './movimientos/crear-movimiento/crear-movimiento.component';
+import { ListarMovimientosComponent } from './movimientos/listar-movimientos/listar-movimientos.component';
 
 const routes: Routes = [
   { path:'', redirectTo:'/login', pathMatch:'full'},
@@ -36,6 +39,15 @@ const routes: Routes = [
       },
       {
         path: 'crear-parcela', component: CrearParcelaComponent
+      },
+      {
+        path: 'crear-movimiento', component: CrearMovimientoComponent
+      },
+      {
+        path: 'listar-movimientos', component: ListarMovimientosComponent
+      },
+      {
+        path: 'detalles-parcela/:referenciaCatastral', component: DetallesParcelaComponent
       }
     ]
   },

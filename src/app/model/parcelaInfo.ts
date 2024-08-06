@@ -1,7 +1,8 @@
-export class Parcela{
+export class ParcelaInfo{
     referenciaCatastral: string | null;
-    poligonoParcela: number | null;
-    paraje: number | null;
+    poligono: number | null;
+    parcela: string | null;
+    paraje: string | null;
     idFinca: string | null;
     clase: string | null;
     usoPrincipal: string | null;
@@ -9,17 +10,18 @@ export class Parcela{
     valorSuelo: number | null;
     valorConstruccion: number | null;
     valorCatastral: number | null;
-    añoValor: string | null;
+    anoValor: string | null;
     fechaAlta: Date | null;
     fechaModificacion: Date | null;
     fechaBaja: Date | null;
 
-    constructor(referenciaCatastral: string | null, poligonoParcela: number | null, paraje: number | null, 
+    constructor(referenciaCatastral: string | null, poligono: number | null, parcela: string | null, paraje: string | null, 
                 idFinca: string | null, clase: string | null, usoPrincipal: string | null, superficie: number | null,
                 valorSuelo: number | null, valorConstruccion: number | null, valorCatastral: number | null, 
-                añoValor: string | null, fechaAlta: Date | null, fechaModificacion: Date | null, fechaBaja: Date | null) {
+                anoValor: string | null, fechaAlta: Date | null, fechaModificacion: Date | null, fechaBaja: Date | null) {
         this.referenciaCatastral = referenciaCatastral;
-        this.poligonoParcela = poligonoParcela;
+        this.poligono = poligono;
+        this.parcela = parcela;
         this.paraje = paraje;
         this.idFinca = idFinca;
         this.clase = clase;
@@ -28,7 +30,7 @@ export class Parcela{
         this.valorSuelo = valorSuelo;
         this.valorConstruccion = valorConstruccion;
         this.valorCatastral = valorCatastral;
-        this.añoValor = añoValor;
+        this.anoValor = anoValor;
         this.fechaAlta = fechaAlta;
         this.fechaModificacion = fechaModificacion;
         this.fechaBaja = fechaBaja;

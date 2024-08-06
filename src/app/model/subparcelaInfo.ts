@@ -1,15 +1,15 @@
-export class Subparcela{
+export class SubparcelaInfo{
     id: string | null;
     referenciaCatastral: string | null;
     subparcela: string | null;
-    cultivo: number | null;
+    cultivo: string | null;
     intensidad: string | null;
     superficie: number | null;
     fechaAlta: Date | null;
     fechaModificacion: Date | null;
     fechaBaja: Date | null; 
 
-    constructor(id: string | null, referenciaCatastral: string | null, subparcela: string | null, cultivo: number | null, 
+    constructor(id: string | null, referenciaCatastral: string | null, subparcela: string | null, cultivo: string | null, 
                 intensidad: string | null, superficie: number | null, fechaAlta: Date | null, fechaModificacion: Date | null, 
                 fechaBaja: Date | null) {
         this.id = id;

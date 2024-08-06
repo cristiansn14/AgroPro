@@ -18,7 +18,7 @@
   
 <mat-sidenav-container class="example-container">
     <mat-sidenav class="mat-elevation-z8" #sidenav="matSidenav" mode="side" opened>
-      <img class="avatar mat-elevation-z8"src="https://startupeable.com/directorio/wp-content/uploads/listing-uploads/logo/2021/10/AgroPro-logo.png" alt="">
+      <img class="avatar mat-elevation-z8" [src]="fotoPerfilUrl" alt="">
       <h4 class="name">{{ username }}</h4>
       <p class="designation">{{ rol }}</p>
       <mat-divider></mat-divider>
@@ -33,7 +33,7 @@
       <mat-menu #actions="matMenu">
         <button mat-menu-item [matMenuTriggerFor]="user">Usuario</button>
         <button mat-menu-item [matMenuTriggerFor]="finca">Finca</button>
-        <button mat-menu-item>Cuentas</button>
+        <button mat-menu-item [matMenuTriggerFor]="movimientos">Movimientos</button>
         <button mat-menu-item>Liquidaciones</button>
       </mat-menu>
       <mat-menu #user="matMenu">
@@ -47,6 +47,10 @@
         <button mat-menu-item routerLink="/dashboard/añadir-usuario">Añadir usuario a finca</button>
         <button mat-menu-item>Listar parcelas</button>
         <button mat-menu-item>Listar propietarios</button>
+      </mat-menu>
+      <mat-menu #movimientos="matMenu">
+        <button mat-menu-item routerLink="/dashboard/crear-movimiento">Añadir movimiento</button>
+        <button mat-menu-item routerLink="/dashboard/listar-movimientos">Listar movimientos</button>
       </mat-menu>
       <button mat-button class="menu-button" routerLink="/dashboard/ver-perfil/{{idUsuario}}">
         <mat-icon>person</mat-icon>

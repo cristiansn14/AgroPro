@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { TokenService } from '../service/token.service';
@@ -8,13 +8,15 @@ import { Finca } from '../model/finca';
 import { ToastrService } from 'ngx-toastr';
 import { UsuarioFinca } from '../model/usuario-finca';
 import { MatSelectChange } from '@angular/material/select';
+import { Subscription } from 'rxjs';
+import { UsuarioService } from '../service/usuario.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit, OnDestroy{
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
@@ -26,6 +28,9 @@ export class DashboardComponent implements OnInit{
   roles: string[] = [];
   rol: string | null = null;
   idUsuario: string | null = null;
+  private subscriptionFoto: Subscription = new Subscription();
+  private subscriptionFinca: Subscription = new Subscription();
+  fotoPerfilUrl: string | null = null;
 
   constructor(
     private observer: BreakpointObserver, 
@@ -33,13 +38,26 @@ export class DashboardComponent implements OnInit{
     private tokenService: TokenService,    
     private router: Router,
     private fincaService: FincaService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private usuarioService: UsuarioService
   ) { }
 
   ngOnInit(): void {
-      this.getFincasInit();
-      this.username = this.tokenService.getUserName();
-      this.idUsuario = this.tokenService.getUserId();
+    this.getFincasInit();
+    this.getFotoPerfil();
+    this.subscriptionFoto.add(this.usuarioService.profilePicture$.subscribe(url => {
+      if (url) {
+        this.fotoPerfilUrl = url;
+      }
+    }));
+    this.username = this.tokenService.getUserName();
+    this.idUsuario = this.tokenService.getUserId();
+}
+
+  ngOnDestroy(): void {
+    if (this.subscriptionFoto) {
+      this.subscriptionFoto.unsubscribe();
+    }
   }
 
   ngAfterViewInit(){
@@ -80,6 +98,27 @@ export class DashboardComponent implements OnInit{
         }
       })
     }   
+  }
+
+  getFotoPerfil() {
+    const idUsuario = this.tokenService.getUserId();
+    if (idUsuario != null) {
+      this.usuarioService.getFotoPerfil(idUsuario).subscribe({
+        next: (foto) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(foto); 
+          reader.onloadend = () => {
+            this.fotoPerfilUrl = reader.result as string;
+          }
+        },
+        error: (error) => {
+          this.error = error.error.message;
+          this.toastr.error(this.error, 'No se pudo cargar la foto de perfil', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      })
+    }
   }
 
   getFincas() {

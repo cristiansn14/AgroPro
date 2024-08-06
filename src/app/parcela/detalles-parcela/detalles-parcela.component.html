@@ -1,0 +1,153 @@
+<h2>Detalles Parcela</h2>
+<form action="#" method="post" class="user-form">
+    <div class="flex">
+        <div style="flex-direction: column;">
+            <div class="container">
+                <h1>Propietarios</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Participacion</th>
+                            <th scope="col">Fecha de alta</th>
+                            <th scope="col">Fecha de modificación</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuario of usuariosParcela">
+                            <td>{{ usuario.nombre }}</td>
+                            <td>{{ usuario.apellido1 }} {{ usuario.apellido2 }}</td>
+                            <td>{{ usuario.participacion }}</td>
+                            <td>{{ usuario.fechaAlta | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ usuario.fechaModificacion | date:'dd/MM/yyyy' }}</td>
+                            <td>
+                                <button mat-button>
+                                    <mat-icon>more_horiz</mat-icon>
+                                    <span>Ver opciones</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex" *ngIf="parcelaConstruccion?.referenciaCatastral">
+                <div class="form-header">
+                    <h1>Datos</h1>
+                    <div class="form-group">           
+                        <div><span class="label" style="font-weight: bold;">Referencia catastral:</span> <span class="label">{{ parcelaConstruccion?.referenciaCatastral }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Uso principal:</span> <span class="label">{{ parcelaConstruccion?.usoPrincipal }}</span></div> 
+                        <div><span class="label" style="font-weight: bold;">Escalera:</span> <span class="label">{{ parcelaConstruccion?.escalera }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Planta:</span> <span class="label">{{ parcelaConstruccion?.planta }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Puerta:</span> <span class="label">{{ parcelaConstruccion?.puerta }}</span></div>
+                    </div>
+                </div>
+                <div class="form-header">
+                    <h1>Características</h1>                               
+                    <div class="form-group">
+                        <div><span class="label" style="font-weight: bold;">Tipo reforma:</span> <span class="label">{{ parcelaConstruccion?.tipoReforma }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Fecha reforma:</span> <span class="label">{{ parcelaConstruccion?.fechaReforma }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Superficie:</span> <span class="label">{{ parcelaConstruccion?.superficie }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Fecha de alta:</span> <span class="label">{{ parcelaConstruccion?.fechaAlta | date:'dd/MM/yyyy' }}</span></div>
+                        <div *ngIf="parcelaConstruccion?.fechaModificacion"><span class="label" style="font-weight: bold;">Fecha de modificación:</span><span class="label">{{ parcelaConstruccion?.fechaModificacion | date:'dd/MM/yyyy' }}</span></div>
+                        <div *ngIf="parcelaConstruccion?.fechaBaja"><span class="label" style="font-weight: bold;">Fecha de baja:</span> <span class="label">{{ parcelaConstruccion?.fechaBaja | date:'dd/MM/yyyy' }}</span></div>
+                    </div>      
+                </div>
+            </div>
+            <div *ngIf="parcela?.referenciaCatastral" style="display: flex; width: fit-content; height: fit-content;">
+                <div class="form-header">
+                    <h1>Datos</h1>
+                    <div class="form-group">           
+                        <div><span class="label" style="font-weight: bold;">Referencia catastral:</span> <span class="label">{{ parcela?.referenciaCatastral }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Polígono:</span> <span class="label">{{ parcela?.poligono }}</span></div> 
+                        <div><span class="label" style="font-weight: bold;">Parcela:</span> <span class="label">{{ parcela?.parcela }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Paraje:</span> <span class="label">{{ parcela?.paraje }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Clase:</span> <span class="label">{{ parcela?.clase }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Uso principal:</span> <span class="label">{{ parcela?.usoPrincipal }}</span></div>
+                    </div>
+                </div>
+                <div class="form-header">
+                    <h1>Características</h1>                               
+                    <div class="form-group">
+                        <div><span class="label" style="font-weight: bold;">Superficie (m2):</span> <span class="label">{{ parcela?.superficie }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Valor del suelo:</span> <span class="label">{{ parcela?.valorSuelo }}</span></div> 
+                        <div><span class="label" style="font-weight: bold;">Valor construcción:</span> <span class="label">{{ parcela?.valorConstruccion }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Valor catastral:</span> <span class="label">{{ parcela?.valorCatastral }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Año valor:</span> <span class="label">{{ parcela?.anoValor }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Uso principal:</span> <span class="label">{{ parcela?.usoPrincipal }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Fecha de alta:</span> <span class="label">{{ parcela?.fechaAlta | date:'dd/MM/yyyy' }}</span></div>
+                        <div *ngIf="parcela?.fechaModificacion"><span class="label" style="font-weight: bold;">Fecha de modificación:</span><span class="label">{{ parcela?.fechaModificacion | date:'dd/MM/yyyy' }}</span></div>
+                        <div *ngIf="parcela?.fechaBaja"><span class="label" style="font-weight: bold;">Fecha de baja:</span> <span class="label">{{ parcela?.fechaBaja | date:'dd/MM/yyyy' }}</span></div>
+                    </div>       
+                </div>
+            </div>
+            <div class="container">
+                <h1>Subparcelas</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Subparcela</th>
+                            <th scope="col">Cultivo</th>
+                            <th scope="col">Intensidad</th>
+                            <th scope="col">Superficie</th>
+                            <th scope="col">Fecha de alta</th>
+                            <th scope="col">Fecha de modificación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let subparcela of subparcelas">
+                            <td>{{ subparcela.subparcela }}</td>
+                            <td>{{ subparcela.cultivo }}</td>
+                            <td>{{ subparcela.intensidad }}</td>
+                            <td>{{ subparcela.superficie }}</td>
+                            <td>{{ subparcela.fechaAlta | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ subparcela.fechaModificacion | date:'dd/MM/yyyy' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="container">
+                <h1>Recintos</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Recinto</th>
+                            <th scope="col">Superficie</th>
+                            <th scope="col">Pendiente</th>
+                            <th scope="col">Altitud</th>
+                            <th scope="col">Cultivo</th>
+                            <th scope="col">Porcentaje de subvencion</th>
+                            <th scope="col">Superficie de subvencion</th>
+                            <th scope="col">Coeficiente de regadio</th>
+                            <th scope="col">Incidencias</th>
+                            <th scope="col">Region</th>
+                            <th scope="col">Fecha de alta</th>
+                            <th scope="col">Fecha de modificación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let recinto of recintos">
+                            <td>{{ recinto.recinto }}</td>
+                            <td>{{ recinto.superficie }}</td>
+                            <td>{{ recinto.pendiente }}</td>
+                            <td>{{ recinto.altitud }}</td>                       
+                            <td>{{ recinto.cultivo }}</td>
+                            <td>{{ recinto.porcentajeSubvencion }}</td>
+                            <td>{{ recinto.superficieSubvencion }}</td>
+                            <td>{{ recinto.coeficienteRegadio }}</td>
+                            <td>{{ recinto.incidencias }}</td>
+                            <td>{{ recinto.region }}</td>
+                            <td>{{ recinto.fechaAlta | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ recinto.fechaModificacion | date:'dd/MM/yyyy' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+        <div class="div-buttons">
+            <button mat-raised-button class="edit-button">Editar</button>
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Cancelar</button>
+        </div>
+    </div>   
+</form>

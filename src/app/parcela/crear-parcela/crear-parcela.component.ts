@@ -13,6 +13,7 @@ import { PoligonoParcela } from 'src/app/model/poligonoParcela';
 import { Paraje } from 'src/app/model/paraje';
 import { Cultivo } from 'src/app/model/cultivo';
 import { ParcelaDto } from 'src/app/model/parcelaDto';
+import { ParcelaConstruccionDto } from 'src/app/model/parcelaConstruccionDto'
 import { ParcelaService } from 'src/app/service/parcela.service';
 import { UsuarioParcela } from 'src/app/model/usuario-parcela';
 import { Recinto } from 'src/app/model/recinto';
@@ -89,8 +90,8 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
   numeroSubparcelas: number = 0;
   numeroRecintos: number = 0;
   numeroPropietarios: number = 0;
-  parcela: Parcela = new Parcela(null, null, null, null, null, null, null, null, null, null, null);
-  parcelaConstruccion: ParcelaConstruccion = new ParcelaConstruccion(null, null, null, null, null, null, null, null);
+  parcela: Parcela = new Parcela(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+  parcelaConstruccion: ParcelaConstruccion = new ParcelaConstruccion(null, null, null, null, null, null, null, null, null, null, null, null);
   private subscription: Subscription | null = null;
   selectedFinca: string | null = null;
   error: string = "";
@@ -410,141 +411,217 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
   }
 
   guardar(): void {
-    if (this.propietariosForm.get('propietarios')?.value.length === 0) {
-      this.toastr.error('Debe haber al menos un propietario.', 'Error', {
-        timeOut: 3000,
-        positionClass: 'toast-top-center'
-      });
-      return;
-    }
-
-    if (this.subparcelasForm.get('subparcelas')?.value.length === 0) {
-      this.toastr.error('Debe haber al menos una subparcela.', 'Error', {
-        timeOut: 3000,
-        positionClass: 'toast-top-center'
-      });
-      return;
-    }
-
-    if (this.recintosForm.get('recintos')?.value.length === 0) {
-      this.toastr.error('Debe haber al menos un recinto.', 'Error', {
-        timeOut: 3000,
-        positionClass: 'toast-top-center'
-      });
-      return;
-    }
-
-    if (this.propietariosForm.get('propietarios')?.hasError('duplicateUser')) {
-      this.toastr.error('No se puede añadir el mismo usuario más de una vez.', 'Error', {
-        timeOut: 3000,
-        positionClass: 'toast-top-center'
-      });
-      return; 
-    }
-
-    if (this.propietariosForm.get('propietarios')?.hasError('participacionTotalInvalida')) {
-      this.toastr.error('El porcentaje de participacion total debe estar entre 95 y 100.', 'Error', {
-        timeOut: 3000,
-        positionClass: 'toast-top-center'
-      });
-      return; 
-    }
-
-    if (this.subparcelasForm.get('subparcelas')?.hasError('superficieInvalida')) {
-      this.toastr.error('La suma de superficies de subparcelas debe ser igual a la superficie de la parcela.', 'Error', {
-        timeOut: 3000,
-        positionClass: 'toast-top-center'
-      });
-      return; 
-    }
-
-    if (this.recintosForm.get('recintos')?.hasError('superficieInvalida')) {
-      this.toastr.error('La suma de superficies de recintos debe ser igual a la superficie de la parcela.', 'Error', {
-        timeOut: 3000,
-        positionClass: 'toast-top-center'
-      });
-      return; 
-    }
-
-    const usuariosParcelaRequestDto = (this.propietariosForm.get('propietarios') as FormArray).controls.map(control => new UsuarioParcela(
-      null,
-      control.get('participacion')?.value,
-      control.get('usuario')?.value,
-      null, 
-      null, 
-      null,
-      null
-    ));
-
-    const poligonoParcela: PoligonoParcela | undefined = this.poligonosParcela.find(p => p.poligono === Number(this.parcelaForm.get('selectedPoligono')?.value) && p.parcela === this.parcelaForm.get('selectedParcela')?.value);
-
-    const parcelaRequestDto = new Parcela(
-      this.parcelaForm.get('referencia')?.value,
-      poligonoParcela?.id ?? null,
-      this.parcelaForm.get('selectedParaje')?.value,
-      this.selectedFinca,
-      this.parcelaForm.get('clase')?.value,
-      this.parcelaForm.get('usoPrincipal')?.value,
-      this.parcelaForm.get('superficie')?.value,
-      this.parcelaForm.get('valorSuelo')?.value,
-      this.parcelaForm.get('valorConstruccion')?.value,
-      this.parcelaForm.get('valorCatastral')?.value,
-      this.parcelaForm.get('añoValor')?.value,
-    );
-
-    const subparcelasRequestDto = (this.subparcelasForm.get('subparcelas') as FormArray).controls.map(control => new Subparcela(
-      null,
-      null,
-      null,
-      control.get('intensidad')?.value,
-      control.get('superficie')?.value,
-      control.get('cultivo')?.value
-    ));
-
-    const recintosRequestDto = (this.recintosForm.get('recintos') as FormArray).controls.map(control => new Recinto(
-      null,
-      null,
-      null,
-      control.get('superficie')?.value,
-      control.get('pendiente')?.value,
-      control.get('altitud')?.value,
-      control.get('cultivo')?.value,
-      control.get('porcentajeSubvencion')?.value,
-      control.get('superficieSubvencion')?.value,
-      control.get('coeficienteRegadio')?.value,
-      control.get('incidencias')?.value,
-      control.get('region')?.value
-    ));
-
-    console.log(usuariosParcelaRequestDto.length);
-    console.log(subparcelasRequestDto.length);
-    console.log(recintosRequestDto.length);
-
-    const parcelaDto: ParcelaDto = new ParcelaDto(      
-      parcelaRequestDto,
-      subparcelasRequestDto,
-      recintosRequestDto,
-      usuariosParcelaRequestDto
-    );
-
-    console.log(parcelaDto.usuariosParcela.length);
-    console.log(parcelaDto.subparcelas.length);
-    console.log(parcelaDto.recintos.length);
-
-    this.parcelaService.guardarParcela(parcelaDto).subscribe({
-      next: response => {
-        this.toastr.success('La parcela se ha añadido correctamente.', 'Éxito', {
+    if (this.tipoParcela === "construccion"){
+      if (this.propietariosForm.get('propietarios')?.value.length === 0) {
+        this.toastr.error('Debe haber al menos un propietario.', 'Error', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
-        this.ngOnInit();
-      },
-      error: err => {
-        this.toastr.error(err.error.message, 'Error', {
-          timeOut: 3000,
-          positionClass: 'toast-top-center'
-        });
+        return;
       }
-    });
-  }
+
+      if (this.propietariosForm.get('propietarios')?.hasError('duplicateUser')) {
+        this.toastr.error('No se puede añadir el mismo usuario más de una vez.', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return; 
+      }
+
+      const usuariosParcelaRequestDto = (this.propietariosForm.get('propietarios') as FormArray).controls.map(control => new UsuarioParcela(
+        null,
+        control.get('participacion')?.value,
+        control.get('usuario')?.value,
+        null, 
+        null, 
+        null,
+        null
+      ));
+
+      const referenciaHtml = document.getElementById('referenciaC') as HTMLInputElement;
+      const usoPrincipalHtml = document.getElementById('usoPrincipalC') as HTMLInputElement;
+      const escaleraCHtml = document.getElementById('escaleraC') as HTMLInputElement;
+      const plantaHtml = document.getElementById('plantaC') as HTMLInputElement;
+      const puertaHtml = document.getElementById('puertaC') as HTMLInputElement;
+      const tipoReformaHtml = document.getElementById('tipoReformaC') as HTMLInputElement;
+      const fechaReforaHtml = document.getElementById('fechaReformaC') as HTMLInputElement;
+      const superficieHtml = document.getElementById('superficieC') as HTMLInputElement;
+
+      const parcelaConstruccion = new ParcelaConstruccion (
+        referenciaHtml.value,
+        this.selectedFinca,
+        Number(superficieHtml.value),
+        Number(escaleraCHtml.value),        
+        Number(plantaHtml.value),
+        Number(puertaHtml.value),
+        tipoReformaHtml.value,
+        fechaReforaHtml.value,
+        usoPrincipalHtml.value,
+        null,
+        null,
+        null
+      );
+
+      const parcelaConstruccionDto = new ParcelaConstruccionDto (
+        parcelaConstruccion,
+        usuariosParcelaRequestDto
+      );
+        
+      this.parcelaService.guardarParcelaConstruccion(parcelaConstruccionDto).subscribe({
+        next: response => {
+          this.toastr.success('La parcela se ha añadido correctamente.', 'Éxito', {
+            timeOut: 3000,
+            positionClass: 'toast-top-center'
+          });
+          this.ngOnInit();
+        },
+        error: err => {
+          this.toastr.error(err.error.message, 'Error', {
+            timeOut: 3000,
+            positionClass: 'toast-top-center'
+          });
+        }
+      });
+
+    } else {
+      if (this.propietariosForm.get('propietarios')?.value.length === 0) {
+        this.toastr.error('Debe haber al menos un propietario.', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return;
+      }
+  
+      if (this.subparcelasForm.get('subparcelas')?.value.length === 0) {
+        this.toastr.error('Debe haber al menos una subparcela.', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return;
+      }
+  
+      if (this.recintosForm.get('recintos')?.value.length === 0) {
+        this.toastr.error('Debe haber al menos un recinto.', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return;
+      }
+  
+      if (this.propietariosForm.get('propietarios')?.hasError('duplicateUser')) {
+        this.toastr.error('No se puede añadir el mismo usuario más de una vez.', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return; 
+      }
+  
+      if (this.propietariosForm.get('propietarios')?.hasError('participacionTotalInvalida')) {
+        this.toastr.error('El porcentaje de participacion total debe estar entre 95 y 100.', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return; 
+      }
+  
+      if (this.subparcelasForm.get('subparcelas')?.hasError('superficieInvalida')) {
+        this.toastr.error('La suma de superficies de subparcelas debe ser igual a la superficie de la parcela.', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return; 
+      }
+  
+      if (this.recintosForm.get('recintos')?.hasError('superficieInvalida')) {
+        this.toastr.error('La suma de superficies de recintos debe ser igual a la superficie de la parcela.', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return; 
+      }
+  
+      const usuariosParcelaRequestDto = (this.propietariosForm.get('propietarios') as FormArray).controls.map(control => new UsuarioParcela(
+        null,
+        control.get('participacion')?.value,
+        control.get('usuario')?.value,
+        null, 
+        null, 
+        null,
+        null
+      ));
+  
+      const poligonoParcela: PoligonoParcela | undefined = this.poligonosParcela.find(p => p.poligono === Number(this.parcelaForm.get('selectedPoligono')?.value) && p.parcela === this.parcelaForm.get('selectedParcela')?.value);
+  
+      const parcelaRequestDto = new Parcela(
+        this.parcelaForm.get('referencia')?.value,
+        poligonoParcela?.id ?? null,
+        this.parcelaForm.get('selectedParaje')?.value,
+        this.selectedFinca,
+        this.parcelaForm.get('clase')?.value,
+        this.parcelaForm.get('usoPrincipal')?.value,
+        this.parcelaForm.get('superficie')?.value,
+        this.parcelaForm.get('valorSuelo')?.value,
+        this.parcelaForm.get('valorConstruccion')?.value,
+        this.parcelaForm.get('valorCatastral')?.value,
+        this.parcelaForm.get('añoValor')?.value,
+        null,
+        null,
+        null
+      );
+  
+      const subparcelasRequestDto = (this.subparcelasForm.get('subparcelas') as FormArray).controls.map(control => new Subparcela(
+        null,
+        null,
+        null,
+        control.get('intensidad')?.value,
+        control.get('superficie')?.value,
+        control.get('cultivo')?.value,
+        null,
+        null,
+        null
+      ));
+  
+      const recintosRequestDto = (this.recintosForm.get('recintos') as FormArray).controls.map(control => new Recinto(
+        null,
+        null,
+        null,
+        control.get('superficie')?.value,
+        control.get('pendiente')?.value,
+        control.get('altitud')?.value,
+        control.get('cultivo')?.value,
+        control.get('porcentajeSubvencion')?.value,
+        control.get('superficieSubvencion')?.value,
+        control.get('coeficienteRegadio')?.value,
+        control.get('incidencias')?.value,
+        control.get('region')?.value,
+        null,
+        null,
+        null
+      ));
+  
+      const parcelaDto: ParcelaDto = new ParcelaDto(      
+        parcelaRequestDto,
+        subparcelasRequestDto,
+        recintosRequestDto,
+        usuariosParcelaRequestDto
+      );
+  
+      this.parcelaService.guardarParcela(parcelaDto).subscribe({
+        next: response => {
+          this.toastr.success('La parcela se ha añadido correctamente.', 'Éxito', {
+            timeOut: 3000,
+            positionClass: 'toast-top-center'
+          });
+          this.ngOnInit();
+        },
+        error: err => {
+          this.toastr.error(err.error.message, 'Error', {
+            timeOut: 3000,
+            positionClass: 'toast-top-center'
+          });
+        }
+      });
+    }
+    }
+    
 }

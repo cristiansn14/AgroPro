@@ -1,11 +1,11 @@
-export class Recinto{
+export class RecintoInfo{
     id: string | null;
     referenciaCatastral: string | null;
     recinto: string | null;
     superficie: number | null;
     pendiente: string | null;
     altitud: number | null;
-    cultivo: number | null;
+    cultivo: string | null;
     porcentajeSubvencion: string | null;
     superficieSubvencion: number | null;
     coeficienteRegadio: number | null;
@@ -16,7 +16,7 @@ export class Recinto{
     fechaBaja: Date | null; 
 
     constructor(id: string | null, referenciaCatastral: string | null, recinto: string | null, superficie: number | null, 
-            pendiente: string | null, altitud: number | null, cultivo: number | null, porcentajeSubvencion: string | null, 
+            pendiente: string | null, altitud: number | null, cultivo: string | null, porcentajeSubvencion: string | null, 
             superficieSubvencion: number | null, coeficienteRegadio: number | null, incidencias: string | null, 
             region: string | null, fechaAlta: Date | null, fechaModificacion: Date | null, fechaBaja: Date | null) {
         this.id = id;

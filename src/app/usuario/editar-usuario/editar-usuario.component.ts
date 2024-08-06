@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Usuario } from 'src/app/model/usuario';
@@ -15,6 +15,7 @@ import { catchError, forkJoin, of, switchMap } from 'rxjs';
   styleUrls: ['./editar-usuario.component.scss']
 })
 export class EditarUsuarioComponent implements OnInit{
+  @Output() profileUpdated: EventEmitter<string> = new EventEmitter<string>();
 
   usuario: Usuario | null = null;
   usuarioOriginal: Usuario | null = null; 
@@ -26,6 +27,7 @@ export class EditarUsuarioComponent implements OnInit{
   selectedMunicipio: number | null = null;
   selectedProvincia: number | null = null;
   selectedComunidad: number | null = null;
+  selectedFile: File | undefined = undefined;
 
   constructor(
     private toastr: ToastrService,
@@ -123,6 +125,17 @@ export class EditarUsuarioComponent implements OnInit{
     });
   }
 
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const fileNameElement = document.getElementById('file-name');
+      if (fileNameElement) {
+        fileNameElement.textContent = file.name;
+      }
+    }
+  }
+
   onComunidadChange() {
     if (this.selectedComunidad != null) {
       this.dataService.getProvinciasByComunidad(this.selectedComunidad).subscribe({
@@ -190,9 +203,17 @@ export class EditarUsuarioComponent implements OnInit{
 
   editar() {
     if (this.usuario && this.usuarioOriginal) {   
-      if (this.hayCambios()) {
-        this.usuarioService.editarUsuario(this.usuario).subscribe({
+      if (this.hayCambios() || this.selectedFile) {
+        this.usuarioService.editarUsuario(this.usuario, this.selectedFile).subscribe({
           next: () => {
+            if (this.selectedFile) {
+              const reader = new FileReader();
+              reader.onload = () => {
+                const base64String = reader.result as string;
+                this.usuarioService.updateProfilePicture(base64String);
+              };
+              reader.readAsDataURL(this.selectedFile);
+            }
             this.toastr.success('Usuario actualizado con éxito', 'Éxito', {
               timeOut: 3000, positionClass: 'toast-top-center'
             });

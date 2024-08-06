@@ -29,6 +29,9 @@ import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddUsuarioComponent } from './finca/añadir-usuario/add-usuario.component';
 import {MatSelectModule} from '@angular/material/select';
+import { DetallesParcelaComponent } from './parcela/detalles-parcela/detalles-parcela.component';
+import { CrearMovimientoComponent } from './movimientos/crear-movimiento/crear-movimiento.component';
+import { ListarMovimientosComponent } from './movimientos/listar-movimientos/listar-movimientos.component';
 
 
 @NgModule({
@@ -43,6 +46,9 @@ import {MatSelectModule} from '@angular/material/select';
     CrearParcelaComponent,
     HomeComponent,
     AddUsuarioComponent,
+    DetallesParcelaComponent,
+    CrearMovimientoComponent,
+    ListarMovimientosComponent,
   ],
   imports: [
     BrowserModule,
