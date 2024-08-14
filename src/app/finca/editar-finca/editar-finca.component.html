@@ -1,0 +1,43 @@
+<h2>Editar Finca</h2>
+<form (ngSubmit)="editar()" method="post" class="user-form">   
+    <div class="flex">
+        <div class="form-header">
+            <h1>Datos</h1>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required [ngModel]="finca?.nombre" (ngModelChange)="finca && (finca.nombre = $event)"><br> 
+
+                <label for="onzas">Onzas:</label>
+                <input type="number" id="onzas" name="onzas" required [ngModel]="finca?.onzas" (ngModelChange)="finca && (finca.onzas = $event)"><br> 
+            </div>                              
+        </div>
+        <div class="form-header">
+            <h1>Ubicación</h1>
+            <div class="form-group">                   
+                <label for="comunidad">Comunidad:</label>
+                <select id="comunidad" name="comunidad" [(ngModel)]="selectedComunidad" (change)="onComunidadChange()" required>
+                    <option value="" disabled selected>Seleccione una comunidad</option>
+                    <option *ngFor="let comunidad of comunidades" [value]="comunidad.id">{{ comunidad.nombre }}</option>
+                </select>
+
+                <label for="provincia">Provincia:</label>
+                <span *ngIf="selectedProvincia === null" style="color: rgb(255, 94, 0); font-size: 0.8rem; margin-left: 10px;">(Seleccione una provincia)</span>
+                <select id="provincia" name="provincia" [(ngModel)]="selectedProvincia" (change)="onProvinciaChange()" required>
+                    <option value="" disabled selected>Seleccione una provincia</option>
+                    <option *ngFor="let provincia of provincias" [value]="provincia.id">{{ provincia.nombre }}</option>
+                </select>
+
+                <label for="municipio">Municipio:</label>
+                <span *ngIf="selectedProvincia === null" style="color: rgb(255, 94, 0); font-size: 0.8rem; margin-left: 10px;">(Seleccione una provincia)</span>
+                <select id="municipio" name="municipio" [(ngModel)]="selectedMunicipio" required>
+                    <option value="" disabled selected>Seleccione un municipio</option>
+                    <option *ngFor="let municipio of municipios" [value]="municipio.id">{{ municipio.nombre }}</option>
+                </select>
+            </div>
+        </div>   
+        <div class="div-buttons">
+            <button mat-raised-button class="save-button" click="editar()">Guardar</button>
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard/detalles-finca">Cancelar</button>
+        </div>
+    </div>
+</form>

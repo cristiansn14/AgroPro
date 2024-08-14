@@ -1,0 +1,159 @@
+.user-form {
+    height: calc(100% - 32px); 
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #e8f5e9;
+    overflow-y: auto;
+    display: flex;
+  }
+  
+  .flex{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+  }
+  
+  h2 {
+    text-align: center;
+    color: white;
+    background-color: #00796b;
+    border-radius: 10px;
+    margin: unset;
+    width: 100%;
+  }
+  
+  .form-header{
+    padding: 15px;
+    margin-top: 10px;
+    border: 2px solid #00796b;
+    border-radius: 10px;
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 10px;
+    margin-right: 70px;
+  }
+  
+  h1 {
+    font-weight: bold;
+    color: black;
+    margin: unset;
+    margin-top: -30px;
+    background-color: rgb(238, 238, 237);
+    width: fit-content;
+    margin-bottom: 10px;
+  }
+  
+  .form-group {
+    flex-direction: column;
+  }
+
+  .label {
+    flex-basis: 100%;
+    font-size: 0.8rem;
+    color: hsl(0, 0%, 20%);
+    width: fit-content;
+    margin-right: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+  
+  .user-form label {
+    flex-basis: 100%;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: hsl(0, 0%, 20%);
+    width: fit-content;
+  }
+  
+  .user-form input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    width: 100%; 
+    justify-self: end;
+  }
+  
+  .user-form select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    width: 100%; 
+    justify-self: end;
+    margin-bottom: 13px;
+  }
+  
+  .div-buttons{
+    width: fit-content;
+    display: flex;
+    margin-top: 20px;
+    margin-left: auto;
+  }
+  
+  .save-button{
+    width: 100px;
+    background-color: #2bea04;
+    color: white;
+  }
+  
+  .cancel-button{
+    width: 100px;
+    background-color: red;
+    color: black;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  @media only screen and (max-width: 800px) {
+    .user-form{
+      flex-direction: column;
+      align-items: left;
+    }
+  
+    .flex{
+      flex-direction: column;
+      align-items: left;
+      width: 100%;
+    }
+  
+    .form-header{
+      width: 100%;
+    }
+  
+    .form-group {
+      flex-direction: column;
+      margin-right: 0;
+      margin-left: 0;
+      width: 100%;
+    }
+  
+    .user-form input {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+      width: 100%; 
+    }
+  
+    .div-buttons{
+        width: fit-content;
+        height: fit-content;
+        margin: inherit;
+        margin-top: 20px;
+    }
+  
+    .save-button{
+      background-color: #2bea04;
+      color: white;
+    }
+    
+    .cancel-button{
+      background-color: red;
+      color: black;
+    }  
+  }

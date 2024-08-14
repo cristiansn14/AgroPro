@@ -32,7 +32,14 @@ import {MatSelectModule} from '@angular/material/select';
 import { DetallesParcelaComponent } from './parcela/detalles-parcela/detalles-parcela.component';
 import { CrearMovimientoComponent } from './movimientos/crear-movimiento/crear-movimiento.component';
 import { ListarMovimientosComponent } from './movimientos/listar-movimientos/listar-movimientos.component';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { DetallesFincaComponent } from './finca/detalles-finca/detalles-finca.component';
+import { EditarFincaComponent } from './finca/editar-finca/editar-finca.component';
+import { CrearRepresentanteComponent } from './usuario/crear-representante/crear-representante.component';
+import { EditarUsuarioFincaComponent } from './finca/editar-usuario-finca/editar-usuario-finca.component';
+import { EditarRepresentanteComponent } from './usuario/editar-representante/editar-representante.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -49,6 +56,11 @@ import { ListarMovimientosComponent } from './movimientos/listar-movimientos/lis
     DetallesParcelaComponent,
     CrearMovimientoComponent,
     ListarMovimientosComponent,
+    DetallesFincaComponent,
+    EditarFincaComponent,
+    CrearRepresentanteComponent,
+    EditarUsuarioFincaComponent,
+    EditarRepresentanteComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +81,10 @@ import { ListarMovimientosComponent } from './movimientos/listar-movimientos/lis
     FormsModule,
     MatStepperModule,
     MatFormFieldModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatTableModule,
+    GoogleMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

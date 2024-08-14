@@ -37,12 +37,14 @@
                     </select>
 
                     <label for="provincia">Provincia:</label>
+                    <span *ngIf="selectedProvincia === null" style="color: rgb(255, 94, 0); font-size: 0.8rem; margin-left: 10px;">(Seleccione una provincia)</span>
                     <select id="provincia" name="provincia" [(ngModel)]="selectedProvincia" (change)="onProvinciaChange()" required>
                         <option value="" disabled selected>Seleccione una provincia</option>
                         <option *ngFor="let provincia of provincias" [value]="provincia.id">{{ provincia.nombre }}</option>
                     </select>
 
                     <label for="municipio">Municipio:</label>
+                    <span *ngIf="selectedProvincia === null" style="color: rgb(255, 94, 0); font-size: 0.8rem; margin-left: 10px;">(Seleccione una provincia)</span>
                     <select id="municipio" name="municipio" [(ngModel)]="selectedMunicipio" required>
                         <option value="" disabled selected>Seleccione un municipio</option>
                         <option *ngFor="let municipio of municipios" [value]="municipio.id">{{ municipio.nombre }}</option>
@@ -72,7 +74,7 @@
             </div>
         </div>
         <div class="div-buttons">
-            <button mat-raised-button class="save-button" click="editar()">Guardar</button>
+            <button mat-raised-button class="save-button" (click)="editar()">Guardar</button>
             <button mat-raised-button class="cancel-button" routerLink="/dashboard/ver-perfil/{{idUsuario}}">Cancelar</button>
         </div>
     </div>

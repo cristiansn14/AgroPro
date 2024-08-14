@@ -14,7 +14,7 @@ import { catchError, forkJoin, of, switchMap } from 'rxjs';
   templateUrl: './editar-usuario.component.html',
   styleUrls: ['./editar-usuario.component.scss']
 })
-export class EditarUsuarioComponent implements OnInit{
+export class EditarUsuarioComponent implements OnInit {
   @Output() profileUpdated: EventEmitter<string> = new EventEmitter<string>();
 
   usuario: Usuario | null = null;
@@ -98,33 +98,6 @@ export class EditarUsuarioComponent implements OnInit{
     }
   }
 
-  loadUsuario(): void {
-    this.usuarioService.findById(this.idUsuario).subscribe({
-      next: (data) => {
-        this.usuario = data;
-        this.usuarioOriginal = data;
-      },
-      error: (err) => {
-        this.error = err.error.message;
-        this.toastr.error(this.error, 'Error al cargar los datos del usuario', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        })
-      }
-    });  
-  }
-
-  loadComunidades() {
-    this.dataService.getComunidades().subscribe(data => {
-      this.comunidades = data;
-    });
-  }
-
-  loadProvincias() {
-    this.dataService.getProvincias().subscribe(data => {
-      this.provincias = data;
-    });
-  }
-
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
@@ -139,14 +112,15 @@ export class EditarUsuarioComponent implements OnInit{
   onComunidadChange() {
     if (this.selectedComunidad != null) {
       this.dataService.getProvinciasByComunidad(this.selectedComunidad).subscribe({
-        next: (data) => {
-          this.selectedProvincia = null;
-          this.selectedMunicipio = null;         
+        next: (data) => {        
           this.municipios = [];
           this.provincias = data;
+          this.selectedProvincia = null;
           if (this.provincias.length === 1) {
             this.selectedProvincia = this.provincias[0].id;
             this.onProvinciaChange();
+          } else {
+            this.selectedProvincia = null;
           }
         },
         error: (err) => {

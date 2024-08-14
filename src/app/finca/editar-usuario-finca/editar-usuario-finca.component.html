@@ -1,0 +1,27 @@
+<h2>Editar Usuario Finca</h2>
+<form (ngSubmit)="editar()" method="post" class="user-form">  
+    <div style="display: block; width: 100%;">
+        <div class="flex">
+            <div class="form-header">
+                <h1>Datos</h1>
+                <div class="form-group">
+                    <label for="nombre">Nombre y apellidos:</label>
+                    <span class="label">{{ usuarioFinca?.nombre }} {{ usuarioFinca?.apellido1 }} {{ usuarioFinca?.apellido2 }}</span>
+    
+                    <label for="onzas">Onzas:</label>
+                    <span style="color: rgb(255, 94, 0); font-size: 0.8rem; margin-left: 15px;">(Disponibles: {{ onzasDisponibles }})</span>
+                    <input type="number" id="onzas" name="onzas" required [ngModel]="usuarioFinca?.onzas" (ngModelChange)="usuarioFinca && (usuarioFinca.onzas = $event)"><br>
+    
+                    <section class="rol">
+                        <mat-checkbox name="isAdmin" [(ngModel)]="isAdmin" (change)="updateRol('ADMINISTRADOR')" class="check" id="administrador">Administrador</mat-checkbox>
+                        <mat-checkbox name="isPropietario" [(ngModel)]="isPropietario" (change)="updateRol('PROPIETARIO')" class="check" id="propietario">Propietario</mat-checkbox>
+                    </section>
+                </div>                              
+            </div>
+            <div class="div-buttons">
+                <button mat-raised-button class="save-button" type="submit">Guardar</button>
+                <button mat-raised-button class="cancel-button" routerLink="/dashboard/detalles-finca">Cancelar</button>
+            </div>
+        </div>
+    </div>    
+</form>

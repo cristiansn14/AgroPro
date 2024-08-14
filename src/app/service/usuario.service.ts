@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Usuario } from '../model/usuario';
+import { Representante } from '../model/representante';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,25 @@ export class UsuarioService {
 
   getFotoPerfil(idUsuario: string): Observable<Blob> {
     return this.http.get(`${this.usuarioUrl}/getFotoPerfil/${idUsuario}`, { responseType: 'blob' });
+  }
+
+  public añadirRepresentante (representanteDto: Representante): Observable<any> {
+    return this.http.post<any>(this.usuarioUrl + '/añadirRepresentante', representanteDto);
+  }
+
+  public editarRepresentante (representante: Representante): Observable<any> {
+    return this.http.post<any>(`${this.usuarioUrl}/editarRepresentante`, representante);
+  }
+
+  public eliminarRepresentante (representante: Representante): Observable<any> {
+    return this.http.post<any>(`${this.usuarioUrl}/eliminarRepresentante`, representante);
+  }
+
+  public findRepresentantesByIdUsuario (idUsuario: string): Observable<Representante[]> {
+    return this.http.get<Representante[]>(`${this.usuarioUrl}/findRepresentantesByIdUsuario/${idUsuario}`);
+  }
+
+  public findRepresentanteById (idRepresentante: string): Observable<Representante> {
+    return this.http.get<Representante>(`${this.usuarioUrl}/findRepresentanteById/${idRepresentante}`);
   }
 }

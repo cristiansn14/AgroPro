@@ -1,0 +1,178 @@
+/* Contenedor principal del formulario */
+.user-form {
+    position: relative;
+    height: calc(100% - 32px); 
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #e8f5e9;
+}
+
+/* Título principal */
+h2 {
+    text-align: center;
+    color: white;
+    background-color: #00796b;
+    border-radius: 10px;
+    margin: unset;
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+}
+
+/* Contenedor de la tabla */
+.container {
+    background-color: #e8f5e9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-left: 20px;
+    margin-right: inherit;
+    //box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo de la tabla */
+.custom-table {
+    border-radius: 8px;
+    overflow: hidden;
+    width: fit-content;
+    background-color: #f9f9f9;
+}
+
+/* Color de los títulos de las columnas */
+.mat-mdc-header-cell {
+    background-color: #00796b !important;
+    font-weight: bold;
+    color: white;
+}
+
+/* Estilo para las celdas de los datos de la tabla */
+.mat-cell {
+    background-color: #e8f5e9;
+    color: #00796b;
+}
+
+.mat-row:nth-of-type(odd) .mat-cell {
+    background-color: #b2dfdb;
+}
+
+.positive-amount {
+    color: #2bea04;
+    font-weight: bold;
+}
+
+.negative-amount {
+    color: red;
+    font-weight: bold;
+}
+
+.file-name:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.div-buttons {
+    position: absolute;
+    top: 5; 
+    right: 0;
+    margin-right: 20px; 
+    width: auto;
+    height: auto;
+    display: flex;
+}
+
+.add-button {
+    width: 100px;
+    background-color: #2bea04;
+    color: white;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+  
+.cancel-button {
+    width: 100px;
+    background-color: red;
+    color: black;
+    margin-top: 15px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 8px;
+    background-color: #00796b;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    border-radius: 8px;
+  }
+  
+  .total-label {
+    margin-right: 8px;
+  }
+  
+  .total-value {
+    color: black;
+    padding: 4px 8px;
+    border-radius: 4px;
+    flex-grow: 1;
+    //text-align: right;
+  }
+  
+  .positive-total {
+    color: #2bea04;
+  }
+  
+  .negative-total {
+    color: red;
+  }
+  
+  
+
+/* Media queries para pantallas pequeñas */
+@media only screen and (max-width: 1095px) {
+    .user-form {
+        align-items: flex-start;
+    }
+
+    .form-header {
+        width: 100%;
+    }
+
+    .flex {
+        flex-direction: column;
+        width: fit-content;
+        height: fit-content;
+    }
+
+    .div-buttons {
+        position: inherit;
+        margin-left: 20px;
+        width: fit-content;
+        height: fit-content;
+        margin-left: 40px;
+    }
+    
+    .add-button {
+        background-color: #2bea04;
+        color: white;
+    }
+    
+    .cancel-button {
+        background-color: red;
+        color: black;
+    } 
+  
+    .user-form input, .user-form select {
+        width: 100%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+}

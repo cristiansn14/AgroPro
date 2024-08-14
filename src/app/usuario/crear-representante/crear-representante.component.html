@@ -1,0 +1,33 @@
+<h2>Añadir representante</h2>
+<form action="#" method="post" class="user-form">
+    <div style="display: block; width: 100%;">
+        <div class="flex">
+            <div class="form-header">
+                <h1>Datos del representante</h1>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+
+                    <label for="apellido1">Primer apellido:</label>
+                    <input type="text" id="apellido1" name="apellido1" required>
+
+                    <label for="apellido2">Segundo apellido:</label>
+                    <input type="text" id="apellido2" name="apellido2" required>
+
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" required>
+
+                    <label for="dni">DNI:</label>
+                    <input type="text" id="dni" name="dni" required>
+
+                    <label for="telefono">Telefono:</label>
+                    <input type="text" id="telefono" name="telefono" required>
+                </div>        
+            </div>
+            <div class="div-buttons">
+                <button mat-raised-button class="create-button" (click)="guardar()">Guardar</button>
+                <button mat-raised-button class="cancel-button" routerLink="/dashboard/ver-perfil/{{idUsuario}}">Cancelar</button>
+            </div>
+        </div>                              
+    </div>   
+</form>

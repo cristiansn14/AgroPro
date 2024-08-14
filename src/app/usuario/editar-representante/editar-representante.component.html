@@ -1,0 +1,33 @@
+<h2>Editar Representante</h2>
+<form (ngSubmit)="editar()" method="post" class="user-form">  
+    <div style="display: block; width: 100%;">
+        <div class="flex">
+            <div class="form-header">
+                <h1>Datos del representante</h1>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required [ngModel]="representante?.nombre" (ngModelChange)="representante && (representante.nombre = $event)"><br> 
+
+                    <label for="apellido1">Primer Apellido:</label>
+                    <input type="text" id="apellido1" name="apellido1" required [ngModel]="representante?.apellido1" (ngModelChange)="representante && (representante.apellido1 = $event)"><br> 
+
+                    <label for="apellido2">Segundo Apellido:</label>
+                    <input type="text" id="apellido2" name="apellido2" required [ngModel]="representante?.apellido2" (ngModelChange)="representante && (representante.apellido2 = $event)"><br> 
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required [ngModel]="representante?.email" (ngModelChange)="representante && (representante.email = $event)"><br>
+
+                    <label for="dni">DNI:</label>
+                    <input type="text" id="dni" name="dni" required [ngModel]="representante?.dni" (ngModelChange)="representante && (representante.dni = $event)"><br> 
+            
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" required [ngModel]="representante?.telefono" (ngModelChange)="representante && (representante.telefono = $event)"><br>
+                </div>                              
+            </div>
+            <div class="div-buttons">
+                <button mat-raised-button class="save-button" type="submit">Guardar</button>
+                <button mat-raised-button class="cancel-button" routerLink="/dashboard/ver-perfil/{{representante?.idUsuario}}">Cancelar</button>
+            </div>
+        </div>
+    </div>    
+</form>

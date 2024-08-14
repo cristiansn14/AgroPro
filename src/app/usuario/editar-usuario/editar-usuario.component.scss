@@ -3,7 +3,7 @@
     overflow-y: auto;
     padding: 20px;
     border-radius: 10px;
-    background-color: rgb(238, 238, 237);
+    background-color: #e8f5e9;
   }
   
   .flex{
@@ -14,8 +14,8 @@
   
   h2 {
     text-align: center;
-    color: black;
-    background-color: #0770fa;
+    color: white;
+    background-color: #00796b;
     border-radius: 10px;
     margin: unset;
     width: 100%;
@@ -24,7 +24,7 @@
   .form-header{
     padding: 15px;
     margin-top: 10px;
-    border: 2px solid #0770fa;
+    border: 2px solid #00796b;
     border-radius: 10px;
     width: fit-content;
     height: fit-content;
@@ -132,7 +132,7 @@
   }
   
   
-  @media only screen and (max-width: 1543px) {
+  @media only screen and (max-width: 2000px) {
     .user-form{
       flex-direction: column;
       align-items: left;

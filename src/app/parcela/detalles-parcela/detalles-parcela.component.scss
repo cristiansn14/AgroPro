@@ -5,14 +5,14 @@
     overflow-y: auto;
     padding: 20px;
     border-radius: 10px;
-    background-color: rgb(238, 238, 237);
+    background-color: #e8f5e9;
 }
 
 /* Título principal */
 h2 {
     text-align: center;
     color: white;
-    background-color: #0770fa;
+    background-color: #00796b;
     border-radius: 10px;
     margin: unset;
     width: 100%;
@@ -28,7 +28,7 @@ h2 {
 .form-header {
     padding: 15px;
     margin: 10px 50px 10px 0;
-    border: 2px solid #0770fa;
+    border: 2px solid #00796b;
     border-radius: 10px;
     width: fit-content;
     height: fit-content;
@@ -107,15 +107,15 @@ h1 {
 
 /* Estilo para las celdas del encabezado de la tabla */
 .table thead th {
-    background-color: #a8a9a6; /* Gris más oscuro */
-    color: black; /* Color de texto negro */
+    background-color: #00796b; /* Gris más oscuro */
+    color: white; /* Color de texto negro */
     font-weight: bold;
     font-size: 14px; /* Letras más pequeñas */
 }
 
 /* Estilo para las celdas de los datos de la tabla */
 .table tbody td {
-    background-color: #d3d4d1; /* Fondo de las celdas más claro */
+    background-color: #e8f5e9; /* Fondo de las celdas más claro */
     color: black; /* Color de texto negro */
     font-size: 14px; /* Letras más pequeñas */
     vertical-align: middle;

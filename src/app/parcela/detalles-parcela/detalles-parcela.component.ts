@@ -1,17 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UsuarioService } from 'src/app/service/usuario.service';
 import { ToastrService } from 'ngx-toastr';
-import { StaticDataService } from 'src/app/service/static-data.service';
 import { ParcelaService } from 'src/app/service/parcela.service';
-import { Parcela } from 'src/app/model/parcela';
-import { Subparcela } from 'src/app/model/subparcela';
-import { NonNullableFormBuilder } from '@angular/forms';
-import { Recinto } from 'src/app/model/recinto';
 import { ParcelaConstruccion } from 'src/app/model/parcelaConstruccion';
-import { PoligonoParcela } from 'src/app/model/poligonoParcela';
-import { Paraje } from 'src/app/model/paraje';
-import { Cultivo } from 'src/app/model/cultivo';
 import { ParcelaInfo } from 'src/app/model/parcelaInfo';
 import { SubparcelaInfo } from 'src/app/model/subparcelaInfo';
 import { RecintoInfo } from 'src/app/model/recintoInfo';

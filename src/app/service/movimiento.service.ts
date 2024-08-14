@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movimiento } from '../model/movimiento';
 import { Observable } from 'rxjs';
+import { Archivo } from '../model/archivo';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,17 @@ export class MovimientoService {
     }
 
     return this.http.post<any>(this.movimientoURL + '/crearMovimiento', formData);
+  }
+
+  findByFincaId(idFinca: string): Observable<Movimiento[]> {
+    return this.http.get<Movimiento[]>(`${this.movimientoURL}/findByFincaId/${idFinca}`);
+  }
+
+  findArchivoById(idArchivo: string): Observable<any> {
+    return this.http.get(`${this.movimientoURL}/findArchivoById/${idArchivo}`, { responseType: 'blob' });
+  }
+
+  getArchivoUrl(idArchivo: string): string {
+    return `${this.movimientoURL}/findArchivoById/${idArchivo}`;
   }
 }

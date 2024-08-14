@@ -13,6 +13,11 @@ import { AddUsuarioComponent } from './finca/añadir-usuario/add-usuario.compone
 import { DetallesParcelaComponent } from './parcela/detalles-parcela/detalles-parcela.component';
 import { CrearMovimientoComponent } from './movimientos/crear-movimiento/crear-movimiento.component';
 import { ListarMovimientosComponent } from './movimientos/listar-movimientos/listar-movimientos.component';
+import { DetallesFincaComponent } from './finca/detalles-finca/detalles-finca.component';
+import { EditarFincaComponent } from './finca/editar-finca/editar-finca.component';
+import { CrearRepresentanteComponent } from './usuario/crear-representante/crear-representante.component';
+import { EditarUsuarioFincaComponent } from './finca/editar-usuario-finca/editar-usuario-finca.component';
+import { EditarRepresentanteComponent } from './usuario/editar-representante/editar-representante.component';
 
 const routes: Routes = [
   { path:'', redirectTo:'/login', pathMatch:'full'},
@@ -32,10 +37,25 @@ const routes: Routes = [
         path: 'ver-perfil/:id', component: DetallesUsuarioComponent
       },
       {
+        path: 'añadir-representante/:id', component: CrearRepresentanteComponent
+      },
+      {
+        path: 'editar-representante/:id', component: EditarRepresentanteComponent
+      },
+      {
         path: 'crear-finca', component: CrearFincaComponent
       },
       {
+        path: 'detalles-finca', component: DetallesFincaComponent
+      },
+      {
+        path: 'editar-finca', component: EditarFincaComponent
+      },
+      {
         path: 'añadir-usuario', component: AddUsuarioComponent
+      },
+      {
+        path: 'editar-usuario-finca/:id', component: EditarUsuarioFincaComponent
       },
       {
         path: 'crear-parcela', component: CrearParcelaComponent

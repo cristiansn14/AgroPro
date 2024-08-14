@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Representante } from 'src/app/model/representante';
 import { Usuario } from 'src/app/model/usuario';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
@@ -14,6 +15,9 @@ export class DetallesUsuarioComponent implements OnInit{
   usuario: Usuario | null = null;
   idUsuario: string = "";
   error: string = "";
+  representantes: Representante[] = [];
+  representantesAlta: Representante[] = [];
+  representantesBaja: Representante[] = [];
 
   constructor(
     private toastr: ToastrService,
@@ -26,6 +30,7 @@ export class DetallesUsuarioComponent implements OnInit{
       this.idUsuario = params['id'];
       if (this.idUsuario) {
         this.loadUsuario();
+        this.loadRepresentantes();
       }
     });
   }
@@ -42,5 +47,40 @@ export class DetallesUsuarioComponent implements OnInit{
         })
       }
     });  
+  }
+
+  loadRepresentantes(): void {
+    this.usuarioService.findRepresentantesByIdUsuario(this.idUsuario).subscribe({
+      next: (data) => {
+        this.representantes = data;
+        this.representantesAlta = this.representantes.filter(r => r.fechaBaja === null);
+        this.representantesBaja = this.representantes.filter(r => r.fechaBaja !== null);
+      },
+      error: (err) => {
+        this.error = err.error.message;
+        this.toastr.error(this.error, 'Error al cargar los representantes del usuario', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        })
+      }
+    });  
+  }
+  eliminarRepresentante(representante: Representante) {
+    if (representante) {
+      this.usuarioService.eliminarRepresentante(representante).subscribe({
+        next: (data) => {        
+          this.toastr.success('Representante eliminado correctamente', 'OK', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+          this.ngOnInit();
+        },
+        error: (err) => {
+          this.error = err.error.message;
+          this.toastr.error(this.error, 'Error al eliminar el representante', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      })
+    }
+    
   }
 }

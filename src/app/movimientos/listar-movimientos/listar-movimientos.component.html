@@ -1,1 +1,55 @@
-<p>listar-movimientos works!</p>
+<h2>Lista de movimientos</h2>
+<form action="#" method="post" class="user-form">
+  <div class="flex">
+    <div style="flex-direction: column;">
+      <div class="container">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 custom-table">
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef> Fecha </th>
+            <td mat-cell *matCellDef="let movimiento">{{ movimiento.fecha | date:'dd/MM/yyyy' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="concepto">
+            <th mat-header-cell *matHeaderCellDef> Concepto </th>
+            <td mat-cell *matCellDef="let movimiento">{{ movimiento.concepto }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="importe">
+            <th mat-header-cell *matHeaderCellDef> Importe </th>
+            <td mat-cell *matCellDef="let movimiento"
+                [ngClass]="{
+                  'positive-amount': (movimiento.importe ?? 0) > 0,
+                  'negative-amount': (movimiento.importe ?? 0) < 0
+                }">
+                {{ (movimiento.importe ?? 0) > 0 ? '+' + movimiento.importe : movimiento.importe }} €
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="archivo">
+            <th mat-header-cell *matHeaderCellDef> Archivo </th>
+            <td mat-cell *matCellDef="let movimiento">
+              <ng-container *ngIf="movimiento.idArchivo; else noArchivo">
+                <span (click)="openDocument(movimiento)" class="file-name">{{ movimiento.nombreArchivo }}</span>
+              </ng-container>
+              <ng-template #noArchivo>
+                <span class="empty-cell"></span>
+              </ng-template>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSize]="6" showFirstLastButtons style="border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 3px 5px rgba(0.4, 0.4, 0.4, 0.4);"></mat-paginator>
+        <div class="total-row">
+            <span class="total-label">Total:</span>
+            <span class="total-value" [ngClass]="calculateTotal().className">{{ calculateTotal().value > 0 ? '+' + calculateTotal().value : calculateTotal().value }} €</span>
+          </div>
+      </div>
+    </div>
+    <div class="div-buttons">
+      <button mat-raised-button class="add-button" routerLink="/dashboard/crear-movimiento">Añadir</button>
+      <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Cancelar</button>
+    </div>
+  </div>
+</form>

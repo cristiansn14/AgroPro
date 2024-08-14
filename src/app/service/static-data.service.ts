@@ -48,4 +48,16 @@ export class StaticDataService {
   getCultivos(): Observable<Cultivo[]> {
     return this.http.get<Cultivo[]>(`${this.staticDataUrl}/findCultivos`);
   }
+
+  getNombreComunidadById(idComunidad: number | null): Observable<any> {
+    return this.http.get<any>(`${this.staticDataUrl}/getNombreComunidadById/${idComunidad}`);
+  }
+
+  getNombreProvinciaById(idProvincia: number | null): Observable<any> {
+    return this.http.get<any>(`${this.staticDataUrl}/getNombreProvinciaById/${idProvincia}`);
+  }
+
+  getNombreMunicipioById(idMunicipio: number | null): Observable<any> {
+    return this.http.get<any>(`${this.staticDataUrl}/getNombreMunicipioById/${idMunicipio}`);
+  }
 }

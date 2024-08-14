@@ -57,9 +57,9 @@ export class CrearFincaComponent implements OnInit {
       this.dataService.getProvinciasByComunidad(this.selectedComunidad).subscribe({
         next: (data) => {
           this.provincias = data;
-          this.municipios = [];
-          this.selectedProvincia = null;
+          this.municipios = [];         
           this.selectedMunicipio = null;
+          this.selectedProvincia = null;
           if (this.provincias.length === 1) {
             this.selectedProvincia = this.provincias[0].id;
             this.onProvinciaChange();
@@ -121,29 +121,38 @@ export class CrearFincaComponent implements OnInit {
     const nombreHtml = document.getElementById('nombre') as HTMLInputElement;
     const onzasHtml = document.getElementById('onzas') as HTMLInputElement;
 
-    this.fincaDto = new Finca (
-      null,
-      nombreHtml.value,
-      Number(onzasHtml.value),
-      this.selectedComunidad,
-      this.selectedProvincia,
-      this.selectedMunicipio
-    );
-
-    this.fincaService.guardarFinca(this.fincaDto).subscribe({
-      next: (data) => {        
-        this.toastr.success('Finca ' + this.fincaDto?.nombre + ' creada correctamente', 'OK', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        });
-        this.router.navigate(['/dashboard/home']);
-      },
-      error: (err) => {
-        this.error = err.error.message;
-        this.toastr.error(this.error, 'Error al guardar la finca', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        })
-      }
-    });
+    if (nombreHtml.value !== null || Number(onzasHtml.value !== null) || this.selectedComunidad !== null || this.selectedProvincia !== null || this.selectedMunicipio !== null) {
+      this.fincaDto = new Finca (
+        null,
+        nombreHtml.value,
+        Number(onzasHtml.value),
+        this.selectedComunidad,
+        this.selectedProvincia,
+        this.selectedMunicipio,
+        null,
+        null,
+        null
+      );
+  
+      this.fincaService.guardarFinca(this.fincaDto).subscribe({
+        next: (data) => {        
+          this.toastr.success('Finca ' + this.fincaDto?.nombre + ' creada correctamente', 'OK', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+          this.router.navigate(['/dashboard/home']);
+        },
+        error: (err) => {
+          this.error = err.error.message;
+          this.toastr.error(this.error, 'Error al guardar la finca', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      });
+    } else {
+      this.toastr.warning('No se han rellenado los campos necesarios', 'Atención', {
+        timeOut: 3000, positionClass: 'toast-top-center'
+      });
+    }  
 
   }
 

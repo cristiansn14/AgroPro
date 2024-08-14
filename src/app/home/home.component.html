@@ -1,3 +1,14 @@
-<div class="container text-center">
-    <div><h2>Bienvenido {{username}}</h2></div>
+<h2>Mapa</h2>
+<div class="user-form">
+    <div class="flex">
+        <div style="margin-top: 15px;">
+            <label for="parcela" style="margin-left: 20px; width: fit-content;">Parcela:</label>
+            <select style="margin-left: 20px; width: fit-content;" id="parcela" name="parcela" [(ngModel)]="selectedParcela" (change)="onParcelaChange()" required>
+                <option *ngFor="let parcela of parcelas" [value]="parcela">{{ parcela }}</option>
+            </select>
+        </div>       
+    </div>
+    <google-map style="border-radius: 10px;" height="493px" width="100%" [center]="mapCenter" [zoom]="18.2" [mapTypeId]="mapTypeSatellite" (mapClick)="onMapClick($event)">
+        <map-marker [position]="mapCenter"></map-marker>
+    </google-map>  
 </div>

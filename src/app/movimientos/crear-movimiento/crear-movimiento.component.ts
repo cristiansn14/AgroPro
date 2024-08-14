@@ -12,16 +12,14 @@ import { MovimientoService } from 'src/app/service/movimiento.service';
   templateUrl: './crear-movimiento.component.html',
   styleUrls: ['./crear-movimiento.component.scss']
 })
-export class CrearMovimientoComponent implements OnInit, OnDestroy{
-  
-  parcelaConstruccionForm!: FormGroup;
+export class CrearMovimientoComponent implements OnInit, OnDestroy {
+
   selectedFile: File | undefined = undefined;
   selectedFinca: string | null = null;
   private subscription: Subscription | null = null;
   error: string = "";
 
   constructor(
-    private fb: FormBuilder,
     private fincaService: FincaService,
     private movimientoService: MovimientoService,
     private router: Router,
@@ -57,16 +55,20 @@ export class CrearMovimientoComponent implements OnInit, OnDestroy{
     const tipoHtml = document.getElementById('tipo') as HTMLInputElement;
 
     if (conceptoHtml.value === null || Number(importeHtml.value) === null || tipoHtml.value === null) {
-        this.toastr.error(this.error, 'Error al guardar el movimiento', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        })
+      this.toastr.warning('Rellene todos los campos', 'Atención', {
+        timeOut: 3000, positionClass: 'toast-top-center'
+      });
     } else {
       const movimiento = new Movimiento (
         null,
         conceptoHtml.value,
         tipoHtml.value,
         Number(importeHtml.value),
-        this.selectedFinca
+        this.selectedFinca,
+        null,
+        null,
+        null,
+        null
       );
 
       this.movimientoService.guardarMovimiento(movimiento, this.selectedFile).subscribe({

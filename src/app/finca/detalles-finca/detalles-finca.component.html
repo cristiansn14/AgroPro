@@ -1,0 +1,85 @@
+<h2>Detalles Finca</h2>
+<form action="#" method="post" class="user-form">
+    <div class="flex">
+        <div style="flex-direction: column;">
+            <div class="container">
+                <h1>Información</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Onzas</th>
+                            <th scope="col">Comunidad</th>
+                            <th scope="col">Provincia</th>
+                            <th scope="col">Municipio</th>
+                            <th scope="col">Fecha de alta</th>
+                            <th scope="col">Fecha de modificación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <td>{{ finca?.nombre }}</td>
+                        <td>{{ finca?.onzas }}</td>
+                        <td>{{ comunidad?.nombre }} ({{ comunidad?.id }})</td>
+                        <td>{{ provincia?.nombre }} ({{ provincia?.id }})</td>
+                        <td>{{ municipio?.nombre }} ({{ municipio?.idMunicipio }})</td>
+                        <td>{{ finca?.fechaAlta | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ finca?.fechaModificacion | date:'dd/MM/yyyy' }}</td>
+                    </tbody>
+                </table>
+            </div>           
+            <div class="container" *ngIf="parcelas && parcelas.length > 0">
+                <h1>Parcelas</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Referencia catastral</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let parcela of parcelas">
+                            <td routerLink="/dashboard/detalles-parcela/{{parcela}}" class="click">{{ parcela }} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="container" *ngIf="usuariosFincaInfo && usuariosFincaInfo.length > 0">
+                <h1>Usuarios</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre y apellidos</th>
+                            <th scope="col">Onzas</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Fecha de alta</th>
+                            <th scope="col">Fecha de modificación</th>
+                            <th scope="col">Opciones</th>                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuarioFincaInfo of usuariosFincaInfo">
+                            <td routerLink="/dashboard/ver-perfil/{{usuarioFincaInfo.idUsuario}}" class="click">{{ usuarioFincaInfo.nombre }} {{ usuarioFincaInfo.apellido1 }} {{ usuarioFincaInfo.apellido2 }} </td>
+                            <td>{{ usuarioFincaInfo.onzas }}</td>
+                            <td>{{ usuarioFincaInfo.rol }}</td>
+                            <td>{{ usuarioFincaInfo.fechaAlta | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ usuarioFincaInfo.fechaModificacion | date:'dd/MM/yyyy' }}</td>
+                            <td style="display: flex;">
+                                <button mat-button routerLink="/dashboard/editar-usuario-finca/{{usuarioFincaInfo.id}}" style="width: 100px; background-color: #00796b; color: white;">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>Editar</span>
+                                </button>
+                                <button mat-button (click)="eliminarUsuarioFinca(usuarioFincaInfo)" style="width: 100px; background-color: #00796b; color: white; margin-left: 20px">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Eliminar</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+        <div class="div-buttons">
+            <button mat-raised-button class="edit-button" routerLink="/dashboard/editar-finca">Editar</button>
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Cancelar</button>
+        </div>
+    </div>   
+</form>

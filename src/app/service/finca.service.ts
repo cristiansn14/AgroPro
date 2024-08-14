@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Finca } from '../model/finca';
 import { UsuarioFinca } from '../model/usuario-finca';
+import { UsuarioFincaInfo } from '../model/usuarioFincaInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class FincaService {
     return this.httpClient.post<any>(this.fincaURL + '/guardarFinca', fincaDto)
   }
 
+  public editarFinca (fincaDto: Finca): Observable<any> {
+    return this.httpClient.post<any>(this.fincaURL + '/editarFinca', fincaDto)
+  }
+
   public getFincaByUsuarioId (idUsuario: String): Observable<any> {
     return this.httpClient.get<Finca[]>(`${this.fincaURL}/findAllFincasByUsuarioId/${idUsuario}`);
   }
@@ -39,7 +44,31 @@ export class FincaService {
     return this.httpClient.post<any>(`${this.fincaURL}/addUsuariosFinca`, usuariosFinca);
   }
 
+  public editarUsuarioFinca (usuarioFinca: UsuarioFinca): Observable<any> {
+    return this.httpClient.post<any>(`${this.fincaURL}/editarUsuarioFinca`, usuarioFinca);
+  }
+
+  public eliminarUsuarioFinca (usuarioFinca: UsuarioFinca): Observable<any> {
+    return this.httpClient.post<any>(`${this.fincaURL}/eliminarUsuarioFinca`, usuarioFinca);
+  }
+
   public getOnzasDisponibles (idFinca: string): Observable<any> {
     return this.httpClient.get<number>(`${this.fincaURL}/getOnzasDisponibles/${idFinca}`)
+  }
+
+  public findById (idFinca: string): Observable<any> {
+    return this.httpClient.get<number>(`${this.fincaURL}/findById/${idFinca}`)
+  }
+
+  public getParcelasByIdFinca (idFinca: string): Observable<any> {
+    return this.httpClient.get<number>(`${this.fincaURL}/getParcelasByIdFinca/${idFinca}`)
+  }
+
+  public findUsuariosFincaByFincaId (idFinca: string): Observable<UsuarioFincaInfo[]> {
+    return this.httpClient.get<UsuarioFincaInfo[]>(`${this.fincaURL}/findUsuariosFincaByFincaId/${idFinca}`)
+  }
+
+  public findUsuarioFincaById (idUsuarioFinca: string): Observable<UsuarioFincaInfo> {
+    return this.httpClient.get<UsuarioFincaInfo>(`${this.fincaURL}/findUsuarioFincaById/${idUsuarioFinca}`)
   }
 }

@@ -28,6 +28,7 @@
                     </select>
 
                     <label for="municipio">Municipio:</label>
+                    <span *ngIf="selectedProvincia === null" style="color: rgb(255, 94, 0); font-size: 0.8rem;">(Seleccione primero una comunidad o provincia)</span>
                     <select id="municipio" name="municipio" [(ngModel)]="selectedMunicipio" required>
                         <option value="" disabled selected>Seleccione un municipio</option>
                         <option *ngFor="let municipio of municipios" [value]="municipio.id">{{ municipio.nombre }}</option>
