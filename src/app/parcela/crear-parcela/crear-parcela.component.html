@@ -1,7 +1,7 @@
 <h2>Crear Parcela</h2>
 <form action="#" method="post" class="user-form">
     <div style="display: block; width: 100%;">
-        <div style="display: flex; width: fit-content; height: fit-content; margin-bottom: 20px;">
+        <div style="display: flex; width: fit-content; height: fit-content; margin-bottom: 20px; margin-top: 15px; margin-left: 8px;">
             <label style="font-size: 0.9rem; font-weight: bold; margin-top: -4px; margin-left: 15px;" for="tipoParcela">Introduzca el número de propietarios:</label>
             <input style="margin-left: 15px; margin-right: 15px; width: 45%;" name="input-propietarios" min="0" type="number" id="numPropietarios" [(ngModel)]="numeroPropietarios" (change)="generarFormularioPropietarios()" required>
         </div>
@@ -26,9 +26,9 @@
                 </div>
             </div>
         </form>            
-        <div style="display: flex; width: fit-content; height: fit-content; margin-bottom: 20px; margin-top: 10px;">
+        <div style="display: flex; width: fit-content; height: fit-content; margin-bottom: 20px; margin-top: 10px; margin-left: 8px;">
             <label style="font-size: 0.9rem; font-weight: bold; margin-top: -4px; margin-left: 15px;" for="tipoParcela">Introduzca el tipo de parcela:</label>
-            <select name="tipoParcela" id="tipoParcela" [(ngModel)]="tipoParcela" style="margin-left: 15px; margin-right: 15px; width: 45%;" (change)="generarFormularioParcela()">
+            <select name="tipoParcela" id="tipoParcela" [(ngModel)]="tipoParcela" style="margin-left: 15px; margin-right: 15px; width: 45%;">
                 <option value="parcela">Parcela</option>
                 <option value="construccion">Construcción</option>        
             </select>
@@ -69,145 +69,14 @@
                 </div>      
             </div>
         </div>
-        <form [formGroup]="parcelaForm">
-            <div class="flex" *ngIf="tipoParcela === 'parcela'">
-                <div class="form-header">
-                    <h1>Datos</h1>
-                    <div class="form-group">           
-                        <label for="referencia">Referencia catastral:</label>
-                        <input type="text" id="referencia" name="referencia" formControlName="referencia" required><br>
-    
-                        <label for="parcela">Polígono:</label>                   
-                        <select id="poligono" name="poligono" required formControlName="selectedPoligono" (change)="onPoligonoChange()">
-                            <option value="" disabled selected>Seleccione un polígono</option>
-                            <option *ngFor="let poligono of poligonos" [value]="poligono">{{ poligono }}</option>
-                        </select>
-    
-                        <label for="parcela">Parcela:</label>
-                        <span style="color: rgb(255, 94, 0); font-size: 0.8rem;">(Seleccione primero un polígono)</span>
-                        <select id="parcela" name="parcela" required formControlName="selectedParcela">
-                            <option value="" disabled selected>Seleccione una parcela</option>
-                            <option *ngFor="let parcela of parcelas" [value]="parcela">{{ parcela }}</option>
-                        </select>
-    
-                        <label for="paraje">Paraje:</label>
-                        <select id="paraje" name="paraje" required formControlName="selectedParaje">
-                            <option *ngFor="let paraje of parajes" [value]="paraje.id">{{ paraje.nombre }}</option>
-                        </select> 
-    
-                        <label for="clase">Clase:</label>
-                        <select id="clase" name="clase" required formControlName="clase">
-                            <option value="Rústico">Rústico</option>
-                        </select>
-    
-                        <label for="usoPrincipal">Uso principal:</label>
-                        <select id="usoPrincipal" name="usoPrincipal" formControlName="usoPrincipal">
-                            <option value="Agrario">Agrario</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-header">
-                    <h1>Características</h1>                               
-                    <div class="form-group">
-                        <label for="superficie">Superficie (m2):</label>
-                        <input type="number" id="superficie" name="superficie" formControlName="superficie"><br>
-    
-                        <label for="valorSuelo">Valor del suelo:</label>
-                        <input type="number" id="valorSuelo" name="valorSuelo" formControlName="valorSuelo"><br> 
-    
-                        <label for="valorConstruccion">Valor construcción:</label>
-                        <input type="number" id="valorConstruccion" name="valorConstruccion" formControlName="valorConstruccion"><br>
-    
-                        <label for="valor-catastral">Valor catastral:</label>
-                        <input type="number" id="valorCatastral" name="valorCatastral" formControlName="valorCatastral"><br>
-    
-                        <label for="añoValor">Año valor:</label>
-                        <input type="text" id="añoValor" name="añoValor" formControlName="añoValor"><br>
-                    </div>       
+        <div class="flex" *ngIf="tipoParcela === 'parcela'">
+            <div class="form-header" style="margin-left: 15px;">
+                <h1>Referencia catastral</h1>
+                <div class="form-group">           
+                    <input type="text" id="referencia" name="referencia" required><br>
                 </div>
             </div>
-        </form>          
-        <div style="display: flex; width: 100%; height: fit-content; margin: 15px;" *ngIf="tipoParcela === 'parcela'">
-            <label style="font-size: 0.9rem; margin-top: 8px; font-weight: bold;" for="numSubparcelas">Introduzca el número de subparcelas según catastro:</label>
-            <input style="width: 100px;" min="0" name="input-subparcela" type="number" id="numSubparcelas" [(ngModel)]="numeroSubparcelas" (change)="generarFormularioSubparcela()" required>
-        </div>
-        <div *ngIf="tipoParcela === 'parcela'">
-            <form [formGroup]="subparcelasForm">
-                <div formArrayName="subparcelas">
-                    <div *ngFor="let row of subparcelaRows; trackBy: trackByFn; let rowIndex = index" class="propietarios" style="display: flex; width: 100%;">
-                        <div *ngFor="let subparcela of row; let i = index" [formGroupName]="rowIndex * 3 + i" class="propietario" style="padding: 10px;">
-                            <div class="form-header">
-                                <h1>Subparcela {{ rowIndex * 3 + i + 1 }}</h1>
-                                <div class="form-group">
-                                    <label for="cultivo{{ rowIndex * 3 + i }}">Cultivo:</label>
-                                    <select name="cultivo{{ rowIndex * 3 + i }}" id="cultivo{{ rowIndex * 3 + i }}" formControlName="cultivo">
-                                        <option *ngFor="let cultivo of cultivos" [value]="cultivo.id">{{ cultivo.codigo }} - {{ cultivo.descripcion }}</option>
-                                    </select>
-    
-                                    <label for="intensidad{{ rowIndex * 3 + i }}" style="margin-right: 15px; margin-top: -3px;">Intensidad productiva:</label>
-                                    <select name="intensidad{{ rowIndex * 3 + i }}" id="intensidad{{ rowIndex * 3 + i }}" formControlName="intensidad">
-                                        <option value="00">00</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                    </select>
-    
-                                    <label for="superficie{{ rowIndex * 3 + i }}" style="margin-right: 10px; margin-top: -3px;">Supercifie (m2): </label>
-                                    <input type="number" id="superficie{{ rowIndex * 3 + i }}" name="superficie{{ rowIndex * 3 + i }}" formControlName="superficie">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div style="display: flex; width: 100%; height: fit-content; margin: 15px;" *ngIf="tipoParcela === 'parcela'">
-            <label style="font-size: 0.9rem; margin-top: 8px; font-weight: bold;" for="numRecintos">Introduzca el número de recintos según SIGPAC:</label>
-            <input style="width: 100px;" min="0" name="input-recinto" type="number" id="numRecintos" [(ngModel)]="numeroRecintos" (change)="generarFormularioRecinto()" required>
-        </div>
-        <div *ngIf="tipoParcela === 'parcela'">
-            <form [formGroup]="recintosForm">
-                <div formArrayName="recintos">
-                    <div *ngFor="let row of recintoRows; trackBy: trackByFn; let rowIndex = index" class="propietarios" style="display: flex; width: 100%;">
-                        <div *ngFor="let recinto of row; let i = index" [formGroupName]="rowIndex * 3 + i" class="propietario" style="padding: 10px;">
-                            <div class="form-header">
-                                <h1>Recinto {{ rowIndex * 3 + i + 1 }}</h1>
-                                <div class="form-group">
-                                    <label for="superficie{{ rowIndex * 3 + i }}">Supercifie (m2): </label>
-                                    <input type="number" id="superficie{{ rowIndex * 3 + i }}" name="superficie{{ rowIndex * 3 + i }}" formControlName="superficie">
-
-                                    <label for="pendiente{{ rowIndex * 3 + i }}">Pendiente (%): </label>
-                                    <input type="text" id="pendiente{{ rowIndex * 3 + i }}" name="pendiente{{ rowIndex * 3 + i }}" formControlName="pendiente">
-
-                                    <label for="altitud{{ rowIndex * 3 + i }}">Altitud (m): </label>
-                                    <input type="number" id="altitud{{ rowIndex * 3 + i }}" name="altitud{{ rowIndex * 3 + i }}" formControlName="altitud">
-
-                                    <label for="cultivo{{ rowIndex * 3 + i }}">Cultivo:</label>
-                                    <select name="cultivo{{ rowIndex * 3 + i }}" id="cultivo{{ rowIndex * 3 + i }}" formControlName="cultivo">
-                                        <option *ngFor="let cultivo of cultivos" [value]="cultivo.id">{{ cultivo.codigo }} - {{ cultivo.descripcion }}</option>
-                                    </select>
-
-                                    <label for="porcentajeSubvencion{{ rowIndex * 3 + i }}">Subv (%): </label>
-                                    <input type="text" id="porcentajeSubvencion{{ rowIndex * 3 + i }}" name="porcentajeSubvencion{{ rowIndex * 3 + i }}" formControlName="porcentajeSubvencion">
-
-                                    <label for="superficieSubvencion{{ rowIndex * 3 + i }}">Subv (ha): </label>
-                                    <input type="number" id="superficieSubvencion{{ rowIndex * 3 + i }}" name="superficieSubvencion{{ rowIndex * 3 + i }}" formControlName="superficieSubvencion">
-
-                                    <label for="coeficienteRegadio{{ rowIndex * 3 + i }}">Coef. Regadío: </label>
-                                    <input type="number" id="coeficienteRegadio{{ rowIndex * 3 + i }}" name="coeficienteRegadio{{ rowIndex * 3 + i }}" formControlName="coeficienteRegadio">
-                                    
-                                    <label for="incidencias{{ rowIndex * 3 + i }}">Incidencias: </label>
-                                    <input type="text" id="incidencias{{ rowIndex * 3 + i }}" name="incidencias{{ rowIndex * 3 + i }}" formControlName="incidencias">
-    
-                                    <label for="region{{ rowIndex * 3 + i }}">Region: </label>
-                                    <input type="text" id="region{{ rowIndex * 3 + i }}" name="region{{ rowIndex * 3 + i }}" formControlName="region">                       
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>                                
+        </div>                                      
     </div>     
     <div class="div-buttons">
         <button mat-raised-button class="create-button" (click)="guardar()">Crear</button>

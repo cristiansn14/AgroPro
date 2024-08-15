@@ -2,24 +2,19 @@ export class Subparcela{
     id: string | null;
     referenciaCatastral: string | null;
     subparcela: string | null;
-    cultivo: number | null;
-    intensidad: string | null;
+    codigoCultivo: string | null;
+    descripcionCultivo: string | null;
+    intensidadProductiva: string | null;
     superficie: number | null;
-    fechaAlta: Date | null;
-    fechaModificacion: Date | null;
-    fechaBaja: Date | null; 
 
-    constructor(id: string | null, referenciaCatastral: string | null, subparcela: string | null, cultivo: number | null, 
-                intensidad: string | null, superficie: number | null, fechaAlta: Date | null, fechaModificacion: Date | null, 
-                fechaBaja: Date | null) {
+    constructor(id: string | null, referenciaCatastral: string | null, subparcela: string | null, codigoCultivo: string | null, 
+                descripcionCultivo: string | null, intensidadProductiva: string | null, superficie: number | null) {
         this.id = id;
         this.referenciaCatastral = referenciaCatastral;
         this.subparcela = subparcela;
-        this.cultivo = cultivo;
-        this.intensidad = intensidad;
+        this.codigoCultivo = codigoCultivo;
+        this.descripcionCultivo = descripcionCultivo;
+        this.intensidadProductiva = intensidadProductiva;
         this.superficie = superficie;
-        this.fechaAlta = fechaAlta;
-        this.fechaModificacion = fechaModificacion;
-        this.fechaBaja = fechaBaja;
     }
 }

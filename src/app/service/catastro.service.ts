@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,4 +16,8 @@ export class CatastroService {
     return this.http.get(url, { responseType: 'text' });
   }
 
+  getDatosParcela(codigoProvincia: number, codigoMunicipio: number, refCatastral: string): Observable<any> {
+    const url = `http://ovc.catastro.meh.es/ovcservweb/OVCSWLocalizacionRC/OVCCallejeroCodigos.asmx/Consulta_DNPRC_Codigos?CodigoProvincia=${codigoProvincia}&CodigoMunicipio=${codigoMunicipio}&CodigoMunicipioINE=&RC=${refCatastral}`;
+    return this.http.get(url, { responseType: 'text' });
+  }
 }

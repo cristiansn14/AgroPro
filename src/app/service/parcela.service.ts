@@ -4,10 +4,9 @@ import { ParcelaDto } from '../model/parcelaDto';
 import { Observable } from 'rxjs';
 import { ParcelaConstruccionDto } from '../model/parcelaConstruccionDto';
 import { ParcelaConstruccion } from '../model/parcelaConstruccion';
-import { ParcelaInfo } from '../model/parcelaInfo';
 import { SubparcelaInfo } from '../model/subparcelaInfo';
-import { RecintoInfo } from '../model/recintoInfo';
 import { UsuarioParcelaInfo } from '../model/usuarioParcelaInfo';
+import { Parcela } from '../model/parcela';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +25,8 @@ export class ParcelaService {
     return this.httpClient.post<any>(this.parcelaURL + '/guardarParcelaConstruccion', parcelaConstruccionDto)
   }
 
-  public findParcelaByReferenciaCatastral (referenciaCatastral: string): Observable<ParcelaInfo> {
-    return this.httpClient.get<ParcelaInfo>(`${this.parcelaURL}/findParcelaByReferenciaCatastral/${referenciaCatastral}`);
+  public findParcelaByReferenciaCatastral (referenciaCatastral: string): Observable<Parcela> {
+    return this.httpClient.get<Parcela>(`${this.parcelaURL}/findParcelaByReferenciaCatastral/${referenciaCatastral}`);
   }
 
   public findParcelaConstruccionByReferenciaCatastral (referenciaCatastral: string): Observable<ParcelaConstruccion> {
@@ -36,10 +35,6 @@ export class ParcelaService {
 
   public findSubparcelasByReferenciaCatastral (referenciaCatastral: string): Observable<SubparcelaInfo[]> {
     return this.httpClient.get<SubparcelaInfo[]>(`${this.parcelaURL}/findSubparcelasByReferenciaCatastral/${referenciaCatastral}`);
-  }
-
-  public findRecintosByReferenciaCatastral (referenciaCatastral: string): Observable<RecintoInfo[]> {
-    return this.httpClient.get<RecintoInfo[]>(`${this.parcelaURL}/findRecintosByReferenciaCatastral/${referenciaCatastral}`);
   }
 
   public findUsuariosInParcela (referenciaCatastral: string): Observable<UsuarioParcelaInfo[]> {
