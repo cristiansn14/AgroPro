@@ -43,7 +43,13 @@
                 </table>
             </div>
             <div class="container" *ngIf="usuariosFincaInfo && usuariosFincaInfo.length > 0">
-                <h1>Usuarios</h1>
+                <h1>
+                    Usuarios
+                    <button mat-button routerLink="/dashboard/añadir-usuario" style="margin-left: 20px; width: 100px; background-color: #00796b; color: white;">
+                        <mat-icon>add</mat-icon>
+                        <span>Añadir</span>
+                    </button>
+                </h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>

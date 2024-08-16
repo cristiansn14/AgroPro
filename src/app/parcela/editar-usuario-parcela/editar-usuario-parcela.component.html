@@ -1,0 +1,23 @@
+<h2>Editar Usuario Parcela</h2>
+<form action="#" method="post" class="user-form">  
+    <div style="display: block; width: 100%;">
+        <div class="flex">
+            <div class="form-header">
+                <h1>Datos</h1>
+                <div class="form-group">
+                    <span class="label" style="font-weight: bold;">Nombre y apellidos:</span>
+                    <span class="label">{{ usuarioParcelaInfo?.nombre }} {{ usuarioParcelaInfo?.apellido1 }} {{ usuarioParcelaInfo?.apellido2 }}</span>
+                    <div style="display: flex; width: auto;">
+                        <span class="label" style="font-weight: bold;">Participación:</span>
+                        <span style="color: rgb(255, 94, 0); font-size: 1rem; width: auto; margin-left: 10px;">(Disponibles: {{ participacionDisponible }})</span>
+                    </div>                   
+                    <input type="number" id="onzas" name="onzas" required [ngModel]="usuarioParcelaInfo?.participacion" (ngModelChange)="usuarioParcelaInfo && (usuarioParcelaInfo.participacion = $event);"><br>
+                </div>                              
+            </div>
+            <div class="div-buttons">
+                <button mat-raised-button class="save-button" (click)="editar()">Guardar</button>
+                <button mat-raised-button class="cancel-button" routerLink="/dashboard/detalles-parcela/{{usuarioParcelaInfo?.referenciaCatastral}}">Cancelar</button>
+            </div>
+        </div>
+    </div>    
+</form>

@@ -121,6 +121,13 @@ export class CrearFincaComponent implements OnInit {
     const nombreHtml = document.getElementById('nombre') as HTMLInputElement;
     const onzasHtml = document.getElementById('onzas') as HTMLInputElement;
 
+    if (Number(onzasHtml.value) <= 0) {
+      this.toastr.warning('El número de onzas no puede ser 0', 'Atención', {
+        timeOut: 3000, positionClass: 'toast-top-center'
+      });
+      return;
+    }
+
     if (nombreHtml.value !== null || Number(onzasHtml.value !== null) || this.selectedComunidad !== null || this.selectedProvincia !== null || this.selectedMunicipio !== null) {
       this.fincaDto = new Finca (
         null,

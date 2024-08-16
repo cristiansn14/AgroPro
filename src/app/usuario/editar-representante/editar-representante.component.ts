@@ -84,6 +84,19 @@ export class EditarRepresentanteComponent implements OnInit, OnDestroy{
       return;
     }
 
+    if (this.representante?.nombre?.length === 0 ||
+      this.representante?.apellido1?.length === 0 ||
+      this.representante?.apellido2?.length === 0 ||
+      this.representante?.email?.length === 0 ||
+      this.representante?.dni?.length === 0 ||
+      this.representante?.telefono?.length === 0 ) 
+    {
+      this.toastr.warning('Rellene todos los campos para poder editar', 'Atención', {
+        timeOut: 3000, positionClass: 'toast-top-center'
+      });
+      return;
+    }
+
     const representante = new Representante (
       this.representante?.id ? this.representante.id : null,
       this.representante?.nombre ? this.representante.nombre : null,
@@ -98,20 +111,27 @@ export class EditarRepresentanteComponent implements OnInit, OnDestroy{
     );
 
     this.usuarioService.editarRepresentante(representante).subscribe({
-      next: (data) => {        
-        this.toastr.success('Representante actualizado con éxito', 'Éxito', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        });
+      next: (response) => {
+        if (response.status === 304) {
+          this.toastr.info('No se realizaron cambios en el representante.', 'Información', {
+            timeOut: 3000,
+            positionClass: 'toast-top-center'
+          });
+        } else {
+          this.toastr.success('Representante actualizado con éxito', 'Éxito', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+          this.router.navigateByUrl(`/dashboard/ver-perfil/${this.representante?.idUsuario}`);
+        }         
       },
       error: (err) => {
-        this.error = err.error.message;
-        this.toastr.error(this.error, 'Error al editar el representante', {
-          timeOut: 3000, positionClass: 'toast-top-center'
-        });
-        return;
+        const errorMessage = err?.error?.message || 'No se han detectado cambios';
+          this.toastr.warning(errorMessage, 'Error al guardar la parcela', {
+            timeOut: 3000,
+            positionClass: 'toast-top-center'
+          });
+          return;
       }
-    });
-
-    this.router.navigateByUrl(`/dashboard/ver-perfil/${this.representante?.idUsuario}`);
+    });  
   }
 }

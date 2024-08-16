@@ -37,7 +37,7 @@
     color: black;
     margin: unset;
     margin-top: -30px;
-    background-color: rgb(238, 238, 237);
+    background-color: #e8f5e9;
     width: fit-content;
     margin-bottom: 10px;
   }
@@ -45,6 +45,17 @@
   .form-group {
     flex-direction: column;
   }
+
+  .label {
+    flex-basis: 100%;
+    font-size: 1rem;
+    color: hsl(0, 0%, 20%);
+    width: fit-content;
+    margin-right: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
   
   .user-form label {
     flex-basis: 100%;
@@ -105,8 +116,8 @@
   .file-upload-label {
     display: block;
     padding: 10px 20px;
-    background-color: #b929e6;
-    color: white;
+    background-color: #00796b;
+    color: white !important;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -118,6 +129,7 @@
   .file-upload-label:hover {
     background-color: #b929e6;
     width: fit-content;
+    color: black !important;
   }
   
   .file-upload-input {

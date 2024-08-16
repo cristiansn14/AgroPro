@@ -25,7 +25,7 @@ h2 {
 
 .div-buttons{
     position: absolute;
-    top: 5; 
+    top: 50; 
     right: 0;
     margin-right: 20px; 
     width: auto;
@@ -101,7 +101,7 @@ h1 {
 }
 
 /* Media queries para pantallas pequeñas */
-@media only screen and (max-width: 1425px) {
+@media only screen and (max-width: 1600px) {
     .user-form {
         align-items: flex-start;
     }

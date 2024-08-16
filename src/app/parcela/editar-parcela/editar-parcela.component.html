@@ -1,0 +1,75 @@
+<h2>Detalles Parcela</h2>
+<form action="#" method="post" class="user-form">
+    <div class="flex">
+        <div style="flex-direction: column;">
+            <div class="flex" *ngIf="parcelaConstruccion?.referenciaCatastral">
+                <div class="form-header">
+                    <h1>Datos</h1>
+                    <div class="form-group">           
+                        <div><span class="label" style="font-weight: bold;">Referencia catastral:</span> <span class="label">{{ parcelaConstruccion?.referenciaCatastral }}</span></div>
+                        <div><span class="label" style="font-weight: bold;">Uso principal:</span> <span class="label">{{ parcelaConstruccion?.usoPrincipal }}</span></div> 
+
+                        <span class="label" style="font-weight: bold;">Escalera:</span>
+                        <input type="number" id="escalera" name="escalera" required [ngModel]="parcelaConstruccion?.escalera" (ngModelChange)="parcelaConstruccion && (parcelaConstruccion.escalera = $event)"><br> 
+
+                        <span class="label" style="font-weight: bold;">Planta:</span>
+                        <input type="number" id="planta" name="planta" required [ngModel]="parcelaConstruccion?.planta" (ngModelChange)="parcelaConstruccion && (parcelaConstruccion.planta = $event)"><br> 
+
+                        <span class="label" style="font-weight: bold;">Puerta:</span>
+                        <input type="number" id="puerta" name="puerta" required [ngModel]="parcelaConstruccion?.puerta" (ngModelChange)="parcelaConstruccion && (parcelaConstruccion.puerta = $event)"><br>
+                    </div>
+                </div>
+                <div class="form-header">
+                    <h1>Características</h1>                               
+                    <div class="form-group">
+                        <span class="label" style="font-weight: bold;">Tipo reforma:</span> 
+                        <input type="text" id="tipoReforma" name="tipoReforma" required [ngModel]="parcelaConstruccion?.tipoReforma" (ngModelChange)="parcelaConstruccion && (parcelaConstruccion.tipoReforma = $event)"><br>
+
+                        <span class="label" style="font-weight: bold;">Fecha reforma:</span>
+                        <input type="date" id="fechaReforma" name="fechaReforma" required [ngModel]="parcelaConstruccion?.fechaReforma" (ngModelChange)="parcelaConstruccion && (parcelaConstruccion.fechaReforma = $event)"><br>
+
+                        <span class="label" style="font-weight: bold;">Superficie (m2):</span> 
+                        <input type="number" id="superficie" name="superficie" required [ngModel]="parcelaConstruccion?.superficie" (ngModelChange)="parcelaConstruccion && (parcelaConstruccion.superficie = $event)"><br>
+                    </div>      
+                </div>
+            </div>
+            <div *ngIf="parcela?.referenciaCatastral">
+                <div class="flex">
+                    <div class="form-header">
+                        <h1>Datos</h1>
+                        <div class="form-group">           
+                            <div><span class="label" style="font-weight: bold;">Referencia catastral:</span> <span class="label">{{ parcela?.referenciaCatastral }}</span></div>
+                            <div><span class="label" style="font-weight: bold;">Polígono:</span> <span class="label">{{ parcela?.poligono }}</span></div> 
+                            <div><span class="label" style="font-weight: bold;">Parcela:</span> <span class="label">{{ parcela?.parcela }}</span></div>
+                            <div><span class="label" style="font-weight: bold;">Paraje:</span> <span class="label">{{ parcela?.paraje }}</span></div>
+                            <div><span class="label" style="font-weight: bold;">Clase:</span> <span class="label">{{ parcela?.clase }}</span></div>
+                            <div><span class="label" style="font-weight: bold;">Uso principal:</span> <span class="label">{{ parcela?.usoPrincipal }}</span></div>
+                        </div>
+                    </div>
+                    <div class="form-header">
+                        <h1>Características</h1>                               
+                        <div class="form-group">
+                            <div><span class="label" style="font-weight: bold;">Superficie (m2):</span> <span class="label">{{ parcela?.superficie }} m2</span></div>
+    
+                            <span class="label" style="font-weight: bold;">Valor del suelo:</span>
+                            <input type="text" id="valorSuelo" name="valorSuelo" required [ngModel]="parcela?.valorSuelo" (ngModelChange)="parcela && (parcela.valorSuelo = $event)"><br> 
+    
+                            <span class="label" style="font-weight: bold;">Valor construcción:</span>
+                            <input type="text" id="valorConstruccion" name="valorConstruccion" required [ngModel]="parcela?.valorConstruccion" (ngModelChange)="parcela && (parcela.valorConstruccion = $event)"><br> 
+    
+                            <span class="label" style="font-weight: bold;">Valor catastral:</span>
+                            <input type="text" id="valorCatastral" name="valorCatastral" required [ngModel]="parcela?.valorCatastral" (ngModelChange)="parcela && (parcela.valorCatastral = $event)"><br> 
+    
+                            <span class="label" style="font-weight: bold;">Año valor:</span>
+                            <input type="text" id="anoValor" name="anoValor" required [ngModel]="parcela?.anoValor" (ngModelChange)="parcela && (parcela.anoValor = $event)"><br> 
+                        </div>       
+                    </div>
+                </div>                
+            </div>
+        </div>        
+        <div class="div-buttons">
+            <button mat-raised-button class="edit-button" (click)="editar()">Editar</button>
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard/detalles-parcela/{{referenciaCatastral}}">Cancelar</button>          
+        </div>
+    </div>   
+</form>

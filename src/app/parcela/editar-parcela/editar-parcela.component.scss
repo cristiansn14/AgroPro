@@ -36,7 +36,6 @@ h2 {
     height: fit-content;
     margin-bottom: 10px;
     margin-right: 70px;
-    margin-left: 20px;
 }
 
 .form-group {
@@ -54,6 +53,24 @@ h2 {
     margin-bottom: 10px;
 }
 
+.user-form label {
+    font-size: 0.8rem;
+    color: hsl(0, 0%, 20%);
+    width: fit-content;
+    margin-right: 20px;
+    margin-top: 5px;
+}
+
+.user-form input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    width: 100%; 
+    margin-right: 20px;
+}
+
 .div-buttons{
     position: absolute;
     top: 5; 
@@ -62,7 +79,7 @@ h2 {
     width: auto;
     height: auto;
     //display: flex;
-  }
+}
 
 .edit-button{
     width: 100px;
@@ -79,16 +96,6 @@ h2 {
     margin-top: 15px;
 }
 
-/* Contenedor de la tabla */
-.container {
-    background-color: #e8f5e9;
-    border-radius: 8px;
-    margin-left: 20px;
-    margin-right: inherit;
-    --bs-gutter-x: 0;
-    margin-top: 30px;
-}
-
 h1 {
     font-weight: bold;
     color: black;
@@ -99,45 +106,8 @@ h1 {
     margin-bottom: 10px;
 }
 
-/* Estilo de la tabla */
-.table {
-    border-radius: 5px;
-    overflow: hidden;
-    width: fit-content;
-}
-
-/* Estilo para las celdas del encabezado de la tabla */
-.table thead th {
-    background-color: #00796b; /* Gris más oscuro */
-    color: white; /* Color de texto negro */
-    font-weight: bold;
-    font-size: 14px; /* Letras más pequeñas */
-    padding: 15px 20px;
-    margin-left: 10px;
-}
-
-/* Estilo para las celdas de los datos de la tabla */
-.table tbody td {
-    background-color: #e8f5e9; /* Fondo de las celdas más claro */
-    color: black; /* Color de texto negro */
-    font-size: 14px; /* Letras más pequeñas */
-    vertical-align: middle;
-    padding-left: 20px; /* Espacio específico desde el borde izquierdo */
-    text-align: left; /* Alinea el texto a la izquierda */
-    padding-right: 20px; /* Espacio específico desde el borde izquierdo */
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-/* Estilo para los botones de la tabla */
-.btn {
-    font-size: 12px; /* Tamaño de fuente más pequeño para los botones */
-}
-
 /* Media queries para pantallas pequeñas */
-@media only screen and (max-width: 1470px) {
+@media only screen and (max-width: 1200px) {
     .user-form {
         align-items: flex-start;
     }
@@ -149,15 +119,13 @@ h1 {
     .flex{
         flex-direction: column;
         align-items: left;
-        width: 100% !important;
-        margin-left: 0px;
+        width: 100%;
     }
     
     .form-header{
         width: 100%;
         margin-bottom: 20px;
         width: 100% !important;
-        margin-left: 0px;
     }
 
     .form-group {
@@ -165,15 +133,6 @@ h1 {
         margin-right: 0;
         margin-left: 0;
         width: 100% !important;
-    }
-
-    .container {
-        background-color: #e8f5e9;
-        border-radius: 8px;
-        margin-right: inherit;
-        --bs-gutter-x: 0;
-        margin-top: 30px;
-        margin-left: 0px;
     }
 
     .div-buttons{

@@ -164,7 +164,7 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
 
     this.fincaService.eliminarUsuarioFinca(usuarioFinca).subscribe({
       next: () => {
-        this.toastr.success('Finca actualizada con éxito', 'Éxito', {
+        this.toastr.success('Usuario de la finca eliminado con éxito', 'Éxito', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
         this.ngOnInit();

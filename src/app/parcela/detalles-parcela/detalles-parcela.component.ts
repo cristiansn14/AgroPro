@@ -130,21 +130,29 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
   loadParcela(): void {
     this.parcelaService.findParcelaByReferenciaCatastral(this.referenciaCatastral).subscribe({
       next: (parcela) => {
-        this.parcela = parcela;
-        this.loadSubparcelas();
+        if (parcela.referenciaCatastral !== null) {
+          this.parcela = parcela;
+          this.loadSubparcelas();
+        } else {
+          this.parcelaService.findParcelaConstruccionByReferenciaCatastral(this.referenciaCatastral).subscribe({
+            next: (parcelaConstruccion) => {
+              this.parcelaConstruccion = parcelaConstruccion;
+            },
+            error: (err) => {
+              this.error = err.error.message;
+              this.toastr.error(this.error, 'Error al cargar la parcela', {
+                timeOut: 3000, positionClass: 'toast-top-center'
+              })
+            }
+          });
+        }        
       },
-      error: (err) => {
-        this.parcelaService.findParcelaConstruccionByReferenciaCatastral(this.referenciaCatastral).subscribe({
-          next: (parcelaConstruccion) => {
-            this.parcelaConstruccion = parcelaConstruccion;
-          },
-          error: (err) => {
-            this.error = err.error.message;
-            this.toastr.error(this.error, 'Error al cargar la parcela', {
-              timeOut: 3000, positionClass: 'toast-top-center'
-            })
-          }
-        });
+      error: (err) => {                 
+        this.error = err.error.message;
+        this.toastr.error(this.error, 'Error al cargar la parcela', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        })
+          
       }
     });
   }
@@ -245,16 +253,24 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
             null
           );
   
-          this.parcelaService.guardarParcela(parcelaDto).subscribe({
+          this.parcelaService.actualizarParcela(parcelaDto).subscribe({
             next: response => {
-              this.toastr.success('La parcela se ha añadido correctamente.', 'Éxito', {
-                timeOut: 3000,
-                positionClass: 'toast-top-center'
-              });
-              this.ngOnInit();
+              if (response.status === 304) {
+                this.toastr.info('No se realizaron cambios en la parcela.', 'Información', {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-center'
+                });
+              } else {
+                this.toastr.success('La parcela se ha actualizado correctamente', 'Éxito', {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-center'
+                });
+                this.ngOnInit();
+              }
             },
             error: err => {
-              this.toastr.error(err.error.message, 'Error al guardar la parcela', {
+              const errorMessage = err?.error?.message || 'No se han detectado cambios';
+              this.toastr.warning(errorMessage, 'Error al guardar la parcela', {
                 timeOut: 3000,
                 positionClass: 'toast-top-center'
               });
@@ -270,5 +286,22 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
         }
       });
     }
+  }
+
+  eliminarUsuarioParcela(usuarioParcelaInfo: UsuarioParcelaInfo) {
+    this.parcelaService.eliminarUsuarioParcela(usuarioParcelaInfo).subscribe({
+      next: () => {
+        this.toastr.success('Usuario eliminado con éxito', 'Éxito', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        });
+        this.ngOnInit();
+      },
+      error: (err) => {
+        this.error = err.error.message;
+        this.toastr.error(this.error, 'Error al eliminar el usuario de la parcela', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        })
+      }
+    });
   }
 }

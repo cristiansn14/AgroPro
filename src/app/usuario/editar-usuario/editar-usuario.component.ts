@@ -176,10 +176,21 @@ export class EditarUsuarioComponent implements OnInit {
   }
 
   editar() {
-    if (this.usuario && this.usuarioOriginal) {   
+    if (this.usuario && this.usuarioOriginal) {
+      if (this.usuario.nombre?.length === 0 ||
+          this.usuario.apellido1?.length === 0 ||
+          this.usuario.apellido2?.length === 0 ||
+          this.usuario.email?.length === 0 ||
+          this.usuario.username?.length === 0
+      ) {
+        this.toastr.warning('Campos obligatorios sin rellenar', 'Atención', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        });
+        return;
+      }  
       if (this.hayCambios() || this.selectedFile) {
         this.usuarioService.editarUsuario(this.usuario, this.selectedFile).subscribe({
-          next: () => {
+          next: (response) => {
             if (this.selectedFile) {
               const reader = new FileReader();
               reader.onload = () => {
@@ -188,16 +199,25 @@ export class EditarUsuarioComponent implements OnInit {
               };
               reader.readAsDataURL(this.selectedFile);
             }
-            this.toastr.success('Usuario actualizado con éxito', 'Éxito', {
-              timeOut: 3000, positionClass: 'toast-top-center'
-            });
-            this.router.navigateByUrl(`/dashboard/ver-perfil/${this.idUsuario}`);
+            if (response.status === 304) {
+              this.toastr.info('No se realizaron cambios en la parcela.', 'Información', {
+                timeOut: 3000,
+                positionClass: 'toast-top-center'
+              });
+            } else {
+              this.toastr.success('Usuario actualizado con éxito', 'Éxito', {
+                timeOut: 3000, positionClass: 'toast-top-center'
+              });
+              this.router.navigateByUrl(`/dashboard/ver-perfil/${this.idUsuario}`);
+            }         
           },
           error: (err) => {
-            this.error = err.error.message;
-            this.toastr.error(this.error, 'Error al editar usuario', {
-              timeOut: 3000, positionClass: 'toast-top-center'
-            })
+            const errorMessage = err?.error?.message || 'No se han detectado cambios';
+            this.toastr.warning(errorMessage, 'Error al guardar la parcela', {
+              timeOut: 3000,
+              positionClass: 'toast-top-center'
+            });
+            return;
           }
         });
       } else {

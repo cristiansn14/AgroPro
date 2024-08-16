@@ -7,13 +7,13 @@ export class ParcelaConstruccion{
     planta: number | null;
     puerta: number | null; 
     tipoReforma: string | null;
-    fechaReforma: string | null; 
+    fechaReforma: Date | null; 
     fechaAlta: Date | null;
     fechaModificacion: Date | null;
     fechaBaja: Date | null; 
 
     constructor(referenciaCatastral: string | null, idFinca: string | null, superficie: number | null, escalera: number | null, 
-                planta: number | null, puerta: number | null, tipoReforma: string | null, fechaReforma: string | null, 
+                planta: number | null, puerta: number | null, tipoReforma: string | null, fechaReforma: Date | null, 
                 usoPrincipal: string | null, fechaAlta: Date | null, fechaModificacion: Date | null, fechaBaja: Date | null) {
         this.referenciaCatastral = referenciaCatastral;
         this.idFinca = idFinca;

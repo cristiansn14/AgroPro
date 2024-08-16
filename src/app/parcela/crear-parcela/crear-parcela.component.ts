@@ -216,7 +216,7 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
   createPropietarioForm(): FormGroup {
     const propietarioForm = this.fb.group({
       usuario: ['', Validators.required],
-      participacion: ['', [Validators.required, Validators.min(0), Validators.max(100)]]
+      participacion: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
     });
 
     return propietarioForm;
@@ -254,6 +254,59 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
         return; 
       }
 
+      if (this.propietariosForm.get('propietarios')?.hasError('participacionTotalInvalida')) {
+        this.toastr.error('La participación total no puede superar el 100%.', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return; 
+      }
+
+      if (this.propietariosForm.invalid) {
+        this.toastr.error('Formulario no válido, faltan campos o alguno es erróneo', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return;
+      }
+
+      const referenciaHtml = document.getElementById('referenciaC') as HTMLInputElement;
+      const usoPrincipalHtml = document.getElementById('usoPrincipalC') as HTMLInputElement;
+      const escaleraHtml = document.getElementById('escaleraC') as HTMLInputElement;
+      const plantaHtml = document.getElementById('plantaC') as HTMLInputElement;
+      const puertaHtml = document.getElementById('puertaC') as HTMLInputElement;
+      const tipoReformaHtml = document.getElementById('tipoReformaC') as HTMLInputElement;
+      const fechaReformaHtml = document.getElementById('fechaReformaC') as HTMLInputElement;
+      const superficieHtml = document.getElementById('superficieC') as HTMLInputElement;
+
+      if (!referenciaHtml?.value ||
+        !usoPrincipalHtml?.value ||
+        !escaleraHtml?.value ||
+        !plantaHtml?.value ||
+        !puertaHtml?.value ||
+        !superficieHtml?.value
+      ) {
+        this.toastr.warning('Campos obligatorios sin rellenar', 'Atención', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        });
+        return;
+      }
+
+      const parcelaConstruccion = new ParcelaConstruccion (
+        referenciaHtml.value,
+        this.selectedFinca,
+        Number(superficieHtml.value),
+        Number(escaleraHtml.value),        
+        Number(plantaHtml.value),
+        Number(puertaHtml.value),
+        tipoReformaHtml ? tipoReformaHtml.value : null,
+        fechaReformaHtml ? new Date(fechaReformaHtml.value) : null,
+        usoPrincipalHtml.value,
+        null,
+        null,
+        null
+      );
+
       const usuariosParcelaRequestDto = (this.propietariosForm.get('propietarios') as FormArray).controls.map(control => new UsuarioParcela(
         null,
         control.get('participacion')?.value,
@@ -263,30 +316,6 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
         null,
         null
       ));
-
-      const referenciaHtml = document.getElementById('referenciaC') as HTMLInputElement;
-      const usoPrincipalHtml = document.getElementById('usoPrincipalC') as HTMLInputElement;
-      const escaleraCHtml = document.getElementById('escaleraC') as HTMLInputElement;
-      const plantaHtml = document.getElementById('plantaC') as HTMLInputElement;
-      const puertaHtml = document.getElementById('puertaC') as HTMLInputElement;
-      const tipoReformaHtml = document.getElementById('tipoReformaC') as HTMLInputElement;
-      const fechaReforaHtml = document.getElementById('fechaReformaC') as HTMLInputElement;
-      const superficieHtml = document.getElementById('superficieC') as HTMLInputElement;
-
-      const parcelaConstruccion = new ParcelaConstruccion (
-        referenciaHtml.value,
-        this.selectedFinca,
-        Number(superficieHtml.value),
-        Number(escaleraCHtml.value),        
-        Number(plantaHtml.value),
-        Number(puertaHtml.value),
-        tipoReformaHtml.value,
-        fechaReforaHtml.value,
-        usoPrincipalHtml.value,
-        null,
-        null,
-        null
-      );
 
       const parcelaConstruccionDto = new ParcelaConstruccionDto (
         parcelaConstruccion,
@@ -299,7 +328,7 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
             timeOut: 3000,
             positionClass: 'toast-top-center'
           });
-          this.ngOnInit();
+          this.router.navigateByUrl(`/dashboard/detalles-parcela/${referenciaHtml.value}`);
         },
         error: err => {
           this.toastr.error(err.error.message, 'Error', {
@@ -332,6 +361,14 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
           positionClass: 'toast-top-center'
         });
         return; 
+      }
+
+      if (this.propietariosForm.invalid) {
+        this.toastr.error('Formulario no válido, faltan campos o alguno es erróneo', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return;
       }
 
       const refCatastralHtml = document.getElementById('referencia') as HTMLInputElement;

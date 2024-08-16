@@ -6,6 +6,7 @@
                 <div class="form-header">
                     <h1>Datos personales</h1>
                     <div class="form-group">
+                        <img *ngIf="flagFoto" class="avatar mat-elevation-z8" [src]="fotoPerfilUrl" alt="">  
                         <div><span class="label" style="font-weight: bold;">Nombre:</span> <span class="label">{{ usuario?.nombre }}</span></div>
                         <div><span class="label" style="font-weight: bold;">Primer Apellido:</span> <span class="label">{{ usuario?.apellido1 }}</span></div> 
                         <div><span class="label" style="font-weight: bold;">Segundo Apellido:</span> <span class="label">{{ usuario?.apellido2 }}</span></div>
@@ -25,15 +26,18 @@
                 </div>   
                 <div class="form-header">
                     <h1>Usuario</h1> 
-                    <div class="form-group">                 
-                        <div><span class="label" style="font-weight: bold;">Email:</span> <span class="label">{{ usuario?.email }}</span></div>
-                        <div><span class="label" style="font-weight: bold;">Teléfono:</span> <span class="label">{{ usuario?.telefono }}</span></div>
-                        <div><span class="label" style="font-weight: bold;">Usuario:</span> <span class="label">{{ usuario?.username }}</span></div>
-                        <div><span class="label" style="font-weight: bold;">Fecha de alta:</span> <span class="label">{{ usuario?.fechaAlta | date:'dd/MM/yyyy' }}</span></div>
-                        <div style="display: flex;">
-                            <button mat-raised-button class="password-button" routerLink="/dashboard/editar-usuario/{{idUsuario}}">Cambiar contraseña</button>
-                            <button mat-raised-button class="repre-button" routerLink="/dashboard/añadir-representante/{{idUsuario}}">Añadir representante</button>
-                        </div>              
+                    <div class="form-group">
+                        <div>
+                            <div><span class="label" style="font-weight: bold;">Email:</span> <span class="label">{{ usuario?.email }}</span></div>
+                            <div><span class="label" style="font-weight: bold;">Teléfono:</span> <span class="label">{{ usuario?.telefono }}</span></div>
+                            <div><span class="label" style="font-weight: bold;">Usuario:</span> <span class="label">{{ usuario?.username }}</span></div>
+                            <div><span class="label" style="font-weight: bold;">Fecha de alta:</span> <span class="label">{{ usuario?.fechaAlta | date:'dd/MM/yyyy' }}</span></div>
+                            <div style="display: flex;">
+                                <button mat-raised-button class="password-button" routerLink="/dashboard/editar-usuario/{{idUsuario}}">Cambiar contraseña</button>
+                                <button mat-raised-button class="repre-button" routerLink="/dashboard/añadir-representante/{{idUsuario}}">Añadir representante</button>
+                            </div>  
+                        </div>                 
+                                  
                     </div>
                 </div>
             </div> 

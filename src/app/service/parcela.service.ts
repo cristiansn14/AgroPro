@@ -7,6 +7,7 @@ import { ParcelaConstruccion } from '../model/parcelaConstruccion';
 import { SubparcelaInfo } from '../model/subparcelaInfo';
 import { UsuarioParcelaInfo } from '../model/usuarioParcelaInfo';
 import { Parcela } from '../model/parcela';
+import { UsuarioParcela } from '../model/usuario-parcela';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,32 @@ export class ParcelaService {
     return this.httpClient.post<any>(this.parcelaURL + '/guardarParcela', parcelaDto)
   }
 
+  public actualizarParcela (parcelaDto: ParcelaDto): Observable<any> {
+    return this.httpClient.post<any>(this.parcelaURL + '/actualizarParcela', parcelaDto, { observe: 'response' })
+  }
+
+  public editarParcela (parcela: Parcela): Observable<any> {
+    return this.httpClient.post<any>(this.parcelaURL + '/editarParcela', parcela, { observe: 'response' })
+  }
+
   public guardarParcelaConstruccion (parcelaConstruccionDto: ParcelaConstruccionDto): Observable<any> {
     return this.httpClient.post<any>(this.parcelaURL + '/guardarParcelaConstruccion', parcelaConstruccionDto)
+  }
+
+  public editarParcelaConstruccion (parcelaConstruccion: ParcelaConstruccion): Observable<any> {
+    return this.httpClient.post<any>(this.parcelaURL + '/editarParcelaConstruccion', parcelaConstruccion , { observe: 'response' })
+  }
+
+  public crearUsuarioParcela (usuarioParcelaDto: UsuarioParcela[]): Observable<any> {
+    return this.httpClient.post<any>(`${this.parcelaURL}/crearUsuarioParcela`, usuarioParcelaDto);
+  }
+
+  public editarUsuarioParcela (usuarioParcelaDto: UsuarioParcelaInfo): Observable<any> {
+    return this.httpClient.post<any>(`${this.parcelaURL}/editarUsuarioParcela`, usuarioParcelaDto , { observe: 'response' });
+  }
+
+  public eliminarUsuarioParcela (usuarioParcelaDto: UsuarioParcelaInfo): Observable<any> {
+    return this.httpClient.post<any>(`${this.parcelaURL}/eliminarUsuarioParcela`, usuarioParcelaDto);
   }
 
   public findParcelaByReferenciaCatastral (referenciaCatastral: string): Observable<Parcela> {
@@ -39,5 +64,13 @@ export class ParcelaService {
 
   public findUsuariosInParcela (referenciaCatastral: string): Observable<UsuarioParcelaInfo[]> {
     return this.httpClient.get<UsuarioParcelaInfo[]>(`${this.parcelaURL}/findUsuariosInParcela/${referenciaCatastral}`);
+  }
+
+  public findUsuarioParcelaById (idUsuarioParcela: string): Observable<UsuarioParcelaInfo> {
+    return this.httpClient.get<UsuarioParcelaInfo>(`${this.parcelaURL}/findUsuarioParcelaById/${idUsuarioParcela}`);
+  }
+
+  public getParticipacionesDisponibles (referenciaCatastral: string): Observable<any> {
+    return this.httpClient.get<number>(`${this.parcelaURL}/getParticipacionesDisponibles/${referenciaCatastral}`);
   }
 }

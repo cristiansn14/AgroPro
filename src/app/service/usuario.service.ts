@@ -39,7 +39,7 @@ export class UsuarioService {
       formData.append('foto', file, file.name);
     }
 
-    return this.http.post<any>(this.usuarioUrl + '/editarUsuario', formData);
+    return this.http.post<any>(this.usuarioUrl + '/editarUsuario', formData, { observe: 'response' });
   }
 
   getFotoPerfil(idUsuario: string): Observable<Blob> {
@@ -51,7 +51,7 @@ export class UsuarioService {
   }
 
   public editarRepresentante (representante: Representante): Observable<any> {
-    return this.http.post<any>(`${this.usuarioUrl}/editarRepresentante`, representante);
+    return this.http.post<any>(`${this.usuarioUrl}/editarRepresentante`, representante, { observe: 'response' });
   }
 
   public eliminarRepresentante (representante: Representante): Observable<any> {
@@ -64,5 +64,9 @@ export class UsuarioService {
 
   public findRepresentanteById (idRepresentante: string): Observable<Representante> {
     return this.http.get<Representante>(`${this.usuarioUrl}/findRepresentanteById/${idRepresentante}`);
+  }
+
+  public findUsuariosByFincaAndNotInParcela(idFinca: string, referenciaCatastral: string): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.usuarioUrl}/findUsuariosByFincaAndNotInParcela/${idFinca}/${referenciaCatastral}`);
   }
 }

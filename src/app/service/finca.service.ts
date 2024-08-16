@@ -29,7 +29,7 @@ export class FincaService {
   }
 
   public editarFinca (fincaDto: Finca): Observable<any> {
-    return this.httpClient.post<any>(this.fincaURL + '/editarFinca', fincaDto)
+    return this.httpClient.post<any>(this.fincaURL + '/editarFinca', fincaDto , { observe: 'response' })
   }
 
   public getFincaByUsuarioId (idUsuario: String): Observable<any> {
@@ -45,7 +45,7 @@ export class FincaService {
   }
 
   public editarUsuarioFinca (usuarioFinca: UsuarioFinca): Observable<any> {
-    return this.httpClient.post<any>(`${this.fincaURL}/editarUsuarioFinca`, usuarioFinca);
+    return this.httpClient.post<any>(`${this.fincaURL}/editarUsuarioFinca`, usuarioFinca , { observe: 'response' });
   }
 
   public eliminarUsuarioFinca (usuarioFinca: UsuarioFinca): Observable<any> {

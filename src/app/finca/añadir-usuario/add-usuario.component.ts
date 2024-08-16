@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Usuario } from 'src/app/model/usuario';
@@ -58,6 +59,7 @@ export class AddUsuarioComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private fincaService: FincaService,
     private toastr: ToastrService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -103,6 +105,12 @@ export class AddUsuarioComponent implements OnInit, OnDestroy {
     this.usuarioService.findUsuariosNotInFinca(idFinca).subscribe({
       next: (usuarios) => {
         this.usuariosDisponibles = usuarios;
+        if (this.usuariosDisponibles.length === 0) {
+          this.toastr.warning(this.error, 'No hay usuarios disponibles para añadir', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+          this.router.navigateByUrl(`/dashboard/detalles-finca`);
+        }
         this.updateValidators();
       },
       error: (err) => {
@@ -118,6 +126,12 @@ export class AddUsuarioComponent implements OnInit, OnDestroy {
     this.fincaService.getOnzasDisponibles(idFinca).subscribe({
       next: (onzasDisp) => {
         this.onzasDisponibles = onzasDisp;
+        if (this.onzasDisponibles  === 0) {
+          this.toastr.warning(this.error, 'No hay onzas disponibles', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+          this.router.navigateByUrl(`/dashboard/home`);
+        }
         this.updateValidators();
       },
       error: (err) => {
@@ -168,7 +182,7 @@ export class AddUsuarioComponent implements OnInit, OnDestroy {
   createPropietarioForm(): FormGroup {
     const propietarioForm = this.fb.group({
       usuario: ['', Validators.required],
-      onzas: ['', [Validators.required]],
+      onzas: ['', [Validators.required, Validators.min(1)]],
       administrador: [false],
       propietario: [false]
     });
@@ -240,10 +254,7 @@ export class AddUsuarioComponent implements OnInit, OnDestroy {
           this.toastr.success('Usuarios añadidos a la finca correctamente', 'Éxito', {
             timeOut: 3000, positionClass: 'toast-top-center'
           });
-          this.propietariosForm.reset();
-          this.numeroPropietarios = 0;
-          this.propietarioRows = [];
-          this.ngOnInit();
+          this.router.navigateByUrl(`/dashboard/detalles-finca`);
         },
         error: (err) => {
           this.error = err.error.message;

@@ -18,6 +18,9 @@ import { EditarFincaComponent } from './finca/editar-finca/editar-finca.componen
 import { CrearRepresentanteComponent } from './usuario/crear-representante/crear-representante.component';
 import { EditarUsuarioFincaComponent } from './finca/editar-usuario-finca/editar-usuario-finca.component';
 import { EditarRepresentanteComponent } from './usuario/editar-representante/editar-representante.component';
+import { EditarParcelaComponent } from './parcela/editar-parcela/editar-parcela.component';
+import { EditarUsuarioParcelaComponent } from './parcela/editar-usuario-parcela/editar-usuario-parcela.component';
+import { CrearUsuarioParcelaComponent } from './parcela/crear-usuario-parcela/crear-usuario-parcela.component';
 
 const routes: Routes = [
   { path:'', redirectTo:'/login', pathMatch:'full'},
@@ -68,6 +71,15 @@ const routes: Routes = [
       },
       {
         path: 'detalles-parcela/:referenciaCatastral', component: DetallesParcelaComponent
+      },
+      {
+        path: 'editar-parcela/:referenciaCatastral', component: EditarParcelaComponent
+      },
+      {
+        path: 'crear-usuario-parcela/:referenciaCatastral', component: CrearUsuarioParcelaComponent
+      },
+      {
+        path: 'editar-usuario-parcela/:id', component: EditarUsuarioParcelaComponent
       }
     ]
   },

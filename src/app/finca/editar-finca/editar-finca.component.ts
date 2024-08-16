@@ -174,21 +174,35 @@ export class EditarFincaComponent implements OnInit, OnDestroy {
   }
 
   editar() {
+    if (this.finca?.onzas !== null && this.finca?.onzas !== undefined && this.finca?.onzas <= 0) {
+      this.toastr.warning('El número de onzas no puede ser 0', 'Atención', {
+        timeOut: 3000, positionClass: 'toast-top-center'
+      });
+      return;
+    }
     if (this.finca?.nombre !== null && this.finca?.onzas !== null && this.finca?.comunidad !== null && this.finca?.provincia !== null && this.finca?.municipio !== null) {
       if (this.finca && this.fincaOriginal) {   
         if (this.hayCambios()) {
           this.fincaService.editarFinca(this.finca).subscribe({
-            next: () => {
-              this.toastr.success('Finca actualizada con éxito', 'Éxito', {
-                timeOut: 3000, positionClass: 'toast-top-center'
-              });
-              this.router.navigateByUrl(`/dashboard/detalles-finca`);
+            next: (response) => {
+              if (response.status === 304) {
+                this.toastr.info('No se realizaron cambios en la parcela.', 'Información', {
+                  timeOut: 3000,
+                  positionClass: 'toast-top-center'
+                });
+              } else {
+                this.toastr.success('Finca actualizada con éxito', 'Éxito', {
+                  timeOut: 3000, positionClass: 'toast-top-center'
+                });
+                this.router.navigateByUrl(`/dashboard/detalles-finca`);
+              }
             },
             error: (err) => {
-              this.error = err.error.message;
-              this.toastr.error(this.error, 'Error al editar la finca', {
-                timeOut: 3000, positionClass: 'toast-top-center'
-              })
+              const errorMessage = err?.error?.message || 'No se han detectado cambios';;
+              this.toastr.warning(errorMessage, 'Error al guardar la parcela', {
+                timeOut: 3000,
+                positionClass: 'toast-top-center'
+              });
             }
           });
         } else {

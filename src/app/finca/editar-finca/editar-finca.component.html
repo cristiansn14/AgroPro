@@ -4,30 +4,30 @@
         <div class="form-header">
             <h1>Datos</h1>
             <div class="form-group">
-                <label for="nombre">Nombre:</label>
+                <span class="label" style="font-weight: bold;">Nombre:</span>
                 <input type="text" id="nombre" name="nombre" required [ngModel]="finca?.nombre" (ngModelChange)="finca && (finca.nombre = $event)"><br> 
 
-                <label for="onzas">Onzas:</label>
+                <span class="label" style="font-weight: bold;">Onzas:</span>
                 <input type="number" id="onzas" name="onzas" required [ngModel]="finca?.onzas" (ngModelChange)="finca && (finca.onzas = $event)"><br> 
             </div>                              
         </div>
         <div class="form-header">
             <h1>Ubicación</h1>
             <div class="form-group">                   
-                <label for="comunidad">Comunidad:</label>
+                <span class="label" style="font-weight: bold;">Comunidad:</span>
                 <select id="comunidad" name="comunidad" [(ngModel)]="selectedComunidad" (change)="onComunidadChange()" required>
                     <option value="" disabled selected>Seleccione una comunidad</option>
                     <option *ngFor="let comunidad of comunidades" [value]="comunidad.id">{{ comunidad.nombre }}</option>
                 </select>
 
-                <label for="provincia">Provincia:</label>
+                <span class="label" style="font-weight: bold;">Provincia:</span>
                 <span *ngIf="selectedProvincia === null" style="color: rgb(255, 94, 0); font-size: 0.8rem; margin-left: 10px;">(Seleccione una provincia)</span>
                 <select id="provincia" name="provincia" [(ngModel)]="selectedProvincia" (change)="onProvinciaChange()" required>
                     <option value="" disabled selected>Seleccione una provincia</option>
                     <option *ngFor="let provincia of provincias" [value]="provincia.id">{{ provincia.nombre }}</option>
                 </select>
 
-                <label for="municipio">Municipio:</label>
+                <span class="label" style="font-weight: bold;">Municipio:</span>
                 <span *ngIf="selectedProvincia === null" style="color: rgb(255, 94, 0); font-size: 0.8rem; margin-left: 10px;">(Seleccione una provincia)</span>
                 <select id="municipio" name="municipio" [(ngModel)]="selectedMunicipio" required>
                     <option value="" disabled selected>Seleccione un municipio</option>
