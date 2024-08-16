@@ -5,6 +5,7 @@ import { LoginRequest } from '../model/login-request';
 import { Observable } from 'rxjs';
 import { JwtResponse } from '../model/jwt-response';
 import { TokenService } from './token.service';
+import { ChangePassword } from '../model/changePassword';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,10 @@ export class AuthService {
 
   public login (login: LoginRequest): Observable<any> {
     return this.httpClient.post<JwtResponse>(this.authURL + '/login', login)
+  }
+
+  public changePassword (changePasswordRequest: ChangePassword): Observable<any> {
+    return this.httpClient.post<any>(this.authURL + '/changePassword', changePasswordRequest)
   }
 
 }

@@ -19,6 +19,19 @@ export function passwordsMatchValidator(): ValidatorFn {
   };
 }
 
+export function passwordLengthValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('password');
+    const confirmPassword = control.get('password2');
+
+    if (password && confirmPassword && (password.value.length <= 7 || confirmPassword.value.length <= 7)) {
+      return { wrongLength: true };
+    } else {
+      return null;
+    }
+  };
+}
+
 @Component({
   selector: 'app-crear-usuario', 
   templateUrl: './crear-usuario.component.html',
@@ -92,7 +105,9 @@ export class CrearUsuarioComponent implements OnInit{
       password2: ['', [Validators.required]],
       superusuario: [false],
       usuariorol: [false]
-    }, { validators: passwordsMatchValidator() });
+    }, {
+      validators: [passwordsMatchValidator(), passwordLengthValidator()]
+    });
 
     usuarioForm.get('superusuario')?.valueChanges.subscribe(value => {
       if (value) {
@@ -122,6 +137,9 @@ export class CrearUsuarioComponent implements OnInit{
       // Buscar en cada grupo de controles de usuario si hay un error de desajuste de contraseñas
       this.usuarios.controls.forEach(control => {
         if (control.errors && control.errors['passwordsMismatch']) {
+          foundMismatch = true;
+        }
+        if (control.errors && control.errors['wrongLength']) {
           foundMismatch = true;
         }
       });

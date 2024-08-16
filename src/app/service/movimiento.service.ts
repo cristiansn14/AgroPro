@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movimiento } from '../model/movimiento';
 import { Observable } from 'rxjs';
-import { Archivo } from '../model/archivo';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +32,9 @@ export class MovimientoService {
 
   getArchivoUrl(idArchivo: string): string {
     return `${this.movimientoURL}/findArchivoById/${idArchivo}`;
+  }
+
+  public eliminarMovimiento(idMovimiento: string): Observable<any> {
+    return this.http.delete(`${this.movimientoURL}/eliminarMovimiento/${idMovimiento}`);
   }
 }

@@ -43,6 +43,12 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { EditarParcelaComponent } from './parcela/editar-parcela/editar-parcela.component';
 import { EditarUsuarioParcelaComponent } from './parcela/editar-usuario-parcela/editar-usuario-parcela.component';
 import { CrearUsuarioParcelaComponent } from './parcela/crear-usuario-parcela/crear-usuario-parcela.component';
+import { ChangePasswordComponent } from './usuario/cambiar-contraseña/change-password.component';
+import { GenerarLiquidacionComponent } from './liquidacion/generar-liquidacion/generar-liquidacion.component';
+import { ListarLiquidacionesComponent } from './liquidacion/listar-liquidaciones/listar-liquidaciones.component';
+import { DetallesLiquidacionComponent } from './liquidacion/detalles-liquidacion/detalles-liquidacion.component';
+import { MatSortModule } from '@angular/material/sort';
+
 
 @NgModule({
   declarations: [
@@ -67,6 +73,10 @@ import { CrearUsuarioParcelaComponent } from './parcela/crear-usuario-parcela/cr
     EditarParcelaComponent,
     EditarUsuarioParcelaComponent,
     CrearUsuarioParcelaComponent,
+    ChangePasswordComponent,
+    GenerarLiquidacionComponent,
+    ListarLiquidacionesComponent,
+    DetallesLiquidacionComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,7 +100,8 @@ import { CrearUsuarioParcelaComponent } from './parcela/crear-usuario-parcela/cr
     MatCheckboxModule,
     MatPaginatorModule,
     MatTableModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

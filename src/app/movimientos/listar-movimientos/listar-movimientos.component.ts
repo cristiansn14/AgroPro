@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ListarMovimientosComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['fecha', 'concepto', 'importe', 'archivo'];
+  displayedColumns: string[] = ['fecha', 'concepto', 'importe', 'archivo', 'opciones'];
   dataSource = new MatTableDataSource<Movimiento>();
   selectedFinca: string | null = null;
   private subscription: Subscription | null = null;
@@ -34,7 +34,11 @@ export class ListarMovimientosComponent implements OnInit, OnDestroy {
       if (this.selectedFinca) {
         this.movimientoService.findByFincaId(this.selectedFinca).subscribe({
           next: (movimientos) => {
-            this.dataSource.data = movimientos;
+            this.dataSource.data = movimientos.sort((a, b) => {
+              const dateA = a.fecha ? new Date(a.fecha) : new Date(0);
+              const dateB = b.fecha ? new Date(b.fecha) : new Date(0);
+              return dateB.getTime() - dateA.getTime();
+            });
             this.dataSource.paginator = this.paginator;
           }
         });
@@ -56,8 +60,27 @@ export class ListarMovimientosComponent implements OnInit, OnDestroy {
   }
 
   calculateTotal(): { value: number, className: string } {
-    const total = this.dataSource.data.reduce((sum, movimiento) => sum + (movimiento.importe ?? 0), 0);
-    const className = total >= 0 ? 'positive-total' : 'negative-total';
-    return { value: total, className };
+    const total = this.dataSource.data.reduce((sum, movimiento) => sum + (movimiento.importe ?? 0), 0).toFixed(2);
+    const className = parseFloat(total) >= 0 ? 'positive-total' : 'negative-total';
+    return { value: parseFloat(total), className };
+  }
+
+  eliminarMovimiento(movimiento: Movimiento) {
+    if (movimiento.id !== null) {
+      this.movimientoService.eliminarMovimiento(movimiento.id).subscribe({
+        next: () => {
+          this.toastr.success('Movimiento eliminado con éxito', 'Éxito', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+          this.ngOnInit();
+        },
+        error: (err) => {
+          this.error = err.error.message;
+          this.toastr.error(this.error, 'Error al eliminar el movimiento', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      });
+    } 
   }
 }

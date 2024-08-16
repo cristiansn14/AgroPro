@@ -7,16 +7,10 @@
     display: flex;
 }
 
-.propietarios{
-  display: flex;
-  width: fit-content;
-  margin-bottom: 20px;
-}
-
-.propietario {
-  margin: 0 10px;
-  width: fit-content;
-  box-sizing: border-box;
+.flex{
+    display: flex;
+    width: 100%;
+    height: fit-content;
 }
 
 h2 {
@@ -51,15 +45,6 @@ h1 {
 
 .form-group {
     flex-direction: column;
-}
-
-.label {
-    font-size: 1rem;
-    color: hsl(0, 0%, 20%);
-    width: fit-content;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
 }
 
 .user-form label {
@@ -110,19 +95,52 @@ h1 {
     margin-right: 10px;
 }
 
+.file-upload {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .file-upload-label {
+    display: block;
+    padding: 10px 20px;
+    background-color: #00796b;
+    color: inherit;
+    color: white !important;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+    width: fit-content;
+    flex-basis: auto !important;
+  }
+  
+  .file-upload-label:hover {
+    background-color: #00796b;
+    width: fit-content;
+    color: white;
+  }
+  
+  .file-upload-input {
+    display: none;
+  }
+  
+  .file-name {
+    font-size: 14px;
+    color: #333;
+    margin-left: 50px;
+    width: fit-content;
+  }
+
 @media only screen and (max-width: 1340px) {
   .user-form{
       flex-direction: column;
       align-items: left;
     }
 
-    .propietarios{
+    .flex{
       flex-direction: column;
       align-items: left;
-      width: 100%;
-    }
-    
-    .propietario {
       width: 100%;
     }
 
@@ -150,6 +168,7 @@ h1 {
       width: fit-content;
       height: fit-content;
       margin: inherit;
+      margin-top: 15px;
     }
 
     .create-button{

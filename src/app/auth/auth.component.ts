@@ -54,7 +54,7 @@ export class AuthComponent implements OnInit{
       },
       error: (err) => {
         this.error = err.error.message;
-        this.toastr.error(this.error, 'Error de autenticación', {
+        this.toastr.error(this.error, 'Usuario o contraseña erróneos', {
           timeOut: 3000, positionClass: 'toast-top-center'
         })
       }

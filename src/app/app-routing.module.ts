@@ -21,6 +21,10 @@ import { EditarRepresentanteComponent } from './usuario/editar-representante/edi
 import { EditarParcelaComponent } from './parcela/editar-parcela/editar-parcela.component';
 import { EditarUsuarioParcelaComponent } from './parcela/editar-usuario-parcela/editar-usuario-parcela.component';
 import { CrearUsuarioParcelaComponent } from './parcela/crear-usuario-parcela/crear-usuario-parcela.component';
+import { ChangePasswordComponent } from './usuario/cambiar-contraseña/change-password.component';
+import { GenerarLiquidacionComponent } from './liquidacion/generar-liquidacion/generar-liquidacion.component';
+import { DetallesLiquidacionComponent } from './liquidacion/detalles-liquidacion/detalles-liquidacion.component';
+import { ListarLiquidacionesComponent } from './liquidacion/listar-liquidaciones/listar-liquidaciones.component';
 
 const routes: Routes = [
   { path:'', redirectTo:'/login', pathMatch:'full'},
@@ -61,6 +65,9 @@ const routes: Routes = [
         path: 'editar-usuario-finca/:id', component: EditarUsuarioFincaComponent
       },
       {
+        path: 'change-password/:id', component: ChangePasswordComponent
+      },
+      {
         path: 'crear-parcela', component: CrearParcelaComponent
       },
       {
@@ -80,7 +87,17 @@ const routes: Routes = [
       },
       {
         path: 'editar-usuario-parcela/:id', component: EditarUsuarioParcelaComponent
-      }
+      },
+      {
+        path: 'generar-liquidacion', component: GenerarLiquidacionComponent
+      },
+      {
+        path: 'listar-liquidaciones', component: ListarLiquidacionesComponent
+      },
+      {
+        path: 'detalles-liquidacion/:id', component: DetallesLiquidacionComponent
+      },
+      
     ]
   },
   { path: '**', redirectTo: '/login', pathMatch: 'full' }

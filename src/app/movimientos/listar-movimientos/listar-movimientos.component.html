@@ -37,6 +37,16 @@
             </td>
           </ng-container>
 
+          <ng-container matColumnDef="opciones">
+            <th mat-header-cell *matHeaderCellDef> Opciones </th>
+            <td *matCellDef="let movimiento" style="padding: 5px;">
+                <button mat-button (click)="eliminarMovimiento(movimiento)" style="width: 100px; background-color: #00796b; color: white; margin-left: 20px">
+                    <mat-icon>delete</mat-icon>
+                    <span>Eliminar</span>
+                </button>
+            </td>
+          </ng-container>
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
@@ -49,7 +59,7 @@
     </div>
     <div class="div-buttons">
       <button mat-raised-button class="add-button" routerLink="/dashboard/crear-movimiento">Añadir</button>
-      <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Cancelar</button>
+      <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Volver</button>
     </div>
   </div>
 </form>

@@ -1,22 +1,26 @@
-<h2>Añadir movimiento</h2>
+<h2>Generar liquidación</h2>
 <form action="#" method="post" class="user-form">
     <div style="display: block; width: 100%;">
         <div class="flex">
             <div class="form-header">
                 <h1>Introduzca los siguientes datos</h1>
                 <div class="form-group">
-                    <label for="tipo">Tipo de movimiento:</label>
-                    <select id="tipo" name="tipo">
-                        <option value="ingreso">Ingreso</option>
-                        <option value="gasto">Gasto</option>
-                    </select> 
-
                     <label for="concepto">Concepto:</label>
                     <input type="text" id="concepto" name="concepto" required>
-    
-                    <label for="importe">Importe:</label>
-                    <input type="number" id="importe" name="importe" required>
 
+                    <label for="fecha">Desde:</label>
+                    <input type="date" id="fechaDesde" name="fechaDesde">
+
+                    <label for="fecha">Hasta:</label>
+                    <input type="date" id="fechaHasta" name="fechaHasta">
+
+                    <label for="tipo">Tipo de liquidación:</label>
+                    <select id="tipo" name="tipo">
+                        <option value="Equitativa">Equitativa</option>
+                        <option value="Superficie de parcela">Por superficie de parcela</option>
+                        <option value="Onzas">Por onzas</option>
+                    </select>
+                    
                     <div class="file-upload">
                         <label for="documento" class="file-upload-label">Subir factura o documento</label>
                         <input type="file" id="documento" name="documento" class="file-upload-input" (change)="onFileSelected($event)">
@@ -25,7 +29,7 @@
                 </div>        
             </div>
             <div class="div-buttons">
-                <button mat-raised-button class="create-button" (click)="guardar()">Guardar</button>
+                <button mat-raised-button class="create-button" (click)="generar()">Generar</button>
                 <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Cancelar</button>
             </div>
         </div>                              

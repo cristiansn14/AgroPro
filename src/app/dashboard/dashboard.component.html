@@ -34,7 +34,7 @@
         <button mat-menu-item [matMenuTriggerFor]="user">Usuario</button>
         <button mat-menu-item [matMenuTriggerFor]="finca">Finca</button>
         <button mat-menu-item [matMenuTriggerFor]="movimientos">Movimientos</button>
-        <button mat-menu-item>Liquidaciones</button>
+        <button mat-menu-item [matMenuTriggerFor]="liquidaciones">Liquidaciones</button>
       </mat-menu>
       <mat-menu #user="matMenu">
         <button mat-menu-item routerLink="/dashboard/registrar-usuario">Registrar usuario</button>
@@ -49,6 +49,10 @@
       <mat-menu #movimientos="matMenu">
         <button mat-menu-item routerLink="/dashboard/crear-movimiento">Añadir movimiento</button>
         <button mat-menu-item routerLink="/dashboard/listar-movimientos">Listar movimientos</button>
+      </mat-menu>
+      <mat-menu #liquidaciones="matMenu">
+        <button mat-menu-item routerLink="/dashboard/generar-liquidacion">Generar liquidación</button>
+        <button mat-menu-item routerLink="/dashboard/listar-liquidaciones">Listar liquidaciones</button>
       </mat-menu>
       <button mat-button class="menu-button" routerLink="/dashboard/ver-perfil/{{idUsuario}}">
         <mat-icon>person</mat-icon>

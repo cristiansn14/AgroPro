@@ -17,9 +17,10 @@
                                     <option value="" disabled selected>Seleccione un usuario</option>
                                     <option *ngFor="let usuario of usuariosDisponibles" [value]="usuario.id">{{ usuario.nombre }} {{usuario.apellido1}} {{usuario.apellido2}}</option>
                                 </select>
-                
-                                <span class="label" style="font-weight: bold;">Participación (%):</span>
-                                <span style="color: rgb(255, 94, 0); font-size: 0.8rem; margin-left: 15px;">(Disponibles: {{ participacionDisponible }})</span>
+                                <div style="display: flex;">
+                                    <span class="label" style="font-weight: bold;">Participación (%):</span>
+                                    <span style="color: rgb(255, 94, 0); font-size: 1rem; margin-left: 5px; font-weight: bold;">(Disponibles: {{ participacionDisponible }})</span>
+                                </div>                                
                                 <input type="number" id="participacion{{ rowIndex * 3 + i }}" formControlName="participacion" name="participacion{{ rowIndex * 3 + i }}" min="0" max="100">
                             </div>
                         </div>

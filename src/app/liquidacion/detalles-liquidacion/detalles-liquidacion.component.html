@@ -1,0 +1,36 @@
+<h2>Detalles Liquidación</h2>
+<form action="#" method="post" class="user-form">
+    <div class="flex">
+        <div style="flex-direction: column;">
+            <div class="container">
+                <h1>{{ liquidacion?.concepto }}: desde {{ liquidacion?.fechaDesde | date:'dd/MM/yyyy' }} hasta {{ liquidacion?.fechaHasta | date:'dd/MM/yyyy' }}</h1>
+                <h1>Fecha: {{ liquidacion?.fecha | date:'dd/MM/yyyy' }} - Tipo: {{ liquidacion?.tipo }}</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Importe</th>
+                            <th scope="col">Recibido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let lineaLiquidacion of lineasLiquidacion">
+                            <td>{{ lineaLiquidacion.nombre }} {{ lineaLiquidacion.apellido1 }} {{ lineaLiquidacion.apellido2 }}</td>
+                            <td>{{ lineaLiquidacion.importe }}</td>
+                            <td *ngIf="lineaLiquidacion.recibida">Recibido</td>
+                            <td *ngIf="!lineaLiquidacion.recibida">
+                                <button mat-button (click)="recibido(lineaLiquidacion)" style="width: 100px; background-color: #00796b; color: white;">
+                                    <mat-icon>check</mat-icon>
+                                    <span>Recibido</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>           
+        </div>        
+        <div class="div-buttons">
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard/listar-liquidaciones">Volver</button>
+        </div>
+    </div>   
+</form>

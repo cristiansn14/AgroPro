@@ -1,5 +1,3 @@
-import { Archivo } from "./archivo";
-
 export class Movimiento {
     id: string | null;
     fecha: Date | null;
