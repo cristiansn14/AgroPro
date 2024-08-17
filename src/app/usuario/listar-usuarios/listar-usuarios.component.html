@@ -1,0 +1,68 @@
+<h2>Lista de usuarios</h2>
+<form action="#" method="post" class="user-form">
+    <div class="flex">
+        <div style="flex-direction: column;">
+            <div class="container">
+                <h1>Usuarios activos</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre y apellidos</th>
+                            <th scope="col">DNI</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuario of usuariosActivos">
+                            <td routerLink="/dashboard/ver-perfil/{{usuario.id}}" class="click" >{{ usuario.nombre }} {{ usuario.apellido1 }} {{ usuario.apellido2 }}</td>
+                            <td>{{ usuario.dni }}</td>
+                            <td>{{ usuario.username }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td>{{ usuario.rol }}</td>
+                            <td style="display: flex;" *ngIf="usuario.id !== idUsuarioRegistrado">
+                                <button mat-button (click)="darBajaUsuario(usuario)" style="width: 100px; background-color: #00796b; color: white; margin-left: 20px">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Eliminar</span>
+                                </button>
+                            </td>
+                        </tr>                       
+                    </tbody>
+                </table>
+            </div>
+            <div class="container" *ngIf="usuariosBaja.length > 0">
+                <h1 style="margin-top: 20px;">Usuarios inactivos</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre y apellidos</th>
+                            <th scope="col">DNI</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuario of usuariosBaja">
+                            <td routerLink="/dashboard/ver-perfil/{{usuario.id}}" class="click">{{ usuario.nombre }} {{ usuario.apellido1 }} {{ usuario.apellido2 }}</td>
+                            <td>{{ usuario.dni }}</td>
+                            <td>{{ usuario.username }}</td>
+                            <td>{{ usuario.email }}</td>
+                            <td style="display: flex;">
+                                <button mat-button (click)="darAltaUsuario(usuario)" style="width: 120px; background-color: #00796b; color: white; margin-left: 20px">
+                                    <mat-icon>add</mat-icon>
+                                    <span>Dar alta</span>
+                                </button>
+                            </td>
+                        </tr>                       
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+        <div class="div-buttons">
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Volver</button>
+        </div>
+    </div>   
+</form>

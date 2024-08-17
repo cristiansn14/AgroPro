@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SignupRequest } from 'src/app/model/signup-request';
 import { Usuario } from 'src/app/model/usuario';
@@ -53,7 +54,8 @@ export class CrearUsuarioComponent implements OnInit{
     private fb: FormBuilder,
     private toastr: ToastrService,
     private tokenService: TokenService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -134,28 +136,37 @@ export class CrearUsuarioComponent implements OnInit{
     }
     if (this.usuariosForm.invalid) {
       let foundMismatch = false;
+      let foundWrongLength = false;
       // Buscar en cada grupo de controles de usuario si hay un error de desajuste de contraseñas
       this.usuarios.controls.forEach(control => {
         if (control.errors && control.errors['passwordsMismatch']) {
           foundMismatch = true;
         }
         if (control.errors && control.errors['wrongLength']) {
-          foundMismatch = true;
+          foundWrongLength = true;
         }
       });
-
       if (foundMismatch) {
         this.toastr.error('Las contraseñas no son iguales', 'Error', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
-      } else {
-        this.toastr.error('Formulario no válido, faltan campos o alguno es erróneo', 'Error', {
+        return;
+      } 
+      if (foundWrongLength) {
+        this.toastr.error('La longitud minima para las contraseñas es 7 caracteres', 'Error', {
           timeOut: 3000,
           positionClass: 'toast-top-center'
         });
+        return;
       }
-      return;
+      if (this.usuariosForm.invalid) {
+        this.toastr.error('Formulario no válido, por favor rellene todos los campos.', 'Error', {
+          timeOut: 3000,
+          positionClass: 'toast-top-center'
+        });
+        return;
+      }
     }
 
     const signupRequest: SignupRequest[] = this.usuarios.controls.map(control => {
@@ -176,10 +187,7 @@ export class CrearUsuarioComponent implements OnInit{
         this.toastr.success('Usuarios registrados en la plataforma correctamente', 'Éxito', {
           timeOut: 3000, positionClass: 'toast-top-center'
         });
-        this.usuariosForm.reset();
-        this.numeroUsuarios = 0;
-        this.usuarioRows = [];
-        this.ngOnInit();
+        this.router.navigateByUrl(`/dashboard/home`);
       },
       error: (err) => {
         this.error = err.error.message;

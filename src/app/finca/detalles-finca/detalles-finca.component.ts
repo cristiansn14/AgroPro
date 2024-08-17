@@ -9,6 +9,7 @@ import { Usuario } from 'src/app/model/usuario';
 import { UsuarioFinca } from 'src/app/model/usuario-finca';
 import { UsuarioFincaInfo } from 'src/app/model/usuarioFincaInfo';
 import { FincaService } from 'src/app/service/finca.service';
+import { ParcelaService } from 'src/app/service/parcela.service';
 import { StaticDataService } from 'src/app/service/static-data.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
@@ -27,12 +28,14 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
   provincia: Provincia | null = null;
   municipio: Municipio | null = null;
   parcelas: string[] = [""];
+  parcelasBaja: string[] = [""];
   private subscription: Subscription | null = null;
 
   constructor(
     private toastr: ToastrService,
     private fincaService: FincaService,
     private staticDataService: StaticDataService,
+    private parcelaService: ParcelaService
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +44,7 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
       if (this.selectedFinca) {
         this.loadFinca();
         this.loadParcelas();
+        this.loadParcelasBaja();
         this.loadUsuarios();
       }     
     });
@@ -80,6 +84,22 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
         error: (err) => {
           this.error = err.error.message;
           this.toastr.error(this.error, 'Error al obtener las parcelas de la finca', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      });
+    }
+  }
+
+  loadParcelasBaja(): void {
+    if (this.selectedFinca) {
+      this.fincaService.getParcelasBajaByIdFinca(this.selectedFinca).subscribe({
+        next: (parcelas) => {
+          this.parcelasBaja = parcelas;
+        },
+        error: (err) => {
+          this.error = err.error.message;
+          this.toastr.error(this.error, 'Error al obtener las parcelas de baja de la finca', {
             timeOut: 3000, positionClass: 'toast-top-center'
           })
         }
@@ -172,6 +192,40 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
       error: (err) => {
         this.error = err.error.message;
         this.toastr.error(this.error, 'Error al eliminar el usuario finca', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        })
+      }
+    });
+  }
+
+  darAltaParcela(parcela: string) {
+    this.parcelaService.darAltaParcela(parcela).subscribe({
+      next: () => {
+        this.toastr.success('Parcela añadida de nuevo con éxito', 'Éxito', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        });
+        this.ngOnInit();
+      },
+      error: (err) => {
+        this.error = err.error.message;
+        this.toastr.error(this.error, 'Error al añadir de nuevo la parcela', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        })
+      }
+    });
+  }
+
+  darBajaParcela(parcela: string) {
+    this.parcelaService.darBajaParcela(parcela).subscribe({
+      next: () => {
+        this.toastr.success('Parcela eliminada con éxito', 'Éxito', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        });
+        this.ngOnInit();
+      },
+      error: (err) => {
+        this.error = err.error.message;
+        this.toastr.error(this.error, 'Error al eliminar la parcela', {
           timeOut: 3000, positionClass: 'toast-top-center'
         })
       }

@@ -1,6 +1,6 @@
 <h2>Inicio</h2>
 <div class="user-form">
-    <div class="flex">
+    <div class="flex" *ngIf="parcelas.length > 0">
         <div style="margin-top: 15px;">
             <label for="parcela" style="margin-left: 20px; width: fit-content;">Parcela:</label>
             <select style="margin-left: 20px; width: fit-content;" id="parcela" name="parcela" [(ngModel)]="selectedParcela" (change)="onParcelaChange()" required>
@@ -8,7 +8,8 @@
             </select>
         </div>       
     </div>
-    <google-map height="87%" width="100%" [center]="mapCenter" [zoom]="18.2" [mapTypeId]="mapTypeSatellite" (mapClick)="onMapClick($event)">
+    <google-map *ngIf="parcelas.length > 0" height="87%" width="100%" [center]="mapCenter" [zoom]="18.2" [mapTypeId]="mapTypeSatellite" (mapClick)="onMapClick($event)">
         <map-marker [position]="mapCenter"></map-marker>
-    </google-map>  
+    </google-map>
+    <div *ngIf="parcelas.length === 0"><h1>Bienvenido {{username}}</h1></div>  
 </div>

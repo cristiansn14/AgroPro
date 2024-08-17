@@ -57,4 +57,8 @@ export class TokenService {
   public logOut(): void {
     window.sessionStorage.clear();
   }
+
+  getBearerToken(){
+    return "Bearer " + this.getToken();
+  }
 }

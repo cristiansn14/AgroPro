@@ -25,6 +25,7 @@ import { ChangePasswordComponent } from './usuario/cambiar-contraseña/change-pa
 import { GenerarLiquidacionComponent } from './liquidacion/generar-liquidacion/generar-liquidacion.component';
 import { DetallesLiquidacionComponent } from './liquidacion/detalles-liquidacion/detalles-liquidacion.component';
 import { ListarLiquidacionesComponent } from './liquidacion/listar-liquidaciones/listar-liquidaciones.component';
+import { ListarUsuariosComponent } from './usuario/listar-usuarios/listar-usuarios.component';
 
 const routes: Routes = [
   { path:'', redirectTo:'/login', pathMatch:'full'},
@@ -36,6 +37,9 @@ const routes: Routes = [
       },
       {
         path: 'registrar-usuario', component: CrearUsuarioComponent
+      },
+      {
+        path: 'listar-usuarios', component: ListarUsuariosComponent
       },
       {
         path: 'editar-perfil/:id', component: EditarUsuarioComponent
@@ -96,8 +100,7 @@ const routes: Routes = [
       },
       {
         path: 'detalles-liquidacion/:id', component: DetallesLiquidacionComponent
-      },
-      
+      }     
     ]
   },
   { path: '**', redirectTo: '/login', pathMatch: 'full' }

@@ -48,6 +48,7 @@ import { GenerarLiquidacionComponent } from './liquidacion/generar-liquidacion/g
 import { ListarLiquidacionesComponent } from './liquidacion/listar-liquidaciones/listar-liquidaciones.component';
 import { DetallesLiquidacionComponent } from './liquidacion/detalles-liquidacion/detalles-liquidacion.component';
 import { MatSortModule } from '@angular/material/sort';
+import { ListarUsuariosComponent } from './usuario/listar-usuarios/listar-usuarios.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { MatSortModule } from '@angular/material/sort';
     GenerarLiquidacionComponent,
     ListarLiquidacionesComponent,
     DetallesLiquidacionComponent,
+    ListarUsuariosComponent,
   ],
   imports: [
     BrowserModule,

@@ -89,3 +89,17 @@ button.btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.download-link {
+    display: block;
+    margin-top: 1.5rem;
+    color: #2E8B57; 
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.download-link:hover {
+    color: #3CB371; 
+    text-decoration: underline;
+}

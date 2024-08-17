@@ -57,11 +57,15 @@ export class FincaService {
   }
 
   public findById (idFinca: string): Observable<any> {
-    return this.httpClient.get<number>(`${this.fincaURL}/findById/${idFinca}`)
+    return this.httpClient.get<any>(`${this.fincaURL}/findById/${idFinca}`)
   }
 
   public getParcelasByIdFinca (idFinca: string): Observable<any> {
-    return this.httpClient.get<number>(`${this.fincaURL}/getParcelasByIdFinca/${idFinca}`)
+    return this.httpClient.get<any>(`${this.fincaURL}/getParcelasByIdFinca/${idFinca}`)
+  }
+
+  public getParcelasBajaByIdFinca (idFinca: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.fincaURL}/getParcelasBajaByIdFinca/${idFinca}`)
   }
 
   public findUsuariosFincaByFincaId (idFinca: string): Observable<UsuarioFincaInfo[]> {

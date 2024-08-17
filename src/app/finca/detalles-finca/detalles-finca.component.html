@@ -26,22 +26,53 @@
                         <td>{{ finca?.fechaModificacion | date:'dd/MM/yyyy' }}</td>
                     </tbody>
                 </table>
-            </div>           
-            <div class="container" *ngIf="parcelas && parcelas.length > 0">
-                <h1>Parcelas</h1>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Referencia catastral</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let parcela of parcelas">
-                            <td routerLink="/dashboard/detalles-parcela/{{parcela}}" class="click">{{ parcela }} </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
+            <div style="display: flex;">
+                <div class="container" *ngIf="parcelas && parcelas.length > 0">
+                    <h1>Parcelas</h1>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Referencia catastral</th>
+                                <th scope="col">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let parcela of parcelas">
+                                <td routerLink="/dashboard/detalles-parcela/{{parcela}}" class="click">{{ parcela }} </td>
+                                <td>
+                                    <button mat-button (click)="darBajaParcela(parcela)" style="width: 100px; background-color: #00796b; color: white; margin-left: 20px">
+                                        <mat-icon>delete</mat-icon>
+                                        <span>Eliminar</span>
+                                    </button>
+                                </td>                               
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container" *ngIf="parcelasBaja && parcelasBaja.length > 0">
+                    <h1>Parcelas dadas de baja</h1>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Referencia catastral</th>
+                                <th scope="col">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let parcela of parcelasBaja">
+                                <td routerLink="/dashboard/detalles-parcela/{{parcela}}" class="click">{{ parcela }} </td>
+                                <td>
+                                    <button mat-button (click)="darAltaParcela(parcela)" style="width: 120px; background-color: #00796b; color: white; margin-left: 20px">
+                                        <mat-icon>add</mat-icon>
+                                        <span>Dar alta</span>
+                                    </button>
+                                </td>                               
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>                      
             <div class="container" *ngIf="usuariosFincaInfo && usuariosFincaInfo.length > 0">
                 <h1>
                     Usuarios

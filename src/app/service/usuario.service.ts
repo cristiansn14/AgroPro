@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Usuario } from '../model/usuario';
 import { Representante } from '../model/representante';
+import { UsuarioInfo } from '../model/usuarioInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -68,5 +69,23 @@ export class UsuarioService {
 
   public findUsuariosByFincaAndNotInParcela(idFinca: string, referenciaCatastral: string): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${this.usuarioUrl}/findUsuariosByFincaAndNotInParcela/${idFinca}/${referenciaCatastral}`);
+  }
+
+  public findAllUsuariosAlta(): Observable<UsuarioInfo[]> {
+    return this.http.get<UsuarioInfo[]>(`${this.usuarioUrl}/findAllUsuariosAlta`);
+  }
+
+  public findAllUsuariosBaja(): Observable<UsuarioInfo[]> {
+    return this.http.get<UsuarioInfo[]>(`${this.usuarioUrl}/findAllUsuariosBaja`);
+  }
+
+  public darAltaUsuario(idUsuario: string): Observable<any> {
+    return this.http.put<any>(`${this.usuarioUrl}/darAltaUsuario`, JSON.stringify(idUsuario), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  public darBajaUsuario(idUsuario: string): Observable<any> {
+    return this.http.delete(`${this.usuarioUrl}/darBajaUsuario/${idUsuario}`);
   }
 }

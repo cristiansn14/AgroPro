@@ -27,6 +27,7 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
   parcela: Parcela | null = null;
   parcelaConstruccion: ParcelaConstruccion | null = null;
   usuariosParcela: UsuarioParcelaInfo[] | null = null;
+  usuariosParcelaBaja: UsuarioParcelaInfo[] | null = null;
   subparcelasInfo: SubparcelaInfo[] | null = null;
   referenciaCatastral: string = "";
   error: string = "";
@@ -132,11 +133,17 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
       next: (parcela) => {
         if (parcela.referenciaCatastral !== null) {
           this.parcela = parcela;
+          if (this.parcela.fechaBaja) {
+            this.loadUsuariosBaja();
+          }
           this.loadSubparcelas();
         } else {
           this.parcelaService.findParcelaConstruccionByReferenciaCatastral(this.referenciaCatastral).subscribe({
             next: (parcelaConstruccion) => {
               this.parcelaConstruccion = parcelaConstruccion;
+              if (this.parcelaConstruccion.fechaBaja) {
+                this.loadUsuariosBaja();
+              }
             },
             error: (err) => {
               this.error = err.error.message;
@@ -179,6 +186,20 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
       error: (err) => {
         this.error = err.error.message;
         this.toastr.error(this.error, 'Error al cargar los propietarios', {
+          timeOut: 3000, positionClass: 'toast-top-center'
+        })
+      }
+    });
+  }
+
+  loadUsuariosBaja(){
+    this.parcelaService.findUsuariosBajaInParcela(this.referenciaCatastral).subscribe({
+      next: (usuariosParcelaBaja) => {
+        this.usuariosParcelaBaja = usuariosParcelaBaja;
+      },
+      error: (err) => {
+        this.error = err.error.message;
+        this.toastr.error(this.error, 'Error al cargar los propietarios anteriores de la parcela', {
           timeOut: 3000, positionClass: 'toast-top-center'
         })
       }

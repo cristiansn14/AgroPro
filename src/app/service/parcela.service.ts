@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ParcelaDto } from '../model/parcelaDto';
 import { Observable } from 'rxjs';
@@ -8,6 +8,15 @@ import { SubparcelaInfo } from '../model/subparcelaInfo';
 import { UsuarioParcelaInfo } from '../model/usuarioParcelaInfo';
 import { Parcela } from '../model/parcela';
 import { UsuarioParcela } from '../model/usuario-parcela';
+import { Subparcela } from '../model/subparcela';
+import { TokenService } from './token.service';
+
+const token = localStorage.getItem('token'); // O sessionStorage
+
+const headers = new HttpHeaders({
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${token}`
+});
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +25,19 @@ export class ParcelaService {
 
   parcelaURL = 'http://localhost:8090/parcela';
 
-  constructor(private httpClient: HttpClient) { }
+  token = localStorage.getItem('token');
 
-  public guardarParcela (parcelaDto: ParcelaDto): Observable<any> {
-    return this.httpClient.post<any>(this.parcelaURL + '/guardarParcela', parcelaDto)
+  constructor(
+    private httpClient: HttpClient, 
+    private tokenService: TokenService
+  ) { }
+
+  public guardarParcela (parcelaDto: Parcela): Observable<any> {
+    return this.httpClient.post<any>(`${this.parcelaURL}/guardarParcela`, parcelaDto)
+  }
+
+  public guardarSubparcelas (subparcelasDto: Subparcela[]): Observable<any> {
+    return this.httpClient.post<any>(`${this.parcelaURL}/guardarSubparcelas`, subparcelasDto)
   }
 
   public actualizarParcela (parcelaDto: ParcelaDto): Observable<any> {
@@ -66,11 +84,29 @@ export class ParcelaService {
     return this.httpClient.get<UsuarioParcelaInfo[]>(`${this.parcelaURL}/findUsuariosInParcela/${referenciaCatastral}`);
   }
 
+  public findUsuariosBajaInParcela (referenciaCatastral: string): Observable<UsuarioParcelaInfo[]> {
+    return this.httpClient.get<UsuarioParcelaInfo[]>(`${this.parcelaURL}/findUsuariosBajaInParcela/${referenciaCatastral}`);
+  }
+
   public findUsuarioParcelaById (idUsuarioParcela: string): Observable<UsuarioParcelaInfo> {
     return this.httpClient.get<UsuarioParcelaInfo>(`${this.parcelaURL}/findUsuarioParcelaById/${idUsuarioParcela}`);
   }
 
   public getParticipacionesDisponibles (referenciaCatastral: string): Observable<any> {
     return this.httpClient.get<number>(`${this.parcelaURL}/getParticipacionesDisponibles/${referenciaCatastral}`);
+  }
+
+  public darAltaParcela(referenciaCatastral: string): Observable<any> {
+    return this.httpClient.put<any>(`${this.parcelaURL}/darAltaParcela`, referenciaCatastral, {
+      headers: { 'Content-Type': 'text/plain' }
+    });
+  }
+
+  public darBajaParcela(referenciaCatastral: string): Observable<any> {
+    return this.httpClient.delete(`${this.parcelaURL}/darBajaParcela/${referenciaCatastral}`);
+  }
+
+  getAuthHeader() {
+    return {"Authorization":this.tokenService.getBearerToken()};
   }
 }

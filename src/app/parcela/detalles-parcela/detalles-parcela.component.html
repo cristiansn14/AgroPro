@@ -1,16 +1,17 @@
-<h2>Detalles Parcela</h2>
+<h2 *ngIf="!parcela?.fechaBaja && !parcelaConstruccion?.fechaBaja">Detalles Parcela</h2>
+<h2 *ngIf="parcela?.fechaBaja || parcelaConstruccion?.fechaBaja">Detalles Parcela Eliminada</h2>
 <form action="#" method="post" class="user-form">
     <div class="flex">
         <div style="flex-direction: column;">
             <div class="container">
-                <h1>
+                <h1 *ngIf="!parcela?.fechaBaja && !parcelaConstruccion?.fechaBaja">
                     Propietarios
                     <button mat-button routerLink="/dashboard/crear-usuario-parcela/{{referenciaCatastral}}" style="margin-left: 20px; width: 100px; background-color: #00796b; color: white;">
                         <mat-icon>add</mat-icon>
                         <span>Añadir</span>
                     </button>
                 </h1>              
-                <table class="table table-striped">
+                <table class="table table-striped" *ngIf="usuariosParcela && usuariosParcela.length > 0">
                     <thead>
                         <tr>
                             <th scope="col">Nombre</th>
@@ -23,7 +24,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let usuario of usuariosParcela">
-                            <td routerLink="/dashboard/ver-perfil/{{usuario.id}}" class="click">{{ usuario.nombre }}</td>
+                            <td routerLink="/dashboard/ver-perfil/{{usuario.idUsuario}}" class="click">{{ usuario.nombre }}</td>
                             <td>{{ usuario.apellido1 }} {{ usuario.apellido2 }}</td>
                             <td>{{ usuario.participacion }}</td>
                             <td>{{ usuario.fechaAlta | date:'dd/MM/yyyy' }}</td>
@@ -38,6 +39,27 @@
                                     <span>Eliminar</span>
                                 </button>
                             </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="container">
+                <h1 *ngIf="parcela?.fechaBaja || parcelaConstruccion?.fechaBaja">Antiguos Propietarios</h1>              
+                <table class="table table-striped" *ngIf="usuariosParcelaBaja && usuariosParcelaBaja.length > 0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Participacion</th>
+                            <th scope="col">Fecha de alta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuario of usuariosParcelaBaja">
+                            <td routerLink="/dashboard/ver-perfil/{{usuario.idUsuario}}" class="click">{{ usuario.nombre }}</td>
+                            <td>{{ usuario.apellido1 }} {{ usuario.apellido2 }}</td>
+                            <td>{{ usuario.participacion }}</td>
+                            <td>{{ usuario.fechaAlta | date:'dd/MM/yyyy' }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -88,11 +110,11 @@
                             <div class="data"><span class="label" style="font-weight: bold;">Superficie (m2):</span> <span class="label">{{ parcela?.superficie }} m2</span></div>
                             <div class="data"><span class="label" style="font-weight: bold;">Valor del suelo:</span> <span class="label">{{ parcela?.valorSuelo }}</span></div> 
                             <div class="data"><span class="label" style="font-weight: bold;">Valor construcción:</span> <span class="label">{{ parcela?.valorConstruccion }}</span></div>
-                            <div class="data"><span class="label" style="font-weight: bold;">Fecha de alta:</span> <span class="label">{{ parcela?.fechaAlta | date:'dd/MM/yyyy' }}</span></div>
-                        </div>
-                        <div class="group">
                             <div class="data"><span class="label" style="font-weight: bold;">Valor catastral:</span> <span class="label">{{ parcela?.valorCatastral }}</span></div>
-                            <div class="data"><span class="label" style="font-weight: bold;">Año valor:</span> <span class="label">{{ parcela?.anoValor }}</span></div>                            
+                        </div>
+                        <div class="group">    
+                            <div class="data"><span class="label" style="font-weight: bold;">Año valor:</span> <span class="label">{{ parcela?.anoValor }}</span></div>
+                            <div class="data"><span class="label" style="font-weight: bold;">Fecha de alta:</span> <span class="label">{{ parcela?.fechaAlta | date:'dd/MM/yyyy' }}</span></div>                            
                             <div *ngIf="parcela?.fechaModificacion"><span class="label" style="font-weight: bold;">Fecha de modificación:</span><span class="label">{{ parcela?.fechaModificacion | date:'dd/MM/yyyy' }}</span></div>
                             <div *ngIf="parcela?.fechaBaja"><span class="label" style="font-weight: bold;">Fecha de baja:</span> <span class="label">{{ parcela?.fechaBaja | date:'dd/MM/yyyy' }}</span></div>
                         </div>    
