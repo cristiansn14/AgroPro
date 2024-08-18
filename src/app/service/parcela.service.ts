@@ -11,13 +11,6 @@ import { UsuarioParcela } from '../model/usuario-parcela';
 import { Subparcela } from '../model/subparcela';
 import { TokenService } from './token.service';
 
-const token = localStorage.getItem('token'); // O sessionStorage
-
-const headers = new HttpHeaders({
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${token}`
-});
-
 @Injectable({
   providedIn: 'root'
 })
@@ -32,12 +25,8 @@ export class ParcelaService {
     private tokenService: TokenService
   ) { }
 
-  public guardarParcela (parcelaDto: Parcela): Observable<any> {
+  public guardarParcela (parcelaDto: ParcelaDto): Observable<any> {
     return this.httpClient.post<any>(`${this.parcelaURL}/guardarParcela`, parcelaDto)
-  }
-
-  public guardarSubparcelas (subparcelasDto: Subparcela[]): Observable<any> {
-    return this.httpClient.post<any>(`${this.parcelaURL}/guardarSubparcelas`, subparcelasDto)
   }
 
   public actualizarParcela (parcelaDto: ParcelaDto): Observable<any> {

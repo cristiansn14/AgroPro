@@ -403,18 +403,9 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
 
             return;
           }
-          
 
-          let poligono = xmlDoc.getElementsByTagName('cpo')[0]?.textContent;
-          let parcela = xmlDoc.getElementsByTagName('cpa')[0]?.textContent;
-          if (poligono == null || poligono.length === 0) {
-            this.toastr.error(this.error, 'Error al obtener la parcela desde Catastro', {
-              timeOut: 3000,
-              positionClass: 'toast-top-center'
-            });
-
-            return;
-          }
+          let poligono = xmlDoc.getElementsByTagName('cpo')[0].textContent;
+          let parcela = xmlDoc.getElementsByTagName('cpa')[0].textContent;
           let paraje = xmlDoc.getElementsByTagName('npa')[0].textContent;
           let clase = xmlDoc.getElementsByTagName('cn')[0].textContent;
           if (clase === "RU") {
@@ -431,7 +422,7 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
             let descripcionCultivo = sprNodo.getElementsByTagName('dcc')[0].textContent;
             let intensidadProductiva = sprNodo.getElementsByTagName('ip')[0].textContent;
             let superficieSubparcela = parseFloat(sprNodo.getElementsByTagName('ssp')[0]?.textContent ?? '0');
-
+          
             superficieParcela += superficieSubparcela;
             const subparcela = new Subparcela (
               null,
@@ -445,7 +436,7 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
             this.subparcelas.push(subparcela);
           }
 
-          const parcelaDto = new Parcela (
+          const parcelaRequest = new Parcela (
             refCatastralHtml.value,
             poligono,
             parcela,
@@ -462,67 +453,38 @@ export class CrearParcelaComponent implements OnInit, OnDestroy {
             null,
             null
           );
-          
+
+          const usuariosParcelaRequest = (this.propietariosForm.get('propietarios') as FormArray).controls.map(control => new UsuarioParcela(
+            null,
+            control.get('participacion')?.value,
+            control.get('usuario')?.value,
+            null, 
+            null, 
+            null,
+            null
+          ));
+
+          const parcelaDto: ParcelaDto = new ParcelaDto(      
+            parcelaRequest,
+            this.subparcelas,
+            usuariosParcelaRequest
+          );
+
           this.parcelaService.guardarParcela(parcelaDto).subscribe({
             next: response => {
               this.toastr.success('La parcela se ha añadido correctamente.', 'Éxito', {
                 timeOut: 3000,
                 positionClass: 'toast-top-center'
               });
-              
-              this.parcelaService.guardarSubparcelas(this.subparcelas).subscribe({
-                next: response => {
-                  this.toastr.success('Las subparcelas se han añadido correctamente.', 'Éxito', {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-center'
-                  });
-
-                  const usuariosParcela = (this.propietariosForm.get('propietarios') as FormArray).controls.map(control => new UsuarioParcela(
-                    null,
-                    control.get('participacion')?.value,
-                    control.get('usuario')?.value,
-                    null, 
-                    null, 
-                    null,
-                    null
-                  ));
-        
-                  this.parcelaService.crearUsuarioParcela(usuariosParcela).subscribe({
-                    next: response => {
-                      this.toastr.success('Los usuarios se han añadido correctamente.', 'Éxito', {
-                        timeOut: 3000,
-                        positionClass: 'toast-top-center'
-                      });
-                      this.router.navigateByUrl(`/dashboard/detalles-parcela/${refCatastralHtml.value}`);
-                    },
-                    error: err => {
-                      this.toastr.error(err.error.message, 'Error al guardar los usuarios', {
-                        timeOut: 3000,
-                        positionClass: 'toast-top-center'
-                      });
-                      return;
-                    }
-                  });
-                },
-                error: err => {
-                  this.toastr.error(err.error.message, 'Error al guardar las subparcelas', {
-                    timeOut: 3000,
-                    positionClass: 'toast-top-center'
-                  });
-                  return;
-                }
-              });
+              this.router.navigateByUrl(`/dashboard/detalles-parcela/${refCatastralHtml.value}`);
             },
             error: err => {
               this.toastr.error(err.error.message, 'Error al guardar la parcela', {
                 timeOut: 3000,
                 positionClass: 'toast-top-center'
               });
-              this.subparcelas = [];
-              return;
             }
           });
-   
         },
         error: (err) => {
           this.error = err.error.message;
