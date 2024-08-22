@@ -21,6 +21,7 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
 
   finca: Finca | null = null;
   usuariosFincaInfo: UsuarioFincaInfo[] = [];
+  usuariosFincaInfoBaja: UsuarioFincaInfo[] = [];
   selectedFinca: string | null = null;
   error: string = "";
   comunidad: Comunidad | null = null;
@@ -48,6 +49,7 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
         this.loadParcelas();
         this.loadParcelasBaja();
         this.loadUsuarios();
+        this.loadUsuariosBaja();
         this.getUsuarioFinca();
       }     
     });
@@ -167,6 +169,22 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
         error: (err) => {
           this.error = err.error.message;
           this.toastr.error(this.error, 'Error al obtener los usuarios', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      });
+    }   
+  }
+
+  loadUsuariosBaja() {
+    if (this.selectedFinca) {
+      this.fincaService.findUsuariosFincaBajaByFincaId(this.selectedFinca).subscribe({
+        next: (usuariosFinca) => {
+          this.usuariosFincaInfoBaja = usuariosFinca;
+        },
+        error: (err) => {
+          this.error = err.error.message;
+          this.toastr.error(this.error, 'Error al obtener los usuarios de baja', {
             timeOut: 3000, positionClass: 'toast-top-center'
           })
         }

@@ -146,6 +146,7 @@ export class CrearFincaComponent implements OnInit {
           this.toastr.success('Finca ' + this.fincaDto?.nombre + ' creada correctamente', 'OK', {
             timeOut: 3000, positionClass: 'toast-top-center'
           });
+          this.fincaService.notifyFincaModified();
           this.router.navigate(['/dashboard/home']);
         },
         error: (err) => {

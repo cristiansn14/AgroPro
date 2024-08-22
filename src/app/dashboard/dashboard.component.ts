@@ -29,6 +29,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
   rol: string | null = null;
   idUsuario: string | null = null;
   private subscriptionFoto: Subscription = new Subscription();
+  private fincaSubscription: Subscription = new Subscription();
+  private fincaModifiedSubscription: Subscription = new Subscription();
   fotoPerfilUrl: string | null = null;
 
   constructor(
@@ -49,6 +51,20 @@ export class DashboardComponent implements OnInit, OnDestroy{
         this.fotoPerfilUrl = url;
       }
     }));
+
+    this.fincaSubscription = this.fincaService.selectedFinca$.subscribe(fincaId => {
+      if (fincaId != null) { 
+        this.selectedFinca = fincaId;
+      } else {
+        this.selectedFinca = null;  
+      }
+      this.cd.detectChanges();  
+    });
+
+    this.fincaModifiedSubscription = this.fincaService.fincaModified$.subscribe(() => {
+      this.getFincasInit(); 
+    });
+
     this.username = this.tokenService.getUserName();
     this.idUsuario = this.tokenService.getUserId();
 }
@@ -56,6 +72,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     if (this.subscriptionFoto) {
       this.subscriptionFoto.unsubscribe();
+      this.fincaSubscription.unsubscribe();
+      this.fincaModifiedSubscription.unsubscribe();
     }
   }
 

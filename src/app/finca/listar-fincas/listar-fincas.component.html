@@ -3,8 +3,8 @@
     <div class="flex">
         <div style="flex-direction: column;">
             <div class="container">
-                <h1 style="color: #2bea04;">Fincas activas</h1>
-                <table class="table table-striped">
+                <h1 *ngIf="fincasActivas.length > 0" style="color: #00796b;">Fincas activas</h1>
+                <table class="table table-striped" *ngIf="fincasActivas.length > 0">
                     <thead>
                         <tr>
                             <th scope="col">Nombre</th>
@@ -19,7 +19,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let finca of fincasActivas">
-                            <td>{{ finca?.nombre }}</td>
+                            <td (click)="redirigirFinca(finca)">{{ finca?.nombre }}</td>
                             <td>{{ finca?.onzas }}</td>
                             <td>{{ finca?.nombreComunidad }} ({{ finca?.idComunidad }})</td>
                             <td>{{ finca?.nombreProvincia }} ({{ finca?.idProvincia }})</td>
@@ -37,7 +37,7 @@
                 </table>
             </div>
             <div class="container" *ngIf="fincasBaja.length > 0">
-                <h1 style="margin-top: 20px; color: red;">Fincas inactivas</h1>
+                <h1 style="margin-top: 20px; color: rgb(184, 5, 5);">Fincas inactivas</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -52,7 +52,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let finca of fincasBaja">
-                            <td>{{ finca?.nombre }}</td>
+                            <td (click)="redirigirFinca(finca)">{{ finca?.nombre }}</td>
                             <td>{{ finca?.onzas }}</td>
                             <td>{{ finca?.nombreComunidad }} ({{ finca?.idComunidad }})</td>
                             <td>{{ finca?.nombreProvincia }} ({{ finca?.idProvincia }})</td>

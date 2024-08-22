@@ -4,7 +4,7 @@
     <div class="flex">
         <div style="flex-direction: column;">
             <div class="container">
-                <h1 *ngIf="(parcela !== null && parcela.fechaBaja === null) || (parcelaConstruccion !== null && parcelaConstruccion.fechaBaja === null)">
+                <h1 style="color: #00796b;" *ngIf="(parcela !== null && parcela.fechaBaja === null) || (parcelaConstruccion !== null && parcelaConstruccion.fechaBaja === null)">
                     Propietarios
                     <button *ngIf="(rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR') && (parcela !== null && parcela.fechaBaja === null) || (parcelaConstruccion !== null && parcelaConstruccion.fechaBaja === null)" mat-button routerLink="/dashboard/crear-usuario-parcela/{{referenciaCatastral}}" style="margin-left: 20px; width: 100px; background-color: #00796b; color: white;">
                         <mat-icon>add</mat-icon>
@@ -44,7 +44,7 @@
                 </table>
             </div>
             <div class="container">
-                <h1 style="margin-top: 5px;" *ngIf="usuariosParcelaBaja && usuariosParcelaBaja.length > 0">Antiguos Propietarios</h1>              
+                <h1 style="margin-top: 5px; color: rgb(184, 5, 5);" *ngIf="usuariosParcelaBaja && usuariosParcelaBaja.length > 0">Antiguos Propietarios</h1>              
                 <table class="table table-striped" *ngIf="usuariosParcelaBaja && usuariosParcelaBaja.length > 0">
                     <thead>
                         <tr>
@@ -68,7 +68,7 @@
             </div>
             <div class="flex" *ngIf="parcelaConstruccion?.referenciaCatastral">
                 <div class="form-header">
-                    <h1>Datos</h1>
+                    <h1 style="color: #00796b;">Datos</h1>
                     <div class="form-group">           
                         <div><span class="label" style="font-weight: bold;">Referencia catastral:</span> <span class="label">{{ parcelaConstruccion?.referenciaCatastral }}</span></div>
                         <div ><span class="label" style="font-weight: bold;">Uso principal:</span> <span class="label">{{ parcelaConstruccion?.usoPrincipal }}</span></div> 
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div class="form-header">
-                    <h1>Características</h1>                               
+                    <h1 style="color: #00796b;">Características</h1>                               
                     <div class="form-group">
                         <div><span class="label" style="font-weight: bold;">Tipo reforma:</span> <span class="label">{{ parcelaConstruccion?.tipoReforma }}</span></div>
                         <div><span class="label" style="font-weight: bold;">Fecha reforma:</span> <span class="label">{{ parcelaConstruccion?.fechaReforma | date:'dd/MM/yyyy' }}</span></div>
@@ -91,7 +91,7 @@
             </div>
             <div *ngIf="parcela?.referenciaCatastral" class="flex">
                 <div class="form-header">
-                    <h1>Datos</h1>
+                    <h1 style="color: #00796b;">Datos</h1>
                     <div class="form-group">
                         <div class="group">
                             <div class="data"><span class="label" style="font-weight: bold;">Referencia catastral:</span> <span class="label">{{ parcela?.referenciaCatastral }}</span></div>
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="form-header">
-                    <h1>Características</h1>                               
+                    <h1 style="color: #00796b;">Características</h1>                               
                     <div class="form-group">
                         <div class="group">
                             <div class="data"><span class="label" style="font-weight: bold;">Superficie (m2):</span> <span class="label">{{ parcela?.superficie }} m2</span></div>
@@ -124,7 +124,7 @@
                 </div>   
             </div>
             <div class="container" *ngIf="parcela?.referenciaCatastral">
-                <h1>Subparcelas</h1>
+                <h1 style="color: #00796b;">Subparcelas</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>

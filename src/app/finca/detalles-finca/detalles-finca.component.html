@@ -4,7 +4,7 @@
     <div class="flex">
         <div style="flex-direction: column;">
             <div class="container">
-                <h1>Información</h1>
+                <h1 style="color: #00796b;">Información</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -30,7 +30,7 @@
             </div>
             <div style="display: flex;">
                 <div class="container" *ngIf="(parcelas && parcelas.length > 0) || ((rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR') && finca?.fechaBaja === null)">
-                    <h1 *ngIf="finca?.fechaBaja === null">
+                    <h1 *ngIf="finca?.fechaBaja === null" style="color: #00796b;">
                         Parcelas
                         <button *ngIf="(rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR') && finca?.fechaBaja === null" mat-button routerLink="/dashboard/crear-parcela" style="margin-left: 20px; width: 100px; background-color: #00796b; color: white;">
                             <mat-icon>add</mat-icon>
@@ -58,7 +58,7 @@
                     </table>
                 </div>
                 <div class="container" *ngIf="parcelasBaja && parcelasBaja.length > 0">
-                    <h1>Parcelas dadas de baja</h1>
+                    <h1 style="color: rgb(184, 5, 5);">Parcelas dadas de baja</h1>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -81,7 +81,7 @@
                 </div>
             </div>                      
             <div class="container" >
-                <h1 *ngIf="finca?.fechaBaja === null">
+                <h1 *ngIf="finca?.fechaBaja === null" style="color: #00796b;">
                     Usuarios
                     <button *ngIf="(rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR') && finca?.fechaBaja === null" mat-button routerLink="/dashboard/añadir-usuario" style="margin-left: 20px; width: 100px; background-color: #00796b; color: white;">
                         <mat-icon>add</mat-icon>
@@ -116,6 +116,29 @@
                                     <span>Eliminar</span>
                                 </button>
                             </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="container" >
+                <h1 *ngIf="usuariosFincaInfoBaja && usuariosFincaInfoBaja.length > 0" style="color: rgb(184, 5, 5);">Usuarios anteriores</h1>
+                <table class="table table-striped" *ngIf="usuariosFincaInfoBaja && usuariosFincaInfoBaja.length > 0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre y apellidos</th>
+                            <th scope="col">Onzas</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Fecha de alta</th>
+                            <th scope="col">Fecha de baja</th>                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuarioFincaInfo of usuariosFincaInfoBaja">
+                            <td routerLink="/dashboard/ver-perfil/{{usuarioFincaInfo.idUsuario}}" class="click">{{ usuarioFincaInfo.nombre }} {{ usuarioFincaInfo.apellido1 }} {{ usuarioFincaInfo.apellido2 }} </td>
+                            <td>{{ usuarioFincaInfo.onzas }}</td>
+                            <td>{{ usuarioFincaInfo.rol }}</td>
+                            <td>{{ usuarioFincaInfo.fechaAlta | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ usuarioFincaInfo.fechaBaja | date:'dd/MM/yyyy' }}</td>
                         </tr>
                     </tbody>
                 </table>

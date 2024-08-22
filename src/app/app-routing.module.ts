@@ -40,7 +40,7 @@ const routes: Routes = [
         path: 'home', component: HomeComponent
       },
       {
-        path: 'registrar-usuario', component: CrearUsuarioComponent, canActivate: [superAccessGuard],
+        path: 'registrar-usuario', component: CrearUsuarioComponent, canActivate: [adminAccessGuard],
       },
       {
         path: 'listar-usuarios', component: ListarUsuariosComponent, canActivate: [superAccessGuard],

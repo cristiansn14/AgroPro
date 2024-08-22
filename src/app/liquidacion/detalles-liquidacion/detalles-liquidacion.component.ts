@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { skip, Subscription } from 'rxjs';
 import { LineaLiquidacion } from 'src/app/model/lineaLiquidacion';
 import { Liquidacion } from 'src/app/model/liquidacion';
+import { UsuarioFinca } from 'src/app/model/usuario-finca';
 import { FincaService } from 'src/app/service/finca.service';
 import { LiquidacionService } from 'src/app/service/liquidacion.service';
 import { TokenService } from 'src/app/service/token.service';
@@ -21,6 +22,9 @@ export class DetallesLiquidacionComponent implements OnInit, OnDestroy{
   lineasLiquidacion: LineaLiquidacion[] = [];
   liquidacion: Liquidacion | null = null;
   idUsuarioRegistrado: string | null = "";
+  usuarioFinca: UsuarioFinca | null = null;
+  rol: string | null = null;
+  selectedFinca: string | null = null;
 
   constructor(
     private toastr: ToastrService,
@@ -37,6 +41,12 @@ export class DetallesLiquidacionComponent implements OnInit, OnDestroy{
       this.loadLiquidacion();
       this.loadLineasLiquidacion();
       this.idUsuarioRegistrado = this.tokenService.getUserId();
+      
+    });
+
+    this.subscription = this.fincaService.selectedFinca$.subscribe(fincaId => {
+      this.selectedFinca = fincaId;
+      this.getUsuarioFinca();    
     });
 
     this.subscription = this.fincaService.selectedFinca$
@@ -95,5 +105,23 @@ export class DetallesLiquidacionComponent implements OnInit, OnDestroy{
         })
       }
     });
+  }
+
+  getUsuarioFinca() {
+    const idUsuario = this.tokenService.getUserId();
+    if (idUsuario != null && this.selectedFinca != null) {
+      this.fincaService.getUsuarioFincaByUsuarioIdAndFincaId(idUsuario, this.selectedFinca).subscribe({
+        next: (usuarioFinca) => {
+          this.usuarioFinca = usuarioFinca;
+          this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol : null;
+        },
+        error: (error) => {
+          this.error = error.error.message;
+          this.toastr.error(this.error, 'No se ha encontrado al usuario para la finca seleccionada', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      })
+    }   
   }
 }

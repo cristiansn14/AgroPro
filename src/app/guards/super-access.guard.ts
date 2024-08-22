@@ -17,7 +17,7 @@ export const superAccessGuard: CanActivateFn = (route, state) => {
         return fincaService.getUsuarioFincaByUsuarioIdAndFincaId(idUsuario, fincaId).pipe(
           switchMap((usuarioFinca: UsuarioFinca | null) => {
             const rol = usuarioFinca?.rol;
-            if (rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR') {
+            if (rol === 'SUPERUSUARIO') {
               return of(true);
             } else {
               tokenService.logOut();

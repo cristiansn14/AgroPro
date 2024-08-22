@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Finca } from '../model/finca';
 import { UsuarioFinca } from '../model/usuario-finca';
 import { UsuarioFincaInfo } from '../model/usuarioFincaInfo';
@@ -17,6 +17,8 @@ export class FincaService {
   fincaURL = 'http://localhost:8090/finca';
   private selectedFincaSource = new BehaviorSubject<string | null>(null);
   selectedFinca$ = this.selectedFincaSource.asObservable();
+  private fincaModifiedSource = new Subject<void>();
+  fincaModified$ = this.fincaModifiedSource.asObservable();
   
   public getSelectedFinca(): string | null {
     return this.selectedFincaSource.value;
@@ -24,6 +26,10 @@ export class FincaService {
   
   public setSelectedFinca(fincaId: string | null) {
     this.selectedFincaSource.next(fincaId);
+  }
+
+  public notifyFincaModified() {
+    this.fincaModifiedSource.next();
   }
 
   public guardarFinca (fincaDto: Finca): Observable<any> {
@@ -72,6 +78,10 @@ export class FincaService {
 
   public findUsuariosFincaByFincaId (idFinca: string): Observable<UsuarioFincaInfo[]> {
     return this.httpClient.get<UsuarioFincaInfo[]>(`${this.fincaURL}/findUsuariosFincaByFincaId/${idFinca}`)
+  }
+
+  public findUsuariosFincaBajaByFincaId (idFinca: string): Observable<UsuarioFincaInfo[]> {
+    return this.httpClient.get<UsuarioFincaInfo[]>(`${this.fincaURL}/findUsuariosFincaBajaByFincaId/${idFinca}`)
   }
 
   public findUsuarioFincaById (idUsuarioFinca: string): Observable<UsuarioFincaInfo> {

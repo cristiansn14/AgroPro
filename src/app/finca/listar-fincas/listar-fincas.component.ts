@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FincaInfo } from 'src/app/model/fincaInfo';
 import { UsuarioFinca } from 'src/app/model/usuario-finca';
@@ -24,7 +24,8 @@ export class ListarFincasComponent {
   constructor(
     private toastr: ToastrService,
     private fincaService: FincaService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +79,7 @@ export class ListarFincasComponent {
           this.toastr.success('Finca dada de baja con éxito', 'Éxito', {
             timeOut: 3000, positionClass: 'toast-top-center'
           });
+          this.fincaService.notifyFincaModified();
           this.ngOnInit();
         },
         error: (err) => {
@@ -97,6 +99,7 @@ export class ListarFincasComponent {
           this.toastr.success('Finca dada de alta de nuevo con éxito', 'Éxito', {
             timeOut: 3000, positionClass: 'toast-top-center'
           });
+          this.fincaService.notifyFincaModified();
           this.ngOnInit();
         },
         error: (err) => {
@@ -116,6 +119,7 @@ export class ListarFincasComponent {
           this.toastr.success('Finca eliminada con éxito', 'Éxito', {
             timeOut: 3000, positionClass: 'toast-top-center'
           });
+          this.fincaService.notifyFincaModified();
           this.ngOnInit();
         },
         error: (err) => {
@@ -125,6 +129,14 @@ export class ListarFincasComponent {
           })
         }
       });
+    }
+  }
+
+  redirigirFinca(finca: FincaInfo){
+    if (finca.id) {
+      this.fincaService.setSelectedFinca(finca.id);
+      console.log(finca.id)
+      this.router.navigateByUrl('/dashboard/detalles-finca');
     }
   }
 }

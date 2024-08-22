@@ -31,14 +31,14 @@
         <span>Acciones</span>
       </button>
       <mat-menu #actions="matMenu">
-        <button mat-menu-item [matMenuTriggerFor]="user" *ngIf="rol === 'SUPERUSUARIO'">Usuario</button>
+        <button mat-menu-item [matMenuTriggerFor]="user" *ngIf="rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR'">Usuario</button>
         <button mat-menu-item [matMenuTriggerFor]="finca">Finca</button>
         <button mat-menu-item [matMenuTriggerFor]="movimientos">Movimientos</button>
         <button mat-menu-item [matMenuTriggerFor]="liquidaciones">Liquidaciones</button>
       </mat-menu>
       <mat-menu #user="matMenu">
         <button mat-menu-item routerLink="/dashboard/registrar-usuario">Registrar usuario</button>
-        <button mat-menu-item routerLink="/dashboard/listar-usuarios">Listar usuarios</button>
+        <button mat-menu-item routerLink="/dashboard/listar-usuarios" *ngIf="rol === 'SUPERUSUARIO'">Listar usuarios</button>
       </mat-menu>
       <mat-menu #finca="matMenu">
         <button mat-menu-item routerLink="/dashboard/crear-finca" *ngIf="rol === 'SUPERUSUARIO'">Crear Finca</button>

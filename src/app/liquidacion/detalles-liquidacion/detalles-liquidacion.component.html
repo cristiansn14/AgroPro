@@ -3,9 +3,9 @@
     <div class="flex">
         <div style="flex-direction: column;">
             <div class="container">
-                <h1>{{ liquidacion?.concepto }}: desde {{ liquidacion?.fechaDesde | date:'dd/MM/yyyy' }} hasta {{ liquidacion?.fechaHasta | date:'dd/MM/yyyy' }}</h1>
-                <h1>Fecha: {{ liquidacion?.fecha | date:'dd/MM/yyyy' }}</h1>
-                <h1>Tipo: {{ liquidacion?.tipo }}</h1>
+                <h1 style="color: #00796b;">{{ liquidacion?.concepto }}: desde {{ liquidacion?.fechaDesde | date:'dd/MM/yyyy' }} hasta {{ liquidacion?.fechaHasta | date:'dd/MM/yyyy' }}</h1>
+                <h1 style="color: #00796b;">Fecha: {{ liquidacion?.fecha | date:'dd/MM/yyyy' }}</h1>
+                <h1 style="color: #00796b;">Tipo: {{ liquidacion?.tipo }}</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -19,12 +19,13 @@
                             <td>{{ lineaLiquidacion.nombre }} {{ lineaLiquidacion.apellido1 }} {{ lineaLiquidacion.apellido2 }}</td>
                             <td>{{ lineaLiquidacion.importe }}</td>
                             <td *ngIf="lineaLiquidacion.recibida">Recibido</td>
-                            <td *ngIf="!lineaLiquidacion.recibida && lineaLiquidacion.idUsuario === idUsuarioRegistrado">
+                            <td *ngIf="(!lineaLiquidacion.recibida && lineaLiquidacion.idUsuario === idUsuarioRegistrado) || (!lineaLiquidacion.recibida && lineaLiquidacion.idUsuario === idUsuarioRegistrado && (rol ==='ADMINISTRADOR' || rol ==='SUPERUSUARIO'))">
                                 <button mat-button (click)="recibido(lineaLiquidacion)" style="width: 100px; background-color: #00796b; color: white;">
                                     <mat-icon>check</mat-icon>
                                     <span>Recibido</span>
                                 </button>
                             </td>
+                            <td *ngIf="!lineaLiquidacion.recibida && lineaLiquidacion.idUsuario !== idUsuarioRegistrado">No recibido</td>
                         </tr>
                     </tbody>
                 </table>
