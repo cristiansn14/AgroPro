@@ -26,6 +26,7 @@ export class ListarArchivosComponent implements OnInit, OnDestroy{
   selectedFile: File | undefined = undefined;
   usuarioFinca: UsuarioFinca | null = null;
   rol: string | null = null;
+  roles: string[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -128,10 +129,10 @@ export class ListarArchivosComponent implements OnInit, OnDestroy{
           }
         },
         error: (error) => {
-          this.error = error.error.message;
-          this.toastr.error(this.error, 'No se ha encontrado al usuario para la finca seleccionada', {
-            timeOut: 3000, positionClass: 'toast-top-center'
-          })
+          if (this.usuarioFinca === null) {
+            this.roles = this.tokenService.getAuthorities();
+            this.rol = this.roles[0];
+          }
         }
       })
     }   

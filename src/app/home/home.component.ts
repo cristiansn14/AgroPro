@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectedFinca: string | null = null;
   error: string = "";
   username: string = "";
-  parcelas: string[] = [""];
+  parcelas: string[] = [];
   selectedParcela: string | null = null;
   private subscription: Subscription | null = null;
   coordenadas: any;
@@ -34,7 +34,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.fincaService.selectedFinca$.subscribe(fincaId => {
       this.selectedFinca = fincaId;
-      if (this.selectedFinca) {
+      this.username = this.tokenService.getUserName() ?? '';
+      if (this.selectedFinca) {       
         this.loadParcelas();
       }     
     }); 

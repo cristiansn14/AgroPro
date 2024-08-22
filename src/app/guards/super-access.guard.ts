@@ -10,9 +10,15 @@ export const superAccessGuard: CanActivateFn = (route, state) => {
   const tokenService = inject(TokenService);
   const router = inject(Router);
   const idUsuario = tokenService.getUserId();
+  const roles = tokenService.getAuthorities();
+  const rolP =  roles[0];
+
+  if (rolP === 'SUPERUSUARIO') {
+    return of(true);
+  }
 
   return fincaService.selectedFinca$.pipe(
-    switchMap((fincaId) => {
+    switchMap((fincaId) => {      
       if (idUsuario != null && fincaId != null) {
         return fincaService.getUsuarioFincaByUsuarioIdAndFincaId(idUsuario, fincaId).pipe(
           switchMap((usuarioFinca: UsuarioFinca | null) => {

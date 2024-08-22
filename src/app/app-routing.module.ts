@@ -58,7 +58,7 @@ const routes: Routes = [
         path: 'editar-representante/:id', component: EditarRepresentanteComponent
       },
       {
-        path: 'crear-finca', component: CrearFincaComponent, canActivate: [adminAccessGuard],
+        path: 'crear-finca', component: CrearFincaComponent, canActivate: [superAccessGuard],
       },
       {
         path: 'detalles-finca', component: DetallesFincaComponent

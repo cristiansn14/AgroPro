@@ -32,6 +32,7 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
   private subscription: Subscription | null = null;
   usuarioFinca: UsuarioFinca | null = null;
   rol: string | null = null;
+  roles: string[] = [];
 
   constructor(
     private toastr: ToastrService,
@@ -262,10 +263,10 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
           this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol : null;
         },
         error: (error) => {
-          this.error = error.error.message;
-          this.toastr.error(this.error, 'No se ha encontrado al usuario para la finca seleccionada', {
-            timeOut: 3000, positionClass: 'toast-top-center'
-          })
+          if (this.usuarioFinca === null) {
+            this.roles = this.tokenService.getAuthorities();
+            this.rol = this.roles[0];
+          }
         }
       })
     }   

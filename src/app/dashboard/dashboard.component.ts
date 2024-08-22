@@ -44,6 +44,8 @@ export class DashboardComponent implements OnInit, OnDestroy{
   ) { }
 
   ngOnInit(): void {
+    this.roles = this.tokenService.getAuthorities();
+    this.rol = this.roles[0];
     this.getFincasInit();
     this.getFotoPerfil();
     this.subscriptionFoto.add(this.usuarioService.profilePicture$.subscribe(url => {
@@ -162,13 +164,13 @@ export class DashboardComponent implements OnInit, OnDestroy{
       this.fincaService.getUsuarioFincaByUsuarioIdAndFincaId(idUsuario, this.selectedFinca).subscribe({
         next: (usuarioFinca) => {
           this.usuarioFinca = usuarioFinca;
-          this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol != null ? this.usuarioFinca.rol : null : null;
+          this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol : null;
         },
         error: (error) => {
-          this.error = error.error.message;
-          this.toastr.error(this.error, 'No se ha encontrado al usuario para la finca seleccionada', {
-            timeOut: 3000, positionClass: 'toast-top-center'
-          })
+          if (this.usuarioFinca === null) {
+            this.roles = this.tokenService.getAuthorities();
+            this.rol = this.roles[0];
+          }
         }
       })
     }   

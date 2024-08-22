@@ -42,6 +42,7 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
   selectedFinca: string | null = null;
   usuarioFinca: UsuarioFinca | null = null;
   rol: string | null = null;
+  roles: string[] = [];
   idUsuario: string | null = null;
 
   constructor(
@@ -336,13 +337,12 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
         next: (usuarioFinca) => {
           this.usuarioFinca = usuarioFinca;
           this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol : null;
-          console.log(this.rol);
         },
         error: (error) => {
-          this.error = error.error.message;
-          this.toastr.error(this.error, 'No se ha encontrado al usuario para la finca seleccionada', {
-            timeOut: 3000, positionClass: 'toast-top-center'
-          })
+          if (this.usuarioFinca === null) {
+            this.roles = this.tokenService.getAuthorities();
+            this.rol = this.roles[0];
+          }
         }
       })
     }   

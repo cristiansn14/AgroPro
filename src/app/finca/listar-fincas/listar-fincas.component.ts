@@ -60,7 +60,6 @@ export class ListarFincasComponent {
       this.fincaService.findAllFincasBajaByUsuarioId(this.idUsuario).subscribe({
         next: (data) => {
           this.fincasBaja = data;
-          console.log(this.fincasBaja.length)
         },
         error: (err) => {
           this.error = err.error.message;
@@ -135,7 +134,6 @@ export class ListarFincasComponent {
   redirigirFinca(finca: FincaInfo){
     if (finca.id) {
       this.fincaService.setSelectedFinca(finca.id);
-      console.log(finca.id)
       this.router.navigateByUrl('/dashboard/detalles-finca');
     }
   }

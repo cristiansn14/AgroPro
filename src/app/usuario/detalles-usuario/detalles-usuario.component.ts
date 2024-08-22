@@ -27,6 +27,7 @@ export class DetallesUsuarioComponent implements OnInit, OnDestroy{
   idUsuarioRegistrado: string | null = "";
   usuarioFinca: UsuarioFinca | null = null;
   rol: string | null = null;
+  roles: string[] = [];
   selectedFinca: string | null = null;
   private subscription: Subscription | null = null;
 
@@ -153,13 +154,13 @@ export class DetallesUsuarioComponent implements OnInit, OnDestroy{
       this.fincaService.getUsuarioFincaByUsuarioIdAndFincaId(idUsuario, this.selectedFinca).subscribe({
         next: (usuarioFinca) => {
           this.usuarioFinca = usuarioFinca;
-          this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol != null ? this.usuarioFinca.rol : null : null;
+          this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol : null;
         },
         error: (error) => {
-          this.error = error.error.message;
-          this.toastr.error(this.error, 'No se ha encontrado al usuario para la finca seleccionada', {
-            timeOut: 3000, positionClass: 'toast-top-center'
-          })
+          if (this.usuarioFinca === null) {
+            this.roles = this.tokenService.getAuthorities();
+            this.rol = this.roles[0];
+          }
         }
       })
     }   
