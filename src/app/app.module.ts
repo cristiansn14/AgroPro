@@ -49,6 +49,8 @@ import { ListarLiquidacionesComponent } from './liquidacion/listar-liquidaciones
 import { DetallesLiquidacionComponent } from './liquidacion/detalles-liquidacion/detalles-liquidacion.component';
 import { MatSortModule } from '@angular/material/sort';
 import { ListarUsuariosComponent } from './usuario/listar-usuarios/listar-usuarios.component';
+import { ListarArchivosComponent } from './finca/listar-archivos/listar-archivos.component';
+import { ListarFincasComponent } from './finca/listar-fincas/listar-fincas.component';
 
 
 @NgModule({
@@ -79,6 +81,8 @@ import { ListarUsuariosComponent } from './usuario/listar-usuarios/listar-usuari
     ListarLiquidacionesComponent,
     DetallesLiquidacionComponent,
     ListarUsuariosComponent,
+    ListarArchivosComponent,
+    ListarFincasComponent,
   ],
   imports: [
     BrowserModule,

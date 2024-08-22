@@ -1,28 +1,29 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Archivo } from 'src/app/model/archivo';
+import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { Liquidacion } from 'src/app/model/liquidacion';
-import { UsuarioFinca } from 'src/app/model/usuario-finca';
 import { FincaService } from 'src/app/service/finca.service';
-import { LiquidacionService } from 'src/app/service/liquidacion.service';
 import { MovimientoService } from 'src/app/service/movimiento.service';
+import { UsuarioFinca } from 'src/app/model/usuario-finca';
 import { TokenService } from 'src/app/service/token.service';
 
-@Component({
-  selector: 'app-listar-liquidaciones',
-  templateUrl: './listar-liquidaciones.component.html',
-  styleUrls: ['./listar-liquidaciones.component.scss']
-})
-export class ListarLiquidacionesComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['fecha', 'concepto', 'tipo', 'importe', 'fechaDesde', 'fechaHasta', 'archivo', 'opciones'];
-  dataSource = new MatTableDataSource<Liquidacion>();
+@Component({
+  selector: 'app-listar-archivos',
+  templateUrl: './listar-archivos.component.html',
+  styleUrls: ['./listar-archivos.component.scss']
+})
+export class ListarArchivosComponent implements OnInit, OnDestroy{
+
+  displayedColumns: string[] = ['archivo'];
+  dataSource = new MatTableDataSource<Archivo>();
   selectedFinca: string | null = null;
   private subscription: Subscription | null = null;
   error: string = "";
+  selectedFile: File | undefined = undefined;
   usuarioFinca: UsuarioFinca | null = null;
   rol: string | null = null;
 
@@ -30,10 +31,9 @@ export class ListarLiquidacionesComponent implements OnInit, OnDestroy {
 
   constructor(
     private fincaService: FincaService,
-    private liquidacionService: LiquidacionService,
     private toastr: ToastrService,
-    private movimientoService: MovimientoService,
     private router: Router,
+    private movimientoService: MovimientoService,
     private tokenService: TokenService,
   ) {}
 
@@ -41,17 +41,16 @@ export class ListarLiquidacionesComponent implements OnInit, OnDestroy {
     this.subscription = this.fincaService.selectedFinca$.subscribe(fincaId => {
       this.selectedFinca = fincaId;
       if (this.selectedFinca) {
-        this.liquidacionService.findByFincaId(this.selectedFinca).subscribe({
-          next: (liquidaciones) => {
-            this.dataSource.data = liquidaciones;
+        this.fincaService.findArchivosByIdFinca(this.selectedFinca).subscribe({
+          next: (archivos) => {
+            this.dataSource.data = archivos;
             this.dataSource.paginator = this.paginator;
+            this.getUsuarioFinca();
             if (this.dataSource.data.length === 0) {
-              this.toastr.warning(this.error, 'No hay liquidaciones generadas', {
+              this.toastr.warning(this.error, 'No hay archivos en la finca', {
                 timeOut: 3000, positionClass: 'toast-top-center'
               });
-              this.router.navigateByUrl(`/dashboard/home`);
             }
-            this.getUsuarioFinca();
           }
         });
       }
@@ -64,18 +63,45 @@ export class ListarLiquidacionesComponent implements OnInit, OnDestroy {
     }
   }
 
-  openDocument(liquidacion: Liquidacion) {
-    if (liquidacion.idArchivo) {
-      const archivoUrl = this.movimientoService.getArchivoUrl(liquidacion.idArchivo);
+  openDocument(archivo: Archivo) {
+    if (archivo.id) {
+      const archivoUrl = this.movimientoService.getArchivoUrl(archivo.id);
       window.open(archivoUrl, '_blank');     
     }
   }
 
-  eliminarLiquidacion(liquidacion: Liquidacion) {
-    if (liquidacion.id !== null) {
-      this.liquidacionService.eliminarLiquidacion(liquidacion.id).subscribe({
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file && this.selectedFinca) {
+      this.selectedFile = file;
+      this.guardarArchivo();
+    }
+  }
+
+  guardarArchivo () {
+    if (this.selectedFinca && this.selectedFile) {
+      this.fincaService.guardarArchivo(this.selectedFinca, this.selectedFile).subscribe({
         next: () => {
-          this.toastr.success('Liquidación eliminada con éxito', 'Éxito', {
+          this.toastr.success('Archivo guardado con éxito', 'Éxito', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          });
+          this.ngOnInit();
+        },
+        error: (err) => {
+          this.error = err.error.message;
+          this.toastr.error(this.error, 'Error al guardar el archivo', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      });
+    }    
+  }
+
+  eliminarArchivo(archivo: Archivo) {
+    if (archivo.id !== null) {
+      this.fincaService.eliminarArchivo(archivo.id).subscribe({
+        next: () => {
+          this.toastr.success('Archivo eliminado con éxito', 'Éxito', {
             timeOut: 3000, positionClass: 'toast-top-center'
           });
           this.ngOnInit();
@@ -97,6 +123,9 @@ export class ListarLiquidacionesComponent implements OnInit, OnDestroy {
         next: (usuarioFinca) => {
           this.usuarioFinca = usuarioFinca;
           this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol != null ? this.usuarioFinca.rol : null : null;
+          if ((this.rol === 'SUPERUSUARIO' || this.rol === 'ADMINISTRADOR') && !this.displayedColumns.includes('opciones')) {
+            this.displayedColumns.push('opciones');
+          }
         },
         error: (error) => {
           this.error = error.error.message;

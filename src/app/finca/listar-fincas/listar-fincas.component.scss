@@ -23,36 +23,6 @@ h2 {
     height: fit-content;
 }
 
-/* Encabezado del formulario */
-.form-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 15px;
-    margin-top: 10px;
-    border: 2px solid #00796b;
-    border-radius: 10px;
-    width: fit-content;
-    height: fit-content;
-    margin-bottom: 10px;
-    margin-right: 70px;
-    margin-left: 20px;
-}
-
-.form-group {
-    flex-direction: column;
-}
-
-.label {
-    flex-basis: 100%;
-    font-size: 1rem;
-    color: hsl(0, 0%, 20%);
-    width: fit-content;
-    margin-right: 30px;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
 
 .div-buttons{
     position: absolute;
@@ -64,14 +34,6 @@ h2 {
     //display: flex;
   }
 
-.edit-button{
-    width: 100px;
-    background-color: #2bea04;
-    color: white;
-    margin-top: 15px;
-    margin-right: 10px;
-}
-  
 .cancel-button{
     width: 100px;
     background-color: red;
@@ -86,13 +48,14 @@ h2 {
     margin-left: 20px;
     margin-right: inherit;
     --bs-gutter-x: 0;
-    margin-top: 0px !important;
+    margin-top: 30px;
 }
 
 h1 {
     font-weight: bold;
     color: black;
     margin: unset;
+    margin-top: -30px;
     background-color: #e8f5e9;
     width: fit-content;
     margin-bottom: 10px;
@@ -149,7 +112,7 @@ h1 {
 }
 
 /* Media queries para pantallas pequeñas */
-@media only screen and (max-width: 1510px) {
+@media only screen and (max-width: 1650px) {
     .user-form {
         align-items: flex-start;
     }
@@ -197,11 +160,6 @@ h1 {
         position: inherit;
         width: fit-content;
         height: fit-content;
-    }
-    
-    .edit-button{
-        background-color: #2bea04;
-        color: white;
     }
     
     .cancel-button{

@@ -1,12 +1,12 @@
-<h2 *ngIf="!parcela?.fechaBaja && !parcelaConstruccion?.fechaBaja">Detalles Parcela</h2>
-<h2 *ngIf="parcela?.fechaBaja || parcelaConstruccion?.fechaBaja">Detalles Parcela Eliminada</h2>
+<h2 *ngIf="(parcela !== null && parcela.fechaBaja === null) || (parcelaConstruccion !== null && parcelaConstruccion.fechaBaja === null)">Detalles Parcela</h2>
+<h2 *ngIf="(parcela !== null && parcela.fechaBaja !== null) || (parcelaConstruccion !== null && parcelaConstruccion.fechaBaja !== null)">Detalles Parcela Eliminada</h2>
 <form action="#" method="post" class="user-form">
     <div class="flex">
         <div style="flex-direction: column;">
             <div class="container">
-                <h1 *ngIf="!parcela?.fechaBaja && !parcelaConstruccion?.fechaBaja">
+                <h1 *ngIf="(parcela !== null && parcela.fechaBaja === null) || (parcelaConstruccion !== null && parcelaConstruccion.fechaBaja === null)">
                     Propietarios
-                    <button mat-button routerLink="/dashboard/crear-usuario-parcela/{{referenciaCatastral}}" style="margin-left: 20px; width: 100px; background-color: #00796b; color: white;">
+                    <button *ngIf="(rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR') && (parcela !== null && parcela.fechaBaja === null) || (parcelaConstruccion !== null && parcelaConstruccion.fechaBaja === null)" mat-button routerLink="/dashboard/crear-usuario-parcela/{{referenciaCatastral}}" style="margin-left: 20px; width: 100px; background-color: #00796b; color: white;">
                         <mat-icon>add</mat-icon>
                         <span>Añadir</span>
                     </button>
@@ -19,7 +19,7 @@
                             <th scope="col">Participacion</th>
                             <th scope="col">Fecha de alta</th>
                             <th scope="col">Fecha de modificación</th>
-                            <th scope="col">Opciones</th>
+                            <th scope="col" *ngIf="(rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR') && ((parcela !== null && parcela.fechaBaja === null) || (parcelaConstruccion !== null && parcelaConstruccion.fechaBaja === null))">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +29,7 @@
                             <td>{{ usuario.participacion }}</td>
                             <td>{{ usuario.fechaAlta | date:'dd/MM/yyyy' }}</td>
                             <td>{{ usuario.fechaModificacion | date:'dd/MM/yyyy' }}</td>
-                            <td style="display: flex;">
+                            <td style="display: flex;" *ngIf="(rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR') && ((parcela !== null && parcela.fechaBaja === null) || (parcelaConstruccion !== null && parcelaConstruccion.fechaBaja === null))">
                                 <button mat-button routerLink="/dashboard/editar-usuario-parcela/{{usuario.id}}" style="width: 100px; background-color: #00796b; color: white;">
                                     <mat-icon>edit</mat-icon>
                                     <span>Editar</span>
@@ -44,7 +44,7 @@
                 </table>
             </div>
             <div class="container">
-                <h1 *ngIf="parcela?.fechaBaja || parcelaConstruccion?.fechaBaja">Antiguos Propietarios</h1>              
+                <h1 style="margin-top: 5px;" *ngIf="usuariosParcelaBaja && usuariosParcelaBaja.length > 0">Antiguos Propietarios</h1>              
                 <table class="table table-striped" *ngIf="usuariosParcelaBaja && usuariosParcelaBaja.length > 0">
                     <thead>
                         <tr>
@@ -52,6 +52,7 @@
                             <th scope="col">Apellidos</th>
                             <th scope="col">Participacion</th>
                             <th scope="col">Fecha de alta</th>
+                            <th scope="col">Fecha de baja</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,6 +61,7 @@
                             <td>{{ usuario.apellido1 }} {{ usuario.apellido2 }}</td>
                             <td>{{ usuario.participacion }}</td>
                             <td>{{ usuario.fechaAlta | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ usuario.fechaBaja | date:'dd/MM/yyyy' }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -117,8 +119,7 @@
                             <div class="data"><span class="label" style="font-weight: bold;">Fecha de alta:</span> <span class="label">{{ parcela?.fechaAlta | date:'dd/MM/yyyy' }}</span></div>                            
                             <div *ngIf="parcela?.fechaModificacion"><span class="label" style="font-weight: bold;">Fecha de modificación:</span><span class="label">{{ parcela?.fechaModificacion | date:'dd/MM/yyyy' }}</span></div>
                             <div *ngIf="parcela?.fechaBaja"><span class="label" style="font-weight: bold;">Fecha de baja:</span> <span class="label">{{ parcela?.fechaBaja | date:'dd/MM/yyyy' }}</span></div>
-                        </div>    
-                        
+                        </div>                            
                     </div>       
                 </div>   
             </div>
@@ -146,10 +147,10 @@
         </div>        
         <div class="div-buttons">
             <div style="display: flex;">
-                <button mat-raised-button class="edit-button" routerLink="/dashboard/editar-parcela/{{referenciaCatastral}}">Editar</button>
+                <button *ngIf="(rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR') && ((parcela !== null && parcela.fechaBaja === null) || (parcelaConstruccion !== null && parcelaConstruccion.fechaBaja === null))" mat-raised-button class="edit-button" routerLink="/dashboard/editar-parcela/{{referenciaCatastral}}">Editar</button>
                 <button mat-raised-button class="cancel-button" routerLink="/dashboard/detalles-finca">Volver</button>
             </div>            
-            <button mat-button *ngIf="parcela?.referenciaCatastral" (click)="actualizarDatos()" style="height: 50px; width: 210px;  background-color: #00796b; color: white; margin-top: 10px">
+            <button mat-button *ngIf="(parcela !== null && parcela.fechaBaja === null) && (rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR')" (click)="actualizarDatos()" style="height: 50px; width: 210px;  background-color: #00796b; color: white; margin-top: 10px">
                 <mat-icon>refresh</mat-icon>
                 <span>Actualizar datos Catastro</span>
             </button>

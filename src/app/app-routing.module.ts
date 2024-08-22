@@ -7,7 +7,9 @@ import { EditarUsuarioComponent } from './usuario/editar-usuario/editar-usuario.
 import { DetallesUsuarioComponent } from './usuario/detalles-usuario/detalles-usuario.component';
 import { CrearParcelaComponent } from './parcela/crear-parcela/crear-parcela.component';
 import { HomeComponent } from './home/home.component';
-import { authGuard } from './auth/auth.guard';
+import { authGuard } from './guards/auth.guard';
+import { adminAccessGuard } from './guards/admin-access.guard';
+import { superAccessGuard } from './guards/super-access.guard';
 import { CrearFincaComponent } from './finca/crear-finca/crear-finca.component';
 import { AddUsuarioComponent } from './finca/añadir-usuario/add-usuario.component';
 import { DetallesParcelaComponent } from './parcela/detalles-parcela/detalles-parcela.component';
@@ -26,6 +28,8 @@ import { GenerarLiquidacionComponent } from './liquidacion/generar-liquidacion/g
 import { DetallesLiquidacionComponent } from './liquidacion/detalles-liquidacion/detalles-liquidacion.component';
 import { ListarLiquidacionesComponent } from './liquidacion/listar-liquidaciones/listar-liquidaciones.component';
 import { ListarUsuariosComponent } from './usuario/listar-usuarios/listar-usuarios.component';
+import { ListarArchivosComponent } from './finca/listar-archivos/listar-archivos.component';
+import { ListarFincasComponent } from './finca/listar-fincas/listar-fincas.component';
 
 const routes: Routes = [
   { path:'', redirectTo:'/login', pathMatch:'full'},
@@ -36,10 +40,10 @@ const routes: Routes = [
         path: 'home', component: HomeComponent
       },
       {
-        path: 'registrar-usuario', component: CrearUsuarioComponent
+        path: 'registrar-usuario', component: CrearUsuarioComponent, canActivate: [superAccessGuard],
       },
       {
-        path: 'listar-usuarios', component: ListarUsuariosComponent
+        path: 'listar-usuarios', component: ListarUsuariosComponent, canActivate: [superAccessGuard],
       },
       {
         path: 'editar-perfil/:id', component: EditarUsuarioComponent
@@ -54,25 +58,31 @@ const routes: Routes = [
         path: 'editar-representante/:id', component: EditarRepresentanteComponent
       },
       {
-        path: 'crear-finca', component: CrearFincaComponent
+        path: 'crear-finca', component: CrearFincaComponent, canActivate: [adminAccessGuard],
       },
       {
         path: 'detalles-finca', component: DetallesFincaComponent
       },
       {
-        path: 'editar-finca', component: EditarFincaComponent
+        path: 'editar-finca', component: EditarFincaComponent, canActivate: [adminAccessGuard],
       },
       {
-        path: 'añadir-usuario', component: AddUsuarioComponent
+        path: 'listar-fincas', component: ListarFincasComponent
       },
       {
-        path: 'editar-usuario-finca/:id', component: EditarUsuarioFincaComponent
+        path: 'añadir-usuario', component: AddUsuarioComponent, canActivate: [adminAccessGuard],
+      },
+      {
+        path: 'editar-usuario-finca/:id', component: EditarUsuarioFincaComponent, canActivate: [adminAccessGuard],
+      },
+      {
+        path: 'listar-archivos', component: ListarArchivosComponent
       },
       {
         path: 'change-password/:id', component: ChangePasswordComponent
       },
       {
-        path: 'crear-parcela', component: CrearParcelaComponent
+        path: 'crear-parcela', component: CrearParcelaComponent, canActivate: [adminAccessGuard],
       },
       {
         path: 'crear-movimiento', component: CrearMovimientoComponent
@@ -84,16 +94,16 @@ const routes: Routes = [
         path: 'detalles-parcela/:referenciaCatastral', component: DetallesParcelaComponent
       },
       {
-        path: 'editar-parcela/:referenciaCatastral', component: EditarParcelaComponent
+        path: 'editar-parcela/:referenciaCatastral', component: EditarParcelaComponent, canActivate: [adminAccessGuard],
       },
       {
-        path: 'crear-usuario-parcela/:referenciaCatastral', component: CrearUsuarioParcelaComponent
+        path: 'crear-usuario-parcela/:referenciaCatastral', component: CrearUsuarioParcelaComponent, canActivate: [adminAccessGuard],
       },
       {
         path: 'editar-usuario-parcela/:id', component: EditarUsuarioParcelaComponent
       },
       {
-        path: 'generar-liquidacion', component: GenerarLiquidacionComponent
+        path: 'generar-liquidacion', component: GenerarLiquidacionComponent, canActivate: [adminAccessGuard],
       },
       {
         path: 'listar-liquidaciones', component: ListarLiquidacionesComponent

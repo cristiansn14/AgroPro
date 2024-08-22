@@ -6,7 +6,7 @@
                 <div class="form-header">
                     <h1>Datos personales</h1>
                     <div class="form-group">
-                        <img *ngIf="flagFoto" class="avatar mat-elevation-z8" [src]="fotoPerfilUrl" alt="">  
+                        <img *ngIf="idUsuarioRegistrado !== idUsuario" class="avatar mat-elevation-z8" [src]="fotoPerfilUrl" alt="">  
                         <div><span class="label" style="font-weight: bold;">Nombre:</span> <span class="label">{{ usuario?.nombre }}</span></div>
                         <div><span class="label" style="font-weight: bold;">Primer Apellido:</span> <span class="label">{{ usuario?.apellido1 }}</span></div> 
                         <div><span class="label" style="font-weight: bold;">Segundo Apellido:</span> <span class="label">{{ usuario?.apellido2 }}</span></div>
@@ -33,8 +33,8 @@
                             <div><span class="label" style="font-weight: bold;">Usuario:</span> <span class="label">{{ usuario?.username }}</span></div>
                             <div><span class="label" style="font-weight: bold;">Fecha de alta:</span> <span class="label">{{ usuario?.fechaAlta | date:'dd/MM/yyyy' }}</span></div>
                             <div style="display: flex;">
-                                <button mat-raised-button class="password-button" routerLink="/dashboard/change-password/{{idUsuario}}">Cambiar contraseña</button>
-                                <button mat-raised-button class="repre-button" routerLink="/dashboard/añadir-representante/{{idUsuario}}">Añadir representante</button>
+                                <button *ngIf="idUsuarioRegistrado === idUsuario || rol === 'SUPERUSUARIO'" mat-raised-button class="password-button" routerLink="/dashboard/change-password/{{idUsuario}}">Cambiar contraseña</button>
+                                <button *ngIf="idUsuarioRegistrado === idUsuario || rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR'" mat-raised-button class="repre-button" routerLink="/dashboard/añadir-representante/{{idUsuario}}">Añadir representante</button>
                             </div>  
                         </div>                 
                                   
@@ -65,7 +65,7 @@
                             <td>{{ representante.dni }} </td>
                             <td>{{ representante.telefono }} </td>
                             <td>{{ representante.fechaAlta | date:'dd/MM/yyyy'  }} </td>
-                            <td style="display: flex;">
+                            <td style="display: flex;" *ngIf="idUsuarioRegistrado === idUsuario || rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR'">
                                 <button mat-button routerLink="/dashboard/editar-representante/{{representante.id}}" style="width: 100px; background-color: #00796b; color: white;">
                                     <mat-icon>edit</mat-icon>
                                     <span>Editar</span>
@@ -110,7 +110,7 @@
             </div>  
         </div>                    
         <div class="div-buttons">
-            <button mat-raised-button class="edit-button" routerLink="/dashboard/editar-perfil/{{idUsuario}}">Editar</button>
+            <button *ngIf="idUsuarioRegistrado === idUsuario || rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR'" mat-raised-button class="edit-button" routerLink="/dashboard/editar-perfil/{{idUsuario}}">Editar</button>
             <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Volver</button>
         </div>
     </div>

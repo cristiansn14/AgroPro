@@ -96,7 +96,8 @@ h2 {
     width: 100px;
     background-color: red;
     color: black;
-    margin-top: 15px;
+    margin-top: 20px;
+    height: 40px;
 }
 
 .total-row {
@@ -131,10 +132,46 @@ h2 {
     color: red;
   }
   
+  .file-upload {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
   
+  .file-upload-label {
+    display: block;
+    padding: 10px 20px;
+    background-color: #00796b;
+    color: inherit;
+    color: white !important;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+    width: fit-content;
+    flex-basis: auto !important;
+    font-size: 14px;
+  }
+  
+  .file-upload-label:hover {
+    background-color: #00796b;
+    width: fit-content;
+    color: white;
+  }
+  
+  .file-upload-input {
+    display: none;
+  }
+  
+  .file-name {
+    font-size: 14px;
+    color: #333;
+    margin-left: 50px;
+    width: fit-content;
+  }
 
 /* Media queries para pantallas pequeñas */
-@media only screen and (max-width: 1660px) {
+@media only screen and (max-width: 1200px) {
     .user-form {
         align-items: flex-start;
     }

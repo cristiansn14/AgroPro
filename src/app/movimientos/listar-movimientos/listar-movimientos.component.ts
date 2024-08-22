@@ -6,6 +6,8 @@ import { Movimiento } from 'src/app/model/movimiento';
 import { FincaService } from 'src/app/service/finca.service';
 import { MovimientoService } from 'src/app/service/movimiento.service';
 import { ToastrService } from 'ngx-toastr';
+import { UsuarioFinca } from 'src/app/model/usuario-finca';
+import { TokenService } from 'src/app/service/token.service';
 
 @Component({
   selector: 'app-listar-movimientos',
@@ -19,6 +21,8 @@ export class ListarMovimientosComponent implements OnInit, OnDestroy {
   selectedFinca: string | null = null;
   private subscription: Subscription | null = null;
   error: string = "";
+  usuarioFinca: UsuarioFinca | null = null;
+  rol: string | null = null;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -26,6 +30,7 @@ export class ListarMovimientosComponent implements OnInit, OnDestroy {
     private fincaService: FincaService,
     private movimientoService: MovimientoService,
     private toastr: ToastrService,
+    private tokenService: TokenService,
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +45,7 @@ export class ListarMovimientosComponent implements OnInit, OnDestroy {
               return dateB.getTime() - dateA.getTime();
             });
             this.dataSource.paginator = this.paginator;
+            this.getUsuarioFinca();
           }
         });
       }
@@ -82,5 +88,23 @@ export class ListarMovimientosComponent implements OnInit, OnDestroy {
         }
       });
     } 
+  }
+
+  getUsuarioFinca() {
+    const idUsuario = this.tokenService.getUserId();
+    if (idUsuario != null && this.selectedFinca != null) {
+      this.fincaService.getUsuarioFincaByUsuarioIdAndFincaId(idUsuario, this.selectedFinca).subscribe({
+        next: (usuarioFinca) => {
+          this.usuarioFinca = usuarioFinca;
+          this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol != null ? this.usuarioFinca.rol : null : null;
+        },
+        error: (error) => {
+          this.error = error.error.message;
+          this.toastr.error(this.error, 'No se ha encontrado al usuario para la finca seleccionada', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      })
+    }   
   }
 }

@@ -40,7 +40,7 @@
           <ng-container matColumnDef="opciones">
             <th mat-header-cell *matHeaderCellDef> Opciones </th>
             <td *matCellDef="let movimiento" style="padding: 5px;">
-                <button mat-button (click)="eliminarMovimiento(movimiento)" style="width: 100px; background-color: #00796b; color: white; margin-left: 20px">
+                <button *ngIf="rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR'" mat-button (click)="eliminarMovimiento(movimiento)" style="width: 100px; background-color: #00796b; color: white; margin-left: 20px">
                     <mat-icon>delete</mat-icon>
                     <span>Eliminar</span>
                 </button>

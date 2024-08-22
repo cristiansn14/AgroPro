@@ -1,0 +1,80 @@
+<h2>Lista de usuarios</h2>
+<form action="#" method="post" class="user-form">
+    <div class="flex">
+        <div style="flex-direction: column;">
+            <div class="container">
+                <h1 style="color: #2bea04;">Fincas activas</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Onzas</th>
+                            <th scope="col">Comunidad</th>
+                            <th scope="col">Provincia</th>
+                            <th scope="col">Municipio</th>
+                            <th scope="col">Fecha de alta</th>
+                            <th scope="col">Fecha de modificación</th>
+                            <th scope="col" *ngIf="rol === 'SUPERUSUARIO'">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let finca of fincasActivas">
+                            <td>{{ finca?.nombre }}</td>
+                            <td>{{ finca?.onzas }}</td>
+                            <td>{{ finca?.nombreComunidad }} ({{ finca?.idComunidad }})</td>
+                            <td>{{ finca?.nombreProvincia }} ({{ finca?.idProvincia }})</td>
+                            <td>{{ finca?.nombreMunicipio }} ({{ finca?.idMunicipio }})</td>
+                            <td>{{ finca?.fechaAlta | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ finca?.fechaModificacion | date:'dd/MM/yyyy' }}</td>
+                            <td *ngIf="rol === 'SUPERUSUARIO'">
+                                <button mat-button (click)="darBajaFinca(finca)" style="width: 100px; background-color: #00796b; color: white; margin-left: 20px">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Baja</span>
+                                </button>
+                            </td>
+                        </tr>                       
+                    </tbody>
+                </table>
+            </div>
+            <div class="container" *ngIf="fincasBaja.length > 0">
+                <h1 style="margin-top: 20px; color: red;">Fincas inactivas</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Onzas</th>
+                            <th scope="col">Comunidad</th>
+                            <th scope="col">Provincia</th>
+                            <th scope="col">Municipio</th>
+                            <th scope="col">Fecha de Baja</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let finca of fincasBaja">
+                            <td>{{ finca?.nombre }}</td>
+                            <td>{{ finca?.onzas }}</td>
+                            <td>{{ finca?.nombreComunidad }} ({{ finca?.idComunidad }})</td>
+                            <td>{{ finca?.nombreProvincia }} ({{ finca?.idProvincia }})</td>
+                            <td>{{ finca?.nombreMunicipio }} ({{ finca?.idMunicipio }})</td>
+                            <td>{{ finca?.fechaBaja | date:'dd/MM/yyyy' }}</td>
+                            <td style="display: flex;">
+                                <button *ngIf="rol === 'SUPERUSUARIO'" mat-button (click)="darAltaFinca(finca)" style="width: 120px; background-color: #00796b; color: white; margin-left: 20px">
+                                    <mat-icon>add</mat-icon>
+                                    <span>Dar alta</span>
+                                </button>
+                                <button *ngIf="rol === 'SUPERUSUARIO'" mat-button (click)="eliminarFinca(finca)" style="width: 120px; background-color: #00796b; color: white; margin-left: 20px">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>Eliminar</span>
+                                </button>
+                            </td>
+                        </tr>                       
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+        <div class="div-buttons">
+            <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Volver</button>
+        </div>
+    </div>   
+</form>

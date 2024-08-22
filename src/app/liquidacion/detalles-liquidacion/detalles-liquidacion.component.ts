@@ -6,6 +6,7 @@ import { LineaLiquidacion } from 'src/app/model/lineaLiquidacion';
 import { Liquidacion } from 'src/app/model/liquidacion';
 import { FincaService } from 'src/app/service/finca.service';
 import { LiquidacionService } from 'src/app/service/liquidacion.service';
+import { TokenService } from 'src/app/service/token.service';
 
 @Component({
   selector: 'app-detalles-liquidacion',
@@ -19,13 +20,15 @@ export class DetallesLiquidacionComponent implements OnInit, OnDestroy{
   error: string = "";
   lineasLiquidacion: LineaLiquidacion[] = [];
   liquidacion: Liquidacion | null = null;
+  idUsuarioRegistrado: string | null = "";
 
   constructor(
     private toastr: ToastrService,
     private fincaService: FincaService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private liquidacionService: LiquidacionService
+    private liquidacionService: LiquidacionService,
+    private tokenService: TokenService,
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +36,7 @@ export class DetallesLiquidacionComponent implements OnInit, OnDestroy{
       this.idLiquidacion = params['id'];
       this.loadLiquidacion();
       this.loadLineasLiquidacion();
+      this.idUsuarioRegistrado = this.tokenService.getUserId();
     });
 
     this.subscription = this.fincaService.selectedFinca$

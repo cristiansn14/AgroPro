@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Finca } from '../model/finca';
 import { UsuarioFinca } from '../model/usuario-finca';
 import { UsuarioFincaInfo } from '../model/usuarioFincaInfo';
+import { Archivo } from '../model/archivo';
+import { FincaInfo } from '../model/fincaInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -75,4 +77,45 @@ export class FincaService {
   public findUsuarioFincaById (idUsuarioFinca: string): Observable<UsuarioFincaInfo> {
     return this.httpClient.get<UsuarioFincaInfo>(`${this.fincaURL}/findUsuarioFincaById/${idUsuarioFinca}`)
   }
+
+  public findArchivosByIdFinca (idFinca: string): Observable<Archivo[]> {
+    return this.httpClient.get<Archivo[]>(`${this.fincaURL}/findArchivosByIdFinca/${idFinca}`)
+  }
+
+  public eliminarArchivo(idArchivo: string): Observable<any> {
+    return this.httpClient.delete(`${this.fincaURL}/eliminarArchivo/${idArchivo}`);
+  }
+
+  public guardarArchivo(idFinca: string, file?: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('idFinca', new Blob([JSON.stringify(idFinca)], { type: 'application/json' }));
+    if (file) {
+      formData.append('archivo', file, file.name);
+    }
+
+    return this.httpClient.post<any>(this.fincaURL + '/guardarArchivo', formData, { observe: 'response' });
+  }
+
+  public findAllFincasAltaByUsuarioId (idUsuario: String): Observable<any> {
+    return this.httpClient.get<FincaInfo[]>(`${this.fincaURL}/findAllFincasAltaByUsuarioId/${idUsuario}`);
+  }
+
+  public findAllFincasBajaByUsuarioId (idUsuario: String): Observable<any> {
+    return this.httpClient.get<FincaInfo[]>(`${this.fincaURL}/findAllFincasBajaByUsuarioId/${idUsuario}`);
+  }
+
+  public darAltaFinca(idFinca: string): Observable<any> {
+    return this.httpClient.put<any>(`${this.fincaURL}/darAltaFinca`, JSON.stringify(idFinca), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  public darBajaFinca(idFinca: string): Observable<any> {
+    return this.httpClient.delete(`${this.fincaURL}/darBajaFinca/${idFinca}`);
+  }
+
+  public eliminarFinca(idFinca: string): Observable<any> {
+    return this.httpClient.delete(`${this.fincaURL}/eliminarFinca/${idFinca}`);
+  }
+
 }

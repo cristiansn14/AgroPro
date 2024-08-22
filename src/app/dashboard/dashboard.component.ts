@@ -29,7 +29,6 @@ export class DashboardComponent implements OnInit, OnDestroy{
   rol: string | null = null;
   idUsuario: string | null = null;
   private subscriptionFoto: Subscription = new Subscription();
-  private subscriptionFinca: Subscription = new Subscription();
   fotoPerfilUrl: string | null = null;
 
   constructor(

@@ -5,13 +5,12 @@ import { Comunidad } from 'src/app/model/comunidad';
 import { Finca } from 'src/app/model/finca';
 import { Municipio } from 'src/app/model/municipio';
 import { Provincia } from 'src/app/model/provincia';
-import { Usuario } from 'src/app/model/usuario';
 import { UsuarioFinca } from 'src/app/model/usuario-finca';
 import { UsuarioFincaInfo } from 'src/app/model/usuarioFincaInfo';
 import { FincaService } from 'src/app/service/finca.service';
 import { ParcelaService } from 'src/app/service/parcela.service';
 import { StaticDataService } from 'src/app/service/static-data.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { TokenService } from 'src/app/service/token.service';
 
 @Component({
   selector: 'app-detalles-finca',
@@ -30,12 +29,15 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
   parcelas: string[] = [""];
   parcelasBaja: string[] = [""];
   private subscription: Subscription | null = null;
+  usuarioFinca: UsuarioFinca | null = null;
+  rol: string | null = null;
 
   constructor(
     private toastr: ToastrService,
     private fincaService: FincaService,
     private staticDataService: StaticDataService,
-    private parcelaService: ParcelaService
+    private parcelaService: ParcelaService,
+    private tokenService: TokenService,
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +48,7 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
         this.loadParcelas();
         this.loadParcelasBaja();
         this.loadUsuarios();
+        this.getUsuarioFinca();
       }     
     });
   }
@@ -230,5 +233,23 @@ export class DetallesFincaComponent implements OnInit, OnDestroy{
         })
       }
     });
+  }
+
+  getUsuarioFinca() {
+    const idUsuario = this.tokenService.getUserId();
+    if (idUsuario != null && this.selectedFinca != null) {
+      this.fincaService.getUsuarioFincaByUsuarioIdAndFincaId(idUsuario, this.selectedFinca).subscribe({
+        next: (usuarioFinca) => {
+          this.usuarioFinca = usuarioFinca;
+          this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol : null;
+        },
+        error: (error) => {
+          this.error = error.error.message;
+          this.toastr.error(this.error, 'No se ha encontrado al usuario para la finca seleccionada', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      })
+    }   
   }
 }

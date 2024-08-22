@@ -16,7 +16,6 @@ export class LineaLiquidacion {
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.idUsuario = idUsuario;
-        this.idUsuario = idUsuario;
         this.idLiquidacion = idLiquidacion;
         this.recibida = recibida;
     }

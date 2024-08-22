@@ -16,6 +16,8 @@ import { Subparcela } from 'src/app/model/subparcela';
 import { StaticDataService } from 'src/app/service/static-data.service';
 import { CatastroService } from 'src/app/service/catastro.service';
 import { ParcelaDto } from 'src/app/model/parcelaDto';
+import { UsuarioFinca } from 'src/app/model/usuario-finca';
+import { TokenService } from 'src/app/service/token.service';
 
 @Component({
   selector: 'app-detalles-parcela',
@@ -38,6 +40,9 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
   municipio!: Municipio;
   subparcelas: Subparcela[] = [];
   selectedFinca: string | null = null;
+  usuarioFinca: UsuarioFinca | null = null;
+  rol: string | null = null;
+  idUsuario: string | null = null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,7 +51,8 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
     private fincaService: FincaService,
     private router: Router,
     private staticDataService: StaticDataService,
-    private catastroService: CatastroService
+    private catastroService: CatastroService,
+    private tokenService: TokenService,
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +60,7 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
       this.referenciaCatastral = params['referenciaCatastral'];
       if (this.referenciaCatastral) {
         this.loadParcela();
-        this.loadUsuarios();
+        this.loadUsuarios();       
       }
     });
 
@@ -62,6 +68,7 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
       this.selectedFinca = fincaId;
       if (this.selectedFinca) {
         this.loadFinca();
+        this.getUsuarioFinca();
       }
     });
 
@@ -133,17 +140,13 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
       next: (parcela) => {
         if (parcela.referenciaCatastral !== null) {
           this.parcela = parcela;
-          if (this.parcela.fechaBaja) {
-            this.loadUsuariosBaja();
-          }
+          this.loadUsuariosBaja();
           this.loadSubparcelas();
         } else {
           this.parcelaService.findParcelaConstruccionByReferenciaCatastral(this.referenciaCatastral).subscribe({
             next: (parcelaConstruccion) => {
               this.parcelaConstruccion = parcelaConstruccion;
-              if (this.parcelaConstruccion.fechaBaja) {
-                this.loadUsuariosBaja();
-              }
+              this.loadUsuariosBaja();
             },
             error: (err) => {
               this.error = err.error.message;
@@ -325,4 +328,24 @@ export class DetallesParcelaComponent implements OnInit, OnDestroy{
       }
     });
   }
+
+  getUsuarioFinca() {
+    this.idUsuario = this.tokenService.getUserId();
+    if (this.idUsuario != null && this.selectedFinca != null) {
+      this.fincaService.getUsuarioFincaByUsuarioIdAndFincaId(this.idUsuario, this.selectedFinca).subscribe({
+        next: (usuarioFinca) => {
+          this.usuarioFinca = usuarioFinca;
+          this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol : null;
+          console.log(this.rol);
+        },
+        error: (error) => {
+          this.error = error.error.message;
+          this.toastr.error(this.error, 'No se ha encontrado al usuario para la finca seleccionada', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      })
+    }   
+  }
+  
 }

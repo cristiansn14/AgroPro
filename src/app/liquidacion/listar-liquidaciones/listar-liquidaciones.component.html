@@ -48,12 +48,12 @@
 
           <ng-container matColumnDef="opciones">
             <th mat-header-cell *matHeaderCellDef> Opciones </th>
-            <td *matCellDef="let liquidacion" style="padding: 5px;">
+            <td *matCellDef="let liquidacion" style="padding: 5px; display: flex;">
                 <button mat-button routerLink="/dashboard/detalles-liquidacion/{{liquidacion.id}}" style="width: 100px; background-color: #00796b; color: white;">
                     <mat-icon>visibility</mat-icon>
                     <span>Ver</span>
                 </button>
-                <button mat-button (click)="eliminarLiquidacion(liquidacion)" style="width: 100px; background-color: #00796b; color: white; margin-left: 20px">
+                <button *ngIf="rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR'" mat-button (click)="eliminarLiquidacion(liquidacion)" style="width: 100px; background-color: #00796b; color: white; margin-left: 20px">
                     <mat-icon>delete</mat-icon>
                     <span>Eliminar</span>
                 </button>
@@ -63,11 +63,11 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [pageSize]="6" showFirstLastButtons style="border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 3px 5px rgba(0.4, 0.4, 0.4, 0.4);"></mat-paginator>
+        <mat-paginator [pageSize]="7" showFirstLastButtons style="border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 3px 5px rgba(0.4, 0.4, 0.4, 0.4);"></mat-paginator>
       </div>
     </div>
     <div class="div-buttons">
-      <button mat-raised-button class="add-button" routerLink="/dashboard/generar-liquidacion">Generar</button>
+      <button *ngIf="rol === 'SUPERUSUARIO' || rol === 'ADMINISTRADOR'" mat-raised-button class="add-button" routerLink="/dashboard/generar-liquidacion">Generar</button>
       <button mat-raised-button class="cancel-button" routerLink="/dashboard/home">Cancelar</button>
     </div>
   </div>

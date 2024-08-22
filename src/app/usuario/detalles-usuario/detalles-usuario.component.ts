@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { skip, Subscription } from 'rxjs';
 import { Representante } from 'src/app/model/representante';
 import { Usuario } from 'src/app/model/usuario';
+import { UsuarioFinca } from 'src/app/model/usuario-finca';
+import { FincaService } from 'src/app/service/finca.service';
 import { TokenService } from 'src/app/service/token.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
@@ -11,7 +14,7 @@ import { UsuarioService } from 'src/app/service/usuario.service';
   templateUrl: './detalles-usuario.component.html',
   styleUrls: ['./detalles-usuario.component.scss']
 })
-export class DetallesUsuarioComponent implements OnInit{
+export class DetallesUsuarioComponent implements OnInit, OnDestroy{
 
   usuario: Usuario | null = null;
   idUsuario: string = "";
@@ -21,12 +24,19 @@ export class DetallesUsuarioComponent implements OnInit{
   representantesBaja: Representante[] = [];
   fotoPerfilUrl: string | null = null;
   flagFoto: boolean = false;
+  idUsuarioRegistrado: string | null = "";
+  usuarioFinca: UsuarioFinca | null = null;
+  rol: string | null = null;
+  selectedFinca: string | null = null;
+  private subscription: Subscription | null = null;
 
   constructor(
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
     private usuarioService: UsuarioService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private fincaService: FincaService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -35,8 +45,30 @@ export class DetallesUsuarioComponent implements OnInit{
       if (this.idUsuario) {
         this.loadUsuario();
         this.loadRepresentantes();
+        this.idUsuarioRegistrado = this.tokenService.getUserId();
+        this.getUsuarioFinca();
       }
     });
+
+    this.subscription = this.fincaService.selectedFinca$.subscribe(fincaId => {
+      this.selectedFinca = fincaId;
+      if (this.selectedFinca) {
+      }     
+    });
+
+    if(this.idUsuario !== this.idUsuarioRegistrado){
+      this.subscription = this.fincaService.selectedFinca$
+      .pipe(skip(1))
+      .subscribe(fincaId => {
+        this.router.navigateByUrl(`/dashboard/home`);
+      });
+    }    
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   loadUsuario(): void {
@@ -113,6 +145,23 @@ export class DetallesUsuarioComponent implements OnInit{
         }
       })
     }
-    
+  }
+
+  getUsuarioFinca() {
+    const idUsuario = this.tokenService.getUserId();
+    if (idUsuario != null && this.selectedFinca != null) {
+      this.fincaService.getUsuarioFincaByUsuarioIdAndFincaId(idUsuario, this.selectedFinca).subscribe({
+        next: (usuarioFinca) => {
+          this.usuarioFinca = usuarioFinca;
+          this.rol = this.usuarioFinca != null ? this.usuarioFinca.rol != null ? this.usuarioFinca.rol : null : null;
+        },
+        error: (error) => {
+          this.error = error.error.message;
+          this.toastr.error(this.error, 'No se ha encontrado al usuario para la finca seleccionada', {
+            timeOut: 3000, positionClass: 'toast-top-center'
+          })
+        }
+      })
+    }   
   }
 }
